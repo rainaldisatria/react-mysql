@@ -3,15 +3,20 @@ import Axios from 'axios';
 import React, { useState } from "react";
 
 function App() {
-  const [queryResult, setQueryResult] = useState([]); // Object that contain all of query result (SELECT * FROM anggota)
-  const [columns, setColumns] = useState([]);  // Column name
-  const [tableData, setTableData] = useState([]);
+  const [queryResult, setQueryResult] = useState([]); // Object that contain all of query result (SELECT * FROM anggota).
+  const [columns, setColumns] = useState([]);  // Column name.
+  const [fields, setFields] = useState([]);
 
   const getQueryResult = () => {
     Axios.get("http://localhost:3001/employees").then((response) => {
       const newResponse = response.data;
       setQueryResult(newResponse);
-      console.log(queryResult);
+    })
+  }
+
+  const insertQueryResult = () => {
+    Axios.post("http://localhost:3001/insert").then(() => {
+      console.log("success");
     })
   }
 
@@ -22,30 +27,31 @@ function App() {
     })
 
     setColumns(newColumns);
-    console.log(columns);
   }
 
-  const getTableData = () => {
-    let newTableData = [];
+  const saveChanges = (event) => {
 
-    queryResult.map((object, index) => {
-      newTableData.push(object);
-    })
   }
+
+  const a = [
+    ["John", "Highway"],
+    ["Peter", "Lowstreet"]
+  ]
 
   React.useEffect(() => {
     getQueryResult();
   }, [])
 
   return (
-    <div className="App">
+    <div className="App"> 
+    {console.log(a)}
       <h1>Hello world</h1>
       <button onClick={getColumns}>Get columns</button>
-      <button onClick={getTableData}>Get table data</button>
+      <button onClick={insertQueryResult}>Insert query</button>
 
       <table style={{ width: "100%" }}>
         <tr>
-          { // Render table column name
+          { // Render table column name 
             columns.map((columnName, index) => {
               return <th>{columnName}</th>
             })}
@@ -53,13 +59,15 @@ function App() {
 
         {// Render table content 
           queryResult.map((val, key) => {
-            return <tr>
-              {Object.keys(val).map((keyName, index) => {
-                return <td>
-                  {val[keyName]}
-                </td>
-              })}
-            </tr>
+            return (
+              <tr>
+                {Object.keys(val).map((keyName, index) => {
+                  return <td contentEditable={true}>
+                    {val[keyName]}
+                  </td>
+                })}
+              </tr>
+            )
           })
         }
       </table>

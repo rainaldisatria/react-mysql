@@ -22,32 +22,23 @@ expressApp.get('/employees', (req, res) => {
             res.send(result);
         }
     }); 
-})
+})  
 
-expressApp.get('/users/:id', (req, res) => { 
-    const id = req.params.id;
+expressApp.post('/insert', (req, res) => {
+    var query = "INSERT INTO " + "anggota" + " VALUES ?";
+    var values = [
+        ["ANG-007", "Almira", "Jaksel", "Jakarta", "1990-09-21 00:00:00", "Perempuan", "Pengusaha", "0895617740232"],
+    ]; 
 
-    currentDB.query("SELECT * FROM anggota WHERE Id_Anggota = ?", id, (err, result) => {
-        if(err) {
-            console.log("error");
+    currentDB.query(query, [values], (err, result) => {
+        if(err){
+            console.log(err);
         }
         else{
-            res.send(result);
+            console.log("Numbe of record inserted " + result.affectedRows);
         }
-    }); 
-})
+    })
 
-expressApp.get('/employees/:id', (req, res) => { 
-    const id = req.params.id;
-
-    currentDB.query("SELECT * FROM anggota WHERE Id_Anggota = ?", id, (err, result) => {
-        if(err) {
-            console.log("error");
-        }
-        else{
-            res.send(result);
-        }
-    }); 
 })
  
 expressApp.listen(3001, () => {
