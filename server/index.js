@@ -2,6 +2,7 @@ const express = require('express');
 const expressApp = express(); 
 const mysql = require('mysql');
 const cors = require('cors');
+const { response } = require('express');
 
 expressApp.use(cors());
 
@@ -14,6 +15,32 @@ const currentDB = mysql.createConnection({
 
 expressApp.get('/employees', (req, res) => { 
     currentDB.query("SELECT * FROM anggota", (err, result) => {
+        if(err) {
+            console.log("error");
+        }
+        else{
+            res.send(result);
+        }
+    }); 
+})
+
+expressApp.get('/users/:id', (req, res) => { 
+    const id = req.params.id;
+
+    currentDB.query("SELECT * FROM anggota WHERE Id_Anggota = ?", id, (err, result) => {
+        if(err) {
+            console.log("error");
+        }
+        else{
+            res.send(result);
+        }
+    }); 
+})
+
+expressApp.get('/employees/:id', (req, res) => { 
+    const id = req.params.id;
+
+    currentDB.query("SELECT * FROM anggota WHERE Id_Anggota = ?", id, (err, result) => {
         if(err) {
             console.log("error");
         }
