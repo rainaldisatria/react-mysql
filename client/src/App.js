@@ -4,18 +4,23 @@ import React, { useState } from "react";
 
 function App() {
   const [queryResult, setQueryResult] = useState([]); // Object that contain all of query result (SELECT * FROM anggota).
-  const [columns, setColumns] = useState([]);  // Column name.
-  const [fields, setFields] = useState([]);
+  const [columns, setColumns] = useState([]);  // Column name. 
+
+  //#region 
+  const [addFields, setAddFields] = useState([]);
+  //#endregion
 
   const getQueryResult = () => {
-    Axios.get("http://localhost:3001/employees").then((response) => {
+    Axios.get("http://localhost:3001/employees", ).then((response) => {
       const newResponse = response.data;
       setQueryResult(newResponse);
     })
   }
 
-  const insertQueryResult = () => {
-    Axios.post("http://localhost:3001/insert").then(() => {
+  const insertQueryResult = (data) => {  
+    console.log("called");
+    
+    Axios.post("http://localhost:3001/insert", data).then(() => {
       console.log("success");
     })
   }
@@ -29,23 +34,19 @@ function App() {
     setColumns(newColumns);
   }
 
-  const saveChanges = (event) => {
+  //#region Add 
+  const onValueChanged = (event) => {
 
   }
-
-  const a = [
-    ["John", "Highway"],
-    ["Peter", "Lowstreet"]
-  ]
+  //#endregion
 
   React.useEffect(() => {
     getQueryResult();
   }, [])
 
   return (
-    <div className="App"> 
-    {console.log(a)}
-      <h1>Hello world</h1>
+    <div className="App">
+      <h1>Apotek Jakarta</h1>
       <button onClick={getColumns}>Get columns</button>
       <button onClick={insertQueryResult}>Insert query</button>
 
@@ -71,6 +72,19 @@ function App() {
           })
         }
       </table>
+      <br></br>
+      <h3>Add Anggota: </h3>
+      {
+        columns.map((value, index) => {
+          return (
+            <div>
+              <p> {value}</p>
+              <input type="text"></input>
+            </div>
+          )
+        })
+      }
+      <button onClick={insertQueryResult}>Add Anggota</button>
     </div>
   );
 }
