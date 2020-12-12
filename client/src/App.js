@@ -17,10 +17,17 @@ function App() {
     })
   }
 
-  const insertQueryResult = (data) => {  
-    console.log("called");
-    
-    Axios.post("http://localhost:3001/insert").then(() => {
+  const insertQueryResult = (data) => {     
+    Axios.post("http://localhost:3001/insert", {
+      Id_Anggota: 'ANG-000',
+      Nama: 'Rara',
+      Alamat: 'Jakarta',
+      Tempat_Lahir: 'Jakarta',
+      Tgl_Lahir: 'saf',
+      Jenis_Kelamin: 'Undefined',
+      Pekerjaan: 'Doctor',
+      No_Telephone: '08'
+    }).then((response) => {
       console.log("success");
     })
   }

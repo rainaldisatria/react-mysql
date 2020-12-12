@@ -23,14 +23,12 @@ expressApp.get('/employees', (req, res) => {
             res.send(result);
         }
     }); 
-})   
-
-expressApp.get('/insert', (req, res) => {
-    res.send("<h1>Hello world </h1>");
-})
+})    
 
 expressApp.post('/insert', (req, res) => {
-    var formData = req.body; 
+    var formData = req.body;  
+    console.log(req.params);
+    console.log(formData);
     var values = []; 
 
     Object.keys(formData).map((value, key) => {
@@ -44,11 +42,11 @@ expressApp.post('/insert', (req, res) => {
             console.log(err);
         }
         else{
-            console.log("Numbe of record inserted " + result.affectedRows);
+            console.log("Number of record inserted " + result.affectedRows);
         }
-    })
+    }) 
 
-    res.send("Done");
+    res.send("done");
 })
  
 expressApp.listen(3001, () => {
