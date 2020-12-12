@@ -20,7 +20,7 @@ function App() {
   const insertQueryResult = (data) => {  
     console.log("called");
     
-    Axios.post("http://localhost:3001/insert", data).then(() => {
+    Axios.post("http://localhost:3001/insert").then(() => {
       console.log("success");
     })
   }
@@ -38,7 +38,7 @@ function App() {
   const onValueChanged = (event) => {
 
   }
-  //#endregion
+  //#endregion 
 
   React.useEffect(() => {
     getQueryResult();
@@ -75,16 +75,15 @@ function App() {
       <br></br>
       <h3>Add Anggota: </h3>
       {
-        columns.map((value, index) => {
-          return (
-            <div>
-              <p> {value}</p>
-              <input type="text"></input>
-            </div>
+        <form action="http://localhost:3001/insert" method="post">
+        {columns.map((value, index) => {
+          return (  
+            <input name={value} placeholder={value}></input>
           )
-        })
+        })}
+        <button>Add Anggota</button>
+        </form>
       }
-      <button onClick={insertQueryResult}>Add Anggota</button>
     </div>
   );
 }

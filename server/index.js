@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const cors = require('cors');
 const { response } = require('express');
 
-expressApp.use(cors());
+expressApp.use(cors()); 
 
 const currentDB = mysql.createConnection({
     user: 'root',
@@ -22,12 +22,18 @@ expressApp.get('/employees', (req, res) => {
             res.send(result);
         }
     }); 
-})  
+})   
+
+expressApp.get('/insert', (req, res) => {
+    res.send("<h1>Hello world </h1>");
+})
 
 expressApp.post('/insert', (req, res) => {
+    console.log(req.body);
+
     var query = "INSERT INTO " + "anggota" + " VALUES ?";
     var values = [
-        ["ANG-007", "Almira", "Jaksel", "Jakarta", "1990-09-21 00:00:00", "Perempuan", "Pengusaha", "0895617740232"],
+        ["ANG-016", "Almira", "Jaksel", "Jakarta", "1990-09-21 00:00:00", "Perempuan", "Pengusaha", "0895617740232"],
     ]; 
 
     currentDB.query(query, [values], (err, result) => {
@@ -39,6 +45,7 @@ expressApp.post('/insert', (req, res) => {
         }
     })
 
+    res.send("Done");
 })
  
 expressApp.listen(3001, () => {
