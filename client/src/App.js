@@ -3,32 +3,26 @@ import Axios from 'axios';
 import { useState } from "react";
 
 function App() {
-  const [query, setQuery] = useState([]);
-  const [test , setTest] = useState(null);
+  const [queryResult, setQueryResult] = useState([]);
 
   const getEmployees = () => {
-    console.log("clicked");
     Axios.get("http://localhost:3001/employees").then((response) => {
-      const newQuery = response.data;
-      setQuery(newQuery);
+      const newResponse = response.data;
+      setQueryResult(newResponse);
     })
-
-    updateResult();
-  }
-
-  let result = test;
-
-  const updateResult = () => {
-    console.log("update result called");
-    setTest(<div> Test</div>);
   }
 
   return (
-    <div className="App"> 
-      {result}
+    <div className="App">
       <h1>Hello world</h1>
       <button onClick={getEmployees}>Get Employee</button>
-      <button onClick={updateResult}>Show Employees</button>
+      {queryResult.map((val, id) => {
+        return Object.keys(val).map((keyName, index) => {
+          return <div>
+            <p>{keyName}: {val[keyName]}</p>
+          </div>
+        })
+      })}
     </div>
   );
 }
