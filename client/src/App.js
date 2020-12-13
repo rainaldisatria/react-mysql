@@ -25,7 +25,7 @@ function App() {
 
   const insertQueryResult = (data) => {     
     Axios.post("http://localhost:3001/insert", {
-      Id_Anggota: 'ANG-000',
+      Id_Anggota: 'ANG-372',
       Nama: 'Rara',
       Alamat: 'Jakarta',
       Tempat_Lahir: 'Jakarta',

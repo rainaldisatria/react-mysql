@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 expressApp.use(bodyParser.urlencoded({extended: true}));
+expressApp.use(express.json());
 expressApp.use(cors()); 
 
 const currentDB = mysql.createConnection({
