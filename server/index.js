@@ -63,9 +63,7 @@ expressApp.post('/insert', (req, res) => {
         else{
             console.log("Number of record inserted " + result.affectedRows);
         }
-    })  
-
-    return res.json();
+    })   
 })
  
 expressApp.listen(3001, () => {
