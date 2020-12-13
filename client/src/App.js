@@ -79,6 +79,7 @@ function App() {
                 {Object.keys(val).map((keyName, index) => {
                   return <td contentEditable={true}>{val[keyName]}</td> 
                 })}   
+                <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Edit</button>
                 <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Delete</button>
               </tr>
             )
