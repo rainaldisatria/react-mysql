@@ -36,16 +36,7 @@ function App() {
     }).then((response) => {
       console.log("success");
     })
-  }
-
-  const getColumns = () => {
-    let newColumns = [];
-    Object.keys(queryResult[0]).map((value, index) => {
-      newColumns.push(value);
-    })
-
-    setColumns(newColumns);
-  }
+  } 
 
   //#region Add 
   const onValueChanged = (event) => {
@@ -59,8 +50,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Apotek Jakarta</h1>
-      <button onClick={getColumns}>Get columns</button>
+      <h1>Apotek Jakarta</h1> 
       <button onClick={insertQueryResult}>Insert query</button>
 
       <table style={{ width: "100%" }}>
