@@ -95,7 +95,7 @@ function App() {
               <input name={value} placeholder={value}></input>
             )
           })}
-          <button>Add Anggota</button>
+          <button onClick={getQueryResult}>Add Anggota</button>
         </form>
       }
     </div>

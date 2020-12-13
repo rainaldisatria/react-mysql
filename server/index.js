@@ -16,7 +16,7 @@ const currentDB = mysql.createConnection({
     database: 'w12',
 });
 
-expressApp.get('/employees', (req, res) => { 
+expressApp.get('/anggota', (req, res) => { 
     currentDB.query("SELECT * FROM anggota", (err, result) => {
         if(err) {
             console.log("error");
@@ -63,9 +63,9 @@ expressApp.post('/insert', (req, res) => {
         else{
             console.log("Number of record inserted " + result.affectedRows);
         }
-    }) 
+    })  
 
-    res.redirect('http://localhost:3000/');
+    return res.json();
 })
  
 expressApp.listen(3001, () => {
