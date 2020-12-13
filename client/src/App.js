@@ -35,6 +35,8 @@ function App() {
     ).then((response) => {
       console.log(response);
     })
+
+    getQueryResult();
   }
 
   const insertQueryResult = (data) => {
