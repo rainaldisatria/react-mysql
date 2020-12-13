@@ -14,6 +14,12 @@ function App() {
     Axios.get("http://localhost:3001/employees", ).then((response) => {
       const newResponse = response.data;
       setQueryResult(newResponse);
+
+      let newColumns = [];
+      Object.keys(newResponse[0]).map((value, index) => {
+        newColumns.push(value);
+      }) 
+      setColumns(newColumns);
     })
   }
 
