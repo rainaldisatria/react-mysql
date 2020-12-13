@@ -3,6 +3,7 @@ const expressApp = express();
 const mysql = require('mysql');
 const cors = require('cors'); 
 const bodyParser = require('body-parser');
+const { request } = require('express');
 
 expressApp.use(bodyParser.urlencoded({extended: true}));
 expressApp.use(express.json());
@@ -26,10 +27,26 @@ expressApp.get('/employees', (req, res) => {
     }); 
 })    
 
+expressApp.post('/delete', (req, res) => { 
+    var query = 'DELETE FROM anggota WHERE ';
+    var columnName = req.body.columnName;
+    var value = req.body.value;
+    var finalQuery = query.concat(columnName, " = ?");
+
+    console.log(query);
+
+    currentDB.query(finalQuery, [value], (err, result) => {
+        if(err){
+            console.log(err);
+        }
+        else { 
+            console.log('affected rows: ' + result.affectedRows); 
+        }
+    })  
+})
+
 expressApp.post('/insert', (req, res) => {
-    var formData = req.body;  
-    console.log(req.params);
-    console.log(formData);
+    var formData = req.body;   
     var values = []; 
 
     Object.keys(formData).map((value, key) => {
@@ -37,6 +54,7 @@ expressApp.post('/insert', (req, res) => {
     }) 
 
     var query = "INSERT INTO " + "anggota" + " VALUES ?";
+    console.log(values + "test");
 
     currentDB.query(query, [[values]], (err, result) => {
         if(err){
@@ -47,7 +65,7 @@ expressApp.post('/insert', (req, res) => {
         }
     }) 
 
-    res.send("done");
+    res.redirect('http://localhost:3000/');
 })
  
 expressApp.listen(3001, () => {
