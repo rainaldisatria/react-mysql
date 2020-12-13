@@ -11,7 +11,7 @@ function App() {
   //#endregion
 
   const getQueryResult = () => {
-    Axios.get("http://localhost:3001/employees",).then((response) => {
+    Axios.get("http://localhost:3001/anggota",).then((response) => {
       const newResponse = response.data;
       setQueryResult(newResponse);
 
