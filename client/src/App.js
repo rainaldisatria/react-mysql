@@ -7,7 +7,7 @@ function App() {
   const [columns, setColumns] = useState([]);  // Column name. 
 
   //#region 
-  const [addFields, setAddFields] = useState({Id_Anggota: 'test'});
+  const [addFields, setAddFields] = useState({});
   //#endregion
 
   const getQueryResult = () => {
