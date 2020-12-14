@@ -33,7 +33,7 @@ expressApp.post('/delete', (req, res) => {
     var value = req.body.value;
     var finalQuery = query.concat(columnName, " = ?");
 
-    console.log(query);
+    console.log(finalQuery, [value]);
 
     currentDB.query(finalQuery, [value], (err, result) => {
         if(err){

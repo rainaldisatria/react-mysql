@@ -23,7 +23,7 @@ function App() {
   }
 
   const deleteTable = (columnName, value) => {
-    console.log('deleted');
+    console.log('deleted'); 
 
     Axios.post("http://localhost:3001/delete",
       {
@@ -68,15 +68,15 @@ function App() {
         </thead>
         <tbody>
           {// Render table content  
-            queryResult.map((val, key) => {
+            queryResult.map((val, key) => { 
               return (
                 <tr key={key}>
-                  {Object.keys(val).map((keyName, index) => {
-                    return <td key={key + " " + index}>{val[keyName]}</td>
+                  {Object.keys(val).map((keyName, index) => { 
+                    return (<td key={key + " " + index}>{val[keyName]}</td>)
                   })}
                   <td>
-                    <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Edit</button>
-                    <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Delete</button>
+                    <button onClick={() => deleteTable(columns[0], val[Object.keys(val)[0]])}>Edit</button>
+                    <button onClick={() => deleteTable(columns[0], val[Object.keys(val)[0]])}>Delete</button>
                   </td>
                 </tr>
               )
