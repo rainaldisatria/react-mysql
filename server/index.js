@@ -13,13 +13,13 @@ const currentDB = mysql.createConnection({
     user: 'root',
     host: 'localhost',
     password: '',
-    database: 'w12',
+    database: 'rumah_sakit',
 });
 
 expressApp.get('/anggota', (req, res) => { 
-    currentDB.query("SELECT * FROM anggota", (err, result) => {
+    currentDB.query("SELECT * FROM tabel_obat", (err, result) => {
         if(err) {
-            console.log("error");
+            console.log(err);
         }
         else{
             res.send(result);
@@ -28,7 +28,7 @@ expressApp.get('/anggota', (req, res) => {
 })    
 
 expressApp.post('/delete', (req, res) => { 
-    var query = 'DELETE FROM anggota WHERE ';
+    var query = 'DELETE FROM tabel_obat WHERE ';
     var columnName = req.body.columnName;
     var value = req.body.value;
     var finalQuery = query.concat(columnName, " = ?");
@@ -53,7 +53,7 @@ expressApp.post('/insert', (req, res) => {
         values.push(formData[value]);
     }) 
 
-    var query = "INSERT INTO " + "anggota" + " VALUES ?";
+    var query = "INSERT INTO " + "tabel_obat" + " VALUES ?";
     console.log(values + "test");
 
     currentDB.query(query, [[values]], (err, result) => {

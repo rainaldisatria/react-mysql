@@ -51,8 +51,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Apotek Jakarta</h1>
-      <button onClick={insertQueryResult}>Insert query</button>
+      <h1>Apotek Jakarta</h1> 
 
       <table style={{ width: "100%" }}>
         <tr>
