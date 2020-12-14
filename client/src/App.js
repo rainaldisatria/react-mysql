@@ -1,6 +1,7 @@
 import './App.css';
 import Axios from 'axios';
 import React, { useState } from "react";
+import {connect} from 'react-redux';
 
 function App() {
   const [queryResult, setQueryResult] = useState([]); // Object that contain all of query result (SELECT * FROM anggota).
@@ -105,4 +106,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect()(App);
