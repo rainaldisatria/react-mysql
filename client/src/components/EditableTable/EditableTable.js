@@ -2,9 +2,9 @@ import React from 'react';
 
 const EditableTable = () => {
     return (
-        <div>
-
-        </div>
+         <div>
+             <p>test</p>
+         </div>
     )
 }
 

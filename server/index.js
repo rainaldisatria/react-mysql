@@ -16,13 +16,13 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
-expressApp.post('/delete', (req, res) => { 
-    const query = 'DELETE FROM tabel_obat WHERE ';
+expressApp.post('/delete', (req, res) => {  
     const columnName = req.body.columnName;
     const value = req.body.value;
-    const finalQuery = query.concat(columnName, " = ?"); 
 
-    currentDB.query(finalQuery, [value], (err, result) => {
+    const query = `DELETE FROM ${'tabel_obat'} WHERE ${columnName} = '${value}'`;
+
+    currentDB.query(query, (err, result) => {
         if(err){
             console.log(err);
         }
@@ -34,16 +34,19 @@ expressApp.post('/delete', (req, res) => {
 })
 
 expressApp.post('/insert', (req, res) => {
-    const formData = req.body;   
+    const formData = req.body;    
+    const columnName = [];
     const values = []; 
 
+    // Setting up the const variable
     Object.keys(formData).map((value, key) => {
-        values.push(formData[value]);
+        values.push(formData[value]); 
+        columnName.push(value);
     }) 
 
-    const query = "INSERT INTO " + "tabel_obat" + " VALUES ?"; 
+    const query = `INSERT INTO ${'tabel_obat'} (${columnName}) VALUES ?`;   
 
-    currentDB.query(query, [[values]], (err, result) => {
+    currentDB.query(query, [[values]],(err, result) => {
         if(err){
             console.log(err);
         }
@@ -55,7 +58,9 @@ expressApp.post('/insert', (req, res) => {
 })
 
 expressApp.get('/anggota', (req, res) => { 
-    currentDB.query("SELECT * FROM tabel_obat", (err, result) => {
+    const query = `SELECT * FROM ${'tabel_obat'}`;
+
+    currentDB.query(query, (err, result) => {
         if(err) {
             console.log(err);
         }
