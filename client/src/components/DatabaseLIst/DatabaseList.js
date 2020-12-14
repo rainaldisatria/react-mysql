@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
+import * as actions from '../../store/actions';
 
 const DatabaseList = () => {
     const dispatch = useDispatch();
@@ -10,8 +11,10 @@ const DatabaseList = () => {
             {
                 tables.map((dbName, id) => {
                     return (
-                        <div>
-                            <button key={dbName}>{dbName}</button>
+                        <div key={dbName}>
+                            <button
+                                onClick={() => dispatch(actions.selectTablesSync(dbName))}>{dbName}
+                            </button>
                         </div>
                     )
                 })

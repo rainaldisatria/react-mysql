@@ -23,6 +23,13 @@ export const fetchTables = () => {
     }
 }
 
+export const selectTablesSync = (tableName) => {
+    return {
+        type: SELECT_TABLE,
+        payload: tableName,
+    }
+}
+
 export const fetchSelectedTable = () => {
     return (dispatch) => {
         Axios.get("http://localhost:3001/getTable",).then((response) => {
@@ -56,12 +63,9 @@ export const insertToSelectedTable = (objectToAdd) => {
 }
 //#endregion
 
-//#region Actions name
-export const REQUEST_SELECTED_TABLE = "REQUEST_SELECTED_TABLE";
+//#region Actions name 
+export const FETCH_TABLES = "FETCH_TABLES"; // Initialize list of tables in this db.
+export const SELECT_TABLE = "SELECT_TABLES"; // Initialize selected table.
+export const FETCH_SELECTED_TABLE = "FETCH_SELECTED_TABLE";   // Get column and row of selected table
 
-export const FETCH_TABLES = "FETCH TABLES";
-
-export const FETCH_SELECTED_TABLE = "FETCH_SELECTED_TABLE";
-export const ADD_TO_SELECTED_TABLE = 'ADD_TO_SELECTED_TABLE';
-export const DELETE_FROM_SELECTED_TABLE = 'DELETE_FROM_SELECTED_TABLE';
 //#endregion

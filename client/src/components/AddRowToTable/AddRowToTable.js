@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import * as actions from '../../store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AddRowToTable = (props) => {
     const dispatch = useDispatch();
 
-    const [addFields, setAddFields] = useState({}); 
+    const [addFields, setAddFields] = useState({});
+    const columnsName = useSelector(state => state.columnsName)
 
     return (
         <div>
-            <h3>Add: </h3>
+            <h3>Add To Table: </h3>
             <form>
-                {props.columnsName.map((value, index) => {
+                {columnsName.map((value, index) => {
                     return (
                         <input
                             key={index}
@@ -21,7 +22,7 @@ const AddRowToTable = (props) => {
                                 setAddFields((prevValue) => {
                                     return {
                                         ...prevValue,
-                                        [props.columnsName[index]]: value,
+                                        [columnsName[index]]: value,
                                     }
                                 })
                             }}
