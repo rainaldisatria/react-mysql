@@ -10,9 +10,8 @@ export const fetchSelectedTableSync = (tableData) => {
 //#region Async methods
 export const fetchSelectedTable = () => {
     return (dispatch) => {
-        Axios.get("http://localhost:3001/getTable",).then((response) => {
-            const tableDatas = response.data;
-            dispatch(fetchSelectedTable(tableDatas));
+        Axios.get("http://localhost:3001/getTable",).then((response) => { 
+            dispatch(fetchSelectedTableSync(response.data));
         }).catch((error) => {
             console.log(error);
         })
@@ -20,8 +19,7 @@ export const fetchSelectedTable = () => {
 }
 
 export const deleteFromSelectedTable = (columnName, value) => {
-    return (dispatch) => {
-
+    return (dispatch) => { 
         Axios.post("http://localhost:3001/delete",
             {
                 columnName: columnName,

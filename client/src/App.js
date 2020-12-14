@@ -1,10 +1,9 @@
 import './App.css';
-import React, { useState } from "react";
-import { connect } from 'react-redux';
+import React, { useState } from "react"; 
 import * as actions from './store/actions';
 import { useSelector, useDispatch } from 'react-redux';
 
-function App(props) {
+function App() {
   const dispatch = useDispatch();
   const tableData = useSelector(state => state.tableData);
   const columnsName = useSelector(state => state.columnsName);

@@ -8,13 +8,13 @@ const initialState = {
 
 // Tempat milah. Ditentuin sama nama action.
 const reducer = (state = initialState, action) => {
-    switch (action) {
+    switch (action.type) {
         case actionType.FETCH_SELECTED_TABLE:
             const newTableData = action.payload;
             const newColumnsName = Object.keys(newTableData[0]).map(val => val)
-
+            console.log("fetching selected table");
             return {
-                ...initialState, 
+                ...state, 
                 tableData: newTableData,
                 columnsName: newColumnsName,
             }
