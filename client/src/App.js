@@ -30,8 +30,7 @@ function App() {
         columnName: columnName,
         value: value
       }
-    ).then((response) => {
-      console.log(response);
+    ).then((response) => { 
       getQueryResult();
     }) 
     
@@ -41,8 +40,6 @@ function App() {
     e.preventDefault();
  
     Axios.post("http://localhost:3001/insert", addFields).then((response) => {
-      console.log(response);
-
       getQueryResult();
     }) 
   } 
