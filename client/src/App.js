@@ -11,6 +11,7 @@ function App() {
   const [addFields, setAddFields] = useState({});
   //#endregion
 
+  //#region API
   const getQueryResult = () => {
     Axios.get("http://localhost:3001/getTable",).then((response) => {
       setQueryResult(response.data);
@@ -43,7 +44,8 @@ function App() {
     Axios.post("http://localhost:3001/insert", addFields).then((response) => {
       getQueryResult();
     })
-  } 
+  }
+  //#endregion 
 
   return (
     <div className="App">

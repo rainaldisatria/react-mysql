@@ -9,9 +9,14 @@ const initialState = {
 // Tempat milah. Ditentuin sama nama action.
 const reducer = (state = initialState, action) => {
     switch (action) {
-        case actionType.ON_TABLE_SELECTED:
+        case actionType.FETCH_SELECTED_TABLE:
+            const newTableData = action.payload;
+            const newColumnsName = Object.keys(newTableData[0]).map(val => val)
+
             return {
                 ...initialState, 
+                tableData: newTableData,
+                columnsName: newColumnsName,
             }
     }
 
