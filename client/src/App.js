@@ -106,4 +106,12 @@ function App() {
   );
 }
 
-export default connect()(App);
+const mapStateToPropos = (stateFromRedux) => {
+  return {
+    table: stateFromRedux.table,
+    tableData: stateFromRedux.tableData,
+    columnsName: stateFromRedux.columnsName,
+  }
+} 
+
+export default connect(mapStateToPropos)(App);
