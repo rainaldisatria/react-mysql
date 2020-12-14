@@ -16,7 +16,7 @@ function App() {
 
       let newColumns = [];
       Object.keys(response.data[0]).map((value, index) => {
-        newColumns.push(value);
+        return newColumns.push(value);
       })
       setColumns(newColumns);
     })
@@ -24,7 +24,6 @@ function App() {
 
   const deleteTable = (columnName, value) => {
     console.log('deleted');
-    const body = [columnName, value];
 
     Axios.post("http://localhost:3001/delete",
       {
@@ -38,11 +37,15 @@ function App() {
     getQueryResult();
   }
 
-  const insertQueryResult = () => {
+  const insertQueryResult = (e) => {
+    e.preventDefault();
+
     console.log("clicked")
     Axios.post("http://localhost:3001/insert", addFields).then((response) => {
       console.log(response);
     })
+
+    getQueryResult();
   }
 
   React.useEffect(() => {
@@ -51,30 +54,35 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Apotek Jakarta</h1> 
+      <h1>Apotek Jakarta</h1>
 
       <table style={{ width: "100%" }}>
-        <tr>
-          { // Render table column name 
-            columns.map((columnName, index) => {
-              return <th>{columnName}</th>
-            })}
-          <th>Action</th>
-        </tr>
-
-        {// Render table content  
-          queryResult.map((val, key) => {
-            return (
-              <tr>
-                {Object.keys(val).map((keyName, index) => {
-                  return <td contentEditable={true}>{val[keyName]}</td>
-                })}
-                <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Edit</button>
-                <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Delete</button>
-              </tr>
-            )
-          })
-        }
+        <thead>
+          <tr>
+            { // Render table column name 
+              columns.map((columnName, index) => {
+                return <th key={index}>{columnName}</th>
+              })}
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {// Render table content  
+            queryResult.map((val, key) => {
+              return (
+                <tr key={key}>
+                  {Object.keys(val).map((keyName, index) => {
+                    return <td key={key + " " + index}>{val[keyName]}</td>
+                  })}
+                  <td>
+                    <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Edit</button>
+                    <button onClick={() => deleteTable(columns[0], val.Id_Anggota)}>Delete</button>
+                  </td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
       </table>
       <br></br>
       <h3>Add Anggota: </h3>
@@ -83,9 +91,10 @@ function App() {
           {columns.map((value, index) => {
             return (
               <input
+                key={index}
                 placeholder={value}
                 onChange={(event) => {
-                  const value = event.target.value; 
+                  const value = event.target.value;
                   setAddFields((prevValue) => {
                     return {
                       ...prevValue,
@@ -97,7 +106,7 @@ function App() {
               ></input>
             )
           })}
-          <button onClick={insertQueryResult}>Add Anggota</button>
+          <button onClick={(e) => insertQueryResult(e)}>Add Anggota</button>
         </form>
       }
     </div>
