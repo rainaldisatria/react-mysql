@@ -11,7 +11,7 @@ function App() {
   //#endregion
 
   const getQueryResult = () => {
-    Axios.get("http://localhost:3001/anggota",).then((response) => {
+    Axios.get("http://localhost:3001/getTable",).then((response) => {
       setQueryResult(response.data);
 
       let newColumns = [];

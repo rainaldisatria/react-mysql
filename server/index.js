@@ -57,7 +57,7 @@ expressApp.post('/insert', (req, res) => {
     })   
 })
 
-expressApp.get('/anggota', (req, res) => { 
+expressApp.get('/getTable', (req, res) => { 
     const query = `SELECT * FROM ${'tabel_obat'}`;
 
     currentDB.query(query, (err, result) => {
