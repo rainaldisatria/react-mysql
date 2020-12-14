@@ -9,12 +9,20 @@ expressApp.use(bodyParser.urlencoded({extended: true}));
 expressApp.use(express.json());
 expressApp.use(cors()); 
 
+var selected_table = '';
+
 const currentDB = mysql.createConnection({
     user: 'root',
     host: 'localhost',
     password: '',
     database: 'rumah_sakit',
 });
+
+expressApp.post('/selectTable', (req, res) => {
+    selected_table = Object.keys(req.body)[0];
+    console.log(selected_table);
+    res.send(selected_table);
+})
 
 expressApp.get('/', (req, res) => {
     const query = `SHOW TABLES`;
@@ -33,7 +41,7 @@ expressApp.post('/delete', (req, res) => {
     const columnName = req.body.columnName;
     const value = req.body.value;
 
-    const query = `DELETE FROM ${'tabel_obat'} WHERE ${columnName} = '${value}'`;
+    const query = `DELETE FROM ${selected_table} WHERE ${columnName} = '${value}'`;
 
     currentDB.query(query, (err, result) => {
         if(err){
@@ -57,7 +65,7 @@ expressApp.post('/insert', (req, res) => {
         columnName.push(value);
     }) 
 
-    const query = `INSERT INTO ${'tabel_obat'} (${columnName}) VALUES ?`;   
+    const query = `INSERT INTO ${selected_table} (${columnName}) VALUES ?`;   
 
     currentDB.query(query, [[values]],(err, result) => {
         if(err){
@@ -71,7 +79,7 @@ expressApp.post('/insert', (req, res) => {
 })
 
 expressApp.get('/getTable', (req, res) => { 
-    const query = `SELECT * FROM ${'tabel_obat'}`;
+    const query = `SELECT * FROM ${selected_table}`;
 
     currentDB.query(query, (err, result) => {
         if(err) {
