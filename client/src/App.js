@@ -18,13 +18,13 @@ function App() {
       Object.keys(response.data[0]).map((value, index) => {
         return newColumns.push(value);
       })
-      setColumns(newColumns);
+      setColumns(newColumns); 
+    }).catch((error) => {
+      console.log(error);
     })
   }
 
-  const deleteTable = (columnName, value) => {
-    console.log('deleted'); 
-
+  const deleteTable = (columnName, value) => {  
     Axios.post("http://localhost:3001/delete",
       {
         columnName: columnName,
@@ -32,29 +32,25 @@ function App() {
       }
     ).then((response) => {
       console.log(response);
-    })
-
-    getQueryResult();
+      getQueryResult();
+    }) 
+    
   }
 
   const insertQueryResult = (e) => {
     e.preventDefault();
-
-    console.log("clicked")
+ 
     Axios.post("http://localhost:3001/insert", addFields).then((response) => {
       console.log(response);
-    })
 
-    getQueryResult();
-  }
-
-  React.useEffect(() => {
-    getQueryResult();
-  }, [])
+      getQueryResult();
+    }) 
+  } 
 
   return (
     <div className="App">
       <h1>Apotek Jakarta</h1>
+      <button onClick={getQueryResult}>Intialize</button>
 
       <table style={{ width: "100%" }}>
         <thead>
@@ -68,10 +64,10 @@ function App() {
         </thead>
         <tbody>
           {// Render table content  
-            queryResult.map((val, key) => { 
+            queryResult.map((val, key) => {
               return (
                 <tr key={key}>
-                  {Object.keys(val).map((keyName, index) => { 
+                  {Object.keys(val).map((keyName, index) => {
                     return (<td key={key + " " + index}>{val[keyName]}</td>)
                   })}
                   <td>

@@ -16,6 +16,44 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
+expressApp.post('/delete', (req, res) => { 
+    const query = 'DELETE FROM tabel_obat WHERE ';
+    const columnName = req.body.columnName;
+    const value = req.body.value;
+    const finalQuery = query.concat(columnName, " = ?"); 
+
+    currentDB.query(finalQuery, [value], (err, result) => {
+        if(err){
+            console.log(err);
+        }
+        else { 
+            res.send(result);
+            console.log('affected rows: ' + result.affectedRows); 
+        }
+    })  
+})
+
+expressApp.post('/insert', (req, res) => {
+    const formData = req.body;   
+    const values = []; 
+
+    Object.keys(formData).map((value, key) => {
+        values.push(formData[value]);
+    }) 
+
+    const query = "INSERT INTO " + "tabel_obat" + " VALUES ?"; 
+
+    currentDB.query(query, [[values]], (err, result) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("Number of record inserted " + result.affectedRows);
+            res.send(result);
+        }
+    })   
+})
+
 expressApp.get('/anggota', (req, res) => { 
     currentDB.query("SELECT * FROM tabel_obat", (err, result) => {
         if(err) {
@@ -25,46 +63,9 @@ expressApp.get('/anggota', (req, res) => {
             res.send(result);
         }
     }); 
+
+    console.log('refreshed');
 })    
-
-expressApp.post('/delete', (req, res) => { 
-    var query = 'DELETE FROM tabel_obat WHERE ';
-    var columnName = req.body.columnName;
-    var value = req.body.value;
-    var finalQuery = query.concat(columnName, " = ?");
-
-    console.log(finalQuery, [value]);
-
-    currentDB.query(finalQuery, [value], (err, result) => {
-        if(err){
-            console.log(err);
-        }
-        else { 
-            console.log('affected rows: ' + result.affectedRows); 
-        }
-    })  
-})
-
-expressApp.post('/insert', (req, res) => {
-    var formData = req.body;   
-    var values = []; 
-
-    Object.keys(formData).map((value, key) => {
-        values.push(formData[value]);
-    }) 
-
-    var query = "INSERT INTO " + "tabel_obat" + " VALUES ?";
-    console.log(values + "test");
-
-    currentDB.query(query, [[values]], (err, result) => {
-        if(err){
-            console.log(err);
-        }
-        else{
-            console.log("Number of record inserted " + result.affectedRows);
-        }
-    })   
-})
  
 expressApp.listen(3001, () => {
     console.log("Server is running on port 3001");
