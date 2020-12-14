@@ -1,4 +1,4 @@
-import Axios from 'axios'; 
+import Axios from 'axios';
 
 export const fetchSelectedTableSync = (tableData) => {
     return {
@@ -7,10 +7,25 @@ export const fetchSelectedTableSync = (tableData) => {
     }
 }
 
+export const fetchTablesSync = (tables) => {
+    return {
+        type: FETCH_TABLES,
+        payload: tables,
+    }
+}
+
 //#region Async methods
+export const fetchTables = () => {
+    return (dispatch) => {
+        Axios.get('http://localhost:3001/').then((response) => {
+            dispatch(fetchTablesSync(response.data));
+        })
+    }
+}
+
 export const fetchSelectedTable = () => {
     return (dispatch) => {
-        Axios.get("http://localhost:3001/getTable",).then((response) => { 
+        Axios.get("http://localhost:3001/getTable",).then((response) => {
             dispatch(fetchSelectedTableSync(response.data));
         }).catch((error) => {
             console.log(error);
@@ -19,7 +34,7 @@ export const fetchSelectedTable = () => {
 }
 
 export const deleteFromSelectedTable = (columnName, value) => {
-    return (dispatch) => { 
+    return (dispatch) => {
         Axios.post("http://localhost:3001/delete",
             {
                 columnName: columnName,
@@ -43,6 +58,8 @@ export const insertToSelectedTable = (objectToAdd) => {
 
 //#region Actions name
 export const REQUEST_SELECTED_TABLE = "REQUEST_SELECTED_TABLE";
+
+export const FETCH_TABLES = "FETCH TABLES";
 
 export const FETCH_SELECTED_TABLE = "FETCH_SELECTED_TABLE";
 export const ADD_TO_SELECTED_TABLE = 'ADD_TO_SELECTED_TABLE';
