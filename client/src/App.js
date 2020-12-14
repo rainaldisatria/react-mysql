@@ -7,7 +7,7 @@ function App() {
   const [columns, setColumns] = useState([]);  // Column name. 
 
   //#region 
-  const [addFields, setAddFields] = useState({});
+  const [addFields, setAddFields] = useState({Id_Anggota: 'test'});
   //#endregion
 
   const getQueryResult = () => {
@@ -18,30 +18,30 @@ function App() {
       Object.keys(response.data[0]).map((value, index) => {
         return newColumns.push(value);
       })
-      setColumns(newColumns); 
+      setColumns(newColumns);
     }).catch((error) => {
       console.log(error);
     })
   }
 
-  const deleteTable = (columnName, value) => {  
+  const deleteTable = (columnName, value) => {
     Axios.post("http://localhost:3001/delete",
       {
         columnName: columnName,
         value: value
       }
-    ).then((response) => { 
+    ).then((response) => {
       getQueryResult();
-    }) 
-    
+    })
+
   }
 
   const insertQueryResult = (e) => {
     e.preventDefault();
- 
+
     Axios.post("http://localhost:3001/insert", addFields).then((response) => {
       getQueryResult();
-    }) 
+    })
   } 
 
   return (
@@ -91,15 +91,14 @@ function App() {
                   setAddFields((prevValue) => {
                     return {
                       ...prevValue,
-                      [columns[index]]: value
+                      [columns[index]]: value,
                     }
                   })
                 }}
-                value={addFields[columns[index]]}
               ></input>
             )
           })}
-          <button onClick={(e) => insertQueryResult(e)}>Add Anggota</button>
+          <button onClick={(e) => insertQueryResult(e)}>Add</button>
         </form>
       }
     </div>
