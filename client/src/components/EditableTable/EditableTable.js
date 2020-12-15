@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import * as actions from '../../store/actions';
+import React, { useEffect, useState } from 'react'; 
 import AddRowToTable from '../AddRowToTable/AddRowToTable';
 import Server from '../../Axios/Server';
 
@@ -10,7 +8,7 @@ const EditableTable = (props) => {
     // Start
     useEffect(() => {
         update();
-    }, [])
+    })
 
     const update = () => {
         Server.fetchTableData(props.tableName).then(res => { setTableData(res.data) }) 

@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import Server from '../Axios/Server';
 
 //#region Sync methods 

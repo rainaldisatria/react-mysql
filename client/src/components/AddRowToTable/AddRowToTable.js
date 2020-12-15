@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import * as actions from '../../store/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';  
 import Server from '../../Axios/Server';
 
-const AddRowToTable = (props) => {
-    const dispatch = useDispatch();
-
+const AddRowToTable = (props) => {  
     const [addFields, setAddFields] = useState({}); 
 
     return (

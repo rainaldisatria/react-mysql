@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
-import * as actions from '../../store/actions';
-import Axios from 'axios';
+import * as actions from '../../store/actions'; 
 
 const DatabaseList = () => {
     const dispatch = useDispatch();
