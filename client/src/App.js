@@ -1,14 +1,15 @@
 import './App.css';
-import React, { useEffect, useState } from "react";
-import * as actions from './store/actions';
-import { useSelector, useDispatch } from 'react-redux';
+import React from "react"; 
 import EditableTable from './components/EditableTable/EditableTable';
-import DatabaseList from './components/DatabaseLIst/DatabaseList';
-import Server from './Axios/Server';
+import DatabaseList from './components/DatabaseLIst/DatabaseList'; 
+import Modal from 'react-modal';
 
 function App() {
   return (
     <div className="App">
+      <Modal>
+
+      </Modal>
       <h1>Apotek Jakarta</h1>
       <br></br>
       <DatabaseList></DatabaseList>
