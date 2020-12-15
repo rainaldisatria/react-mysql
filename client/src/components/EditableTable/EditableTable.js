@@ -13,14 +13,13 @@ const EditableTable = (props) => {
     }, [])
 
     const update = () => {
-        Server.fetchTableData(props.tableName).then(res => { setTableData(res.data) })
-            .catch(err => err);
+        Server.fetchTableData(props.tableName).then(res => { setTableData(res.data) }) 
     }
 
     const deleteHandler = (columnName, value) => {
         Server.deleteFromTable(props.tableName, columnName, value).then(res => {
             update();
-        }).catch(err => err);
+        }) 
     }
     let actionHeader = <th>Action</th>;
 
