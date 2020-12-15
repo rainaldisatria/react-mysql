@@ -9,17 +9,13 @@ const DatabaseList = () => {
 
     return (
         <div>
+            <button onClick={() => dispatch(actions.fetchTables())}>Fetch tables</button>
             {
                 tables.map((dbName, id) => {
                     return (
                         <div key={dbName}>
                             <button
-                                onClick={() => {
-                                    dispatch(actions.selectTablesSync(dbName))
-                                    Axios.post('http://localhost:3001/selectTable', dbName).then(response => {
-                                        console.log('clicked');
-                                    })
-                                }}>{dbName}
+                                onClick={console.log('clicked')}>{dbName}
                             </button>
                         </div>
                     )

@@ -1,5 +1,7 @@
 import Axios from 'axios';
+import Server from '../Axios/Server';
 
+//#region Sync methods
 export const fetchSelectedTableSync = (tableData) => {
     return {
         type: FETCH_SELECTED_TABLE,
@@ -13,13 +15,14 @@ export const fetchTablesSync = (tables) => {
         payload: tables,
     }
 }
+//#endregion Sync methods
 
 //#region Async methods
 export const fetchTables = () => {
     return (dispatch) => {
-        Axios.get('http://localhost:3001/').then((response) => {
+        Server.fetchTablesData().then(response => {
             dispatch(fetchTablesSync(response.data));
-        })
+        }) 
     }
 }
 
@@ -32,7 +35,7 @@ export const selectTablesSync = (tableName) => {
 
 export const fetchSelectedTable = () => {
     return (dispatch) => {
-        Axios.get("http://localhost:3001/getTable",).then((response) => {
+        Server.then((response) => {
             dispatch(fetchSelectedTableSync(response.data));
         }).catch((error) => {
             console.log(error);

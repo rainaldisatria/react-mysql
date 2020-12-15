@@ -7,9 +7,7 @@ const { request } = require('express');
 
 expressApp.use(bodyParser.urlencoded({extended: true}));
 expressApp.use(express.json());
-expressApp.use(cors()); 
-
-var selected_table = '';
+expressApp.use(cors());  
 
 const currentDB = mysql.createConnection({
     user: 'root',
@@ -37,11 +35,12 @@ expressApp.get('/', (req, res) => {
     })
 })
 
-expressApp.post('/delete', (req, res) => {  
+expressApp.post('/delete/:tableName', (req, res) => {  
+    tableName = req.params.tableName;
     const columnName = req.body.columnName;
     const value = req.body.value;
 
-    const query = `DELETE FROM ${selected_table} WHERE ${columnName} = '${value}'`;
+    const query = `DELETE FROM ${tableName} WHERE ${columnName} = '${value}'`;
 
     currentDB.query(query, (err, result) => {
         if(err){
@@ -54,7 +53,8 @@ expressApp.post('/delete', (req, res) => {
     })  
 })
 
-expressApp.post('/insert', (req, res) => {
+expressApp.post('/insert/:tableName', (req, res) => {
+    const tableName = req.params.tableName;
     const formData = req.body;    
     const columnName = [];
     const values = []; 
@@ -65,7 +65,7 @@ expressApp.post('/insert', (req, res) => {
         columnName.push(value);
     }) 
 
-    const query = `INSERT INTO ${selected_table} (${columnName}) VALUES ?`;   
+    const query = `INSERT INTO ${tableName} (${columnName}) VALUES ?`;   
 
     currentDB.query(query, [[values]],(err, result) => {
         if(err){
@@ -78,8 +78,9 @@ expressApp.post('/insert', (req, res) => {
     })   
 })
 
-expressApp.get('/getTable', (req, res) => { 
-    const query = `SELECT * FROM ${selected_table}`;
+expressApp.get('/table/:tableName', (req, res) => { 
+    const tableName = req.params.tableName;
+    const query = `SELECT * FROM ${tableName}`;
 
     currentDB.query(query, (err, result) => {
         if(err) {
@@ -88,9 +89,7 @@ expressApp.get('/getTable', (req, res) => {
         else{
             res.send(result);
         }
-    }); 
-
-    console.log('refreshed');
+    });  
 })    
  
 expressApp.listen(3001, () => {

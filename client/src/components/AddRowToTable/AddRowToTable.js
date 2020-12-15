@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import * as actions from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Server from '../../Axios/Server';
 
 const AddRowToTable = (props) => {
     const dispatch = useDispatch();
 
-    const [addFields, setAddFields] = useState({});
-    const columnsName = useSelector(state => state.columnsName)
+    const [addFields, setAddFields] = useState({}); 
 
     return (
         <div>
             <h3>Add To Table: </h3>
             <form>
-                {columnsName.map((value, index) => {
+                {Object.keys(props.tableData[0]).map((columnName, index) => {
                     return (
                         <input
-                            key={index}
-                            placeholder={value}
+                            key={columnName}
+                            placeholder={columnName}
                             onChange={(event) => {
                                 const value = event.target.value;
                                 setAddFields((prevValue) => {
                                     return {
                                         ...prevValue,
-                                        [columnsName[index]]: value,
+                                        [columnName]: value,
                                     }
                                 })
                             }}
@@ -30,8 +30,9 @@ const AddRowToTable = (props) => {
                     )
                 })}
                 <button onClick={(e) => {
-                    e.preventDefault();
-                    dispatch(actions.insertToSelectedTable(addFields))
+                    e.preventDefault(); 
+                    Server.insertIntoTable(props.tableName, addFields); 
+                    props.onClick();
                 }}>Add</button>
             </form>
         </div>
