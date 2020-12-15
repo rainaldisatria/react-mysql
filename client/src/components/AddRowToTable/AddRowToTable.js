@@ -6,7 +6,7 @@ import Server from '../../Axios/Server';
 const AddRowToTable = (props) => {
     const dispatch = useDispatch();
 
-    const [addFields, setAddFields] = useState({}); 
+    const [addFields, setAddFields] = useState({});
 
     return (
         <div>
@@ -30,9 +30,10 @@ const AddRowToTable = (props) => {
                     )
                 })}
                 <button onClick={(e) => {
-                    e.preventDefault(); 
-                    Server.insertIntoTable(props.tableName, addFields); 
-                    props.onClick();
+                    e.preventDefault();
+                    Server.insertIntoTable(props.tableName, addFields).then(res => {
+                        props.onClick();
+                    }).catch(err => err);
                 }}>Add</button>
             </form>
         </div>

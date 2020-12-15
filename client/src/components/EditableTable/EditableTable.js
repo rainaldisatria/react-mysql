@@ -5,22 +5,23 @@ import AddRowToTable from '../AddRowToTable/AddRowToTable';
 import Server from '../../Axios/Server';
 
 const EditableTable = (props) => {
-    const [tableData, setTableData] = useState([{ test: 'test', lala: 'lala' }]);
-
-    const update = () => {
-        Server.fetchTableData(props.tableName).then(res => setTableData(res.data));
-    }
-
-    const deleteHandler = (columnName, value) => {
-        Server.deleteFromTable(props.tableName, columnName, value);
-        console.log('deteled');
-    }
+    const [tableData, setTableData] = useState([{}]);
 
     // Start
     useEffect(() => {
         update();
     }, [])
 
+    const update = () => {
+        Server.fetchTableData(props.tableName).then(res => { setTableData(res.data) })
+            .catch(err => err);
+    }
+
+    const deleteHandler = (columnName, value) => {
+        Server.deleteFromTable(props.tableName, columnName, value).then(res => {
+            update();
+        }).catch(err => err);
+    }
     let actionHeader = <th>Action</th>;
 
     let addButton = <AddRowToTable
@@ -63,7 +64,6 @@ const EditableTable = (props) => {
                                                 <button onClick={() => {
                                                     const columnName = Object.keys(objectData)[0];
                                                     deleteHandler(columnName, objectData[columnName]);
-                                                    update();
                                                 }
                                                 }>Delete</button>
                                             </td>
