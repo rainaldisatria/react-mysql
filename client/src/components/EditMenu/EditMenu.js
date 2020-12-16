@@ -21,8 +21,7 @@ const EditMenu = (props) => {
 
     const [editFields, setEditFields] = useState({});
 
-    const saveChanges = () => { 
-        console.log('clicked');
+    const saveChanges = (e) => {  
         Server.editTableFields(tableName, editFields, defaultData).then(res => res);
     }
 
@@ -86,10 +85,7 @@ const EditMenu = (props) => {
                 e.preventDefault();
                 onCloseHandler();
             }}>Cancel</button>
-            <button onClick={(e) => {
-                e.preventDefault();
-                saveChanges();
-            }}>Save Changes</button>
+            <button onClick={(e) => saveChanges(e)}>Save Changes</button>
         </form>
     ) 
 
