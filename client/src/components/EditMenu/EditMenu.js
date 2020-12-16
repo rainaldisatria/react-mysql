@@ -14,16 +14,33 @@ const EditMenu = (props) => {
 
     // {Kode_Obat: "SRSCF1723", Nama_Obat: "SUCRALFATE", Bentuk_Obat: "Syrup", 
     // Tgl_Produksi: "2017-03-22T17:00:00.000Z", Tgl_Kadaluarsa: "2023-03-19T17:00:00.000Z", …}
-    const defaultData = useSelector(state => state.defaultData);
+    const defaultData = useSelector(state => state.defaultData); 
 
     //[{"Field":"Kode_Obat","Type":"varchar(10)","Null":"NO","Key":"PRI","Default":null,"Extra":""},
     const [tableDesc, setTableDesc] = useState([{}]);
 
     const [editFields, setEditFields] = useState({});
 
-    const saveChanges = (e) => {  
-        Server.editTableFields(tableName, editFields, defaultData).then(res => res);
+    const saveChanges = (e) => {
+        e.preventDefault();
+        Server.editTableFields(tableName, editFields, defaultData)
+            .then(res => { 
+                dispatch(actions.diasbleEditModal()); 
+                return res
+            });
     }
+
+    const onOpenHandler = () => {
+        setEditFields()
+        Server.fetchTableDesc(tableName).then(response => {
+            setTableDesc(response.data);
+        })
+    }
+
+    const onCloseHandler = () => {
+        dispatch(actions.diasbleEditModal());
+    }
+
 
     let modalContent = (
         <form>
@@ -64,13 +81,13 @@ const EditMenu = (props) => {
                                                 <input
                                                     defaultValue={defaultData[dataName]}
                                                     onChange={(e) => {
-                                                      const value = e.target.value;
-                                                      setEditFields(prevValue => {
-                                                          return {
-                                                              ...prevValue,
-                                                              [dataName]: value,
-                                                          }
-                                                      })
+                                                        const value = e.target.value;
+                                                        setEditFields(prevValue => {
+                                                            return {
+                                                                ...prevValue,
+                                                                [dataName]: value,
+                                                            }
+                                                        })
                                                     }}
                                                 ></input>
                                             </td>
@@ -88,16 +105,6 @@ const EditMenu = (props) => {
             <button onClick={(e) => saveChanges(e)}>Save Changes</button>
         </form>
     ) 
-
-    const onOpenHandler = () => {
-        Server.fetchTableDesc(tableName).then(response => {
-            setTableDesc(response.data);
-        })
-    }
-
-    const onCloseHandler = () => {
-        dispatch(actions.setEditModal(false));
-    }
 
     return (
         <Modal

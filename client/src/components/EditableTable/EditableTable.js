@@ -20,7 +20,7 @@ const EditableTable = (props) => {
     }
 
     const editHandler = (defaultData) => {
-        dispatch(actions.setEditModal(true, defaultData, props.tableName));
+        dispatch(actions.setEditModal(true, defaultData, props.tableName, update));
     }
 
     const deleteHandler = (columnName, value) => {

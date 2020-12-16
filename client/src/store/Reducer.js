@@ -5,7 +5,8 @@ const initialState = {
 
     editModal: false, 
     defaultData: {},
-    tableName: '', 
+    tableName: '',  
+    callback: () => {},
 }
 
 const reducer = (state = initialState, action) => {
@@ -25,7 +26,15 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 editModal: action.status,
                 defaultData: action.defaultData,
-                tableName: action.tableName,
+                tableName: action.tableName, 
+                callback: action.callback,
+            }
+        
+        case actionType.DISABLE_EDIT_MODAL:
+            state.callback();
+            return {
+                ...state,
+                editModal: false,
             }
  
         default:

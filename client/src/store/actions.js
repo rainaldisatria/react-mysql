@@ -8,12 +8,19 @@ export const fetchTablesSync = (tables) => {
     }
 }
 
-export const setEditModal = (status, defaultData, tableName) => {
+export const diasbleEditModal = () => {
+    return {
+        type: DISABLE_EDIT_MODAL,
+    }
+}
+
+export const setEditModal = (status, defaultData, tableName, callback) => {
     return {
         type: SET_EDIT_MODAL,
         status: status,
         defaultData: defaultData,
-        tableName: tableName, 
+        tableName: tableName,  
+        callback: callback,
     }
 } 
 //#endregion Sync methods
@@ -31,6 +38,6 @@ export const fetchTables = () => {
 //#region Actions name 
 export const FETCH_TABLES = "FETCH_TABLES"; // Initialize list of tables in this db. 
 
-export const SET_EDIT_MODAL = "SET_EDIT_MODAL";
-export const OPEN_EDIT_MODAL = "OPEN_EDIT_MODAL";
+export const SET_EDIT_MODAL = "SET_EDIT_MODAL"; 
+export const DISABLE_EDIT_MODAL = "DISABLE_EDIT_MODAL";
 //#endregion

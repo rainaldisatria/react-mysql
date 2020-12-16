@@ -4,6 +4,7 @@ import EditableTable from '../../components/EditableTable/EditableTable';
 const AdminDashboard = () => {
     return (
         <div> 
+            <h1>Admin Dashboard</h1>
             <EditableTable
                 tableName={'log_perubahan'}
             ></EditableTable>
