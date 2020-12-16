@@ -1,33 +1,20 @@
 import './App.css';
 import React from "react";
-import EditableTable from './components/EditableTable/EditableTable';
 import EditMenu from './components/EditMenu/EditMenu';
-import {Notification} from './components/Notification/Notification';
+import { Notification } from './components/Notification/Notification';
+import AdminDashboard from './container/AdminDashboard/AdminDashboard';
 
 function App() {
   return (
     <div className="App">
       {/*HOC*/}
       <Notification />
-      <EditMenu></EditMenu>  
-      {/*Component*/}
+      <EditMenu></EditMenu>
+
+      {/*Components*/}
       <h1>Apotek Jakarta</h1>
       <br></br>
-      <EditableTable
-        tableName={'log_perubahan'}
-      ></EditableTable>
-      <EditableTable
-        Editable
-        tableName={'obat_kadaluarsa'}
-      ></EditableTable>
-      <EditableTable
-        Editable
-        tableName={'tabel_obat'}
-      ></EditableTable>
-      <EditableTable
-        Editable
-        tableName={'tabel_persediaan'}
-      ></EditableTable>
+      <AdminDashboard />
     </div>
   );
 }
