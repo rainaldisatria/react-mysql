@@ -16,7 +16,8 @@ const EditMenu = (props) => {
     // Tgl_Produksi: "2017-03-22T17:00:00.000Z", Tgl_Kadaluarsa: "2023-03-19T17:00:00.000Z", …}
     const defaultData = useSelector(state => state.defaultData);
 
-    const [tableDesc, setTableDesc] = useState({});
+    //[{"Field":"Kode_Obat","Type":"varchar(10)","Null":"NO","Key":"PRI","Default":null,"Extra":""},
+    const [tableDesc, setTableDesc] = useState([{}]);
 
     let modalContent = (
         <div>
@@ -25,13 +26,14 @@ const EditMenu = (props) => {
                 <thead>
                     <tr>
                         {
-                            Object.keys(tableDesc).map((columnName, colId) => {
-                                return (
-                                    <th key={colId}>
-                                        {columnName}
-                                    </th>
-                                )
-                            })
+                            tableDesc ?
+                                Object.keys(tableDesc[0]).map((columnName, colId) => {
+                                    return (
+                                        <th key={colId}>
+                                            {columnName}
+                                        </th>
+                                    )
+                                }) : null
                         }
                         <th>
                             Value
@@ -40,15 +42,28 @@ const EditMenu = (props) => {
                 </thead>
                 <tbody>
                     {
-                        Object.keys(defaultData).map((tableData, tableDataID) => {
-                            return (
-                                <tr key={tableDataID}>
-                                    {Object.keys(tableDesc).map((descName, descId) => {
-                                        return <td>{tableDesc[descName]}</td>
-                                    })}
-                                </tr>
-                            )
-                        })
+                        defaultData ?
+                            Object.keys(defaultData).map((dataName, dataID) => {
+                                return (
+
+                                    tableDesc[dataID] ?
+                                        <tr>
+                                            {
+                                                Object.keys(tableDesc[dataID]).map((descName, descId) => {
+                                                    return (
+                                                        <td>{tableDesc[dataID][descName]}</td>
+                                                    )
+                                                })
+                                            }
+                                            <td>
+                                                <form style={{ width: '100%' }}>
+                                                    <input placeholder={dataName}></input>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        : null
+                                )
+                            }) : null
                     }
                 </tbody>
             </table>
@@ -57,8 +72,7 @@ const EditMenu = (props) => {
 
     const onOpenHandler = () => {
         Server.fetchTableDesc(tableName).then(response => {
-            //[{"Field":"Kode_Obat","Type":"varchar(10)","Null":"NO","Key":"PRI","Default":null,"Extra":""},
-            setTableDesc(response.data[0]);
+            setTableDesc(response.data);
         })
     }
 
