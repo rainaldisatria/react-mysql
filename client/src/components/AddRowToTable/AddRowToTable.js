@@ -10,9 +10,7 @@ const AddRowToTable = (props) => {
         ServerAPI.fetchTableDesc(props.tableName).then(response => {
             setColumnNames(response.data);
         })
-    }, [])
-
-    console.log(columnNames);
+    }, []) 
 
     return (
         <div>

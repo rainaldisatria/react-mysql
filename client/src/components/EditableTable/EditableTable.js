@@ -34,9 +34,14 @@ const EditableTable = (props) => {
         onClick={update}
     ></AddRowToTable>
 
+    if(tableData.length <= 0){
+        actionHeader = <th>Empty Table</th>
+    }
+
     if (!props.Editable) {
         addButton = null;
         actionHeader = null;
+        console.log(null);
     }
 
     return (
