@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AddRowToTable from '../AddRowToTable/AddRowToTable';
 import Server from '../../Axios/Server';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions';
 
 const EditableTable = (props) => {
@@ -47,37 +47,45 @@ const EditableTable = (props) => {
                 <thead>
                     <tr>
                         { // Render table column name 
-                            Object.keys(tableData[0]).map((columnName, index) => {
-                                return <th key={index}>{columnName}</th>
-                            })}
+                            tableData[0] ?
+                                Object.keys(tableData[0]).map((columnName, index) => {
+                                    return <th key={index}>{columnName}</th>
+                                })
+                                : null
+                        }
                         {actionHeader}
                     </tr>
                 </thead>
                 <tbody>
                     {// Render table content  
-                        tableData.map((objectData, objId) => {
-                            return (
-                                <tr key={objId}>
-                                    {Object.keys(objectData).map((keyName, index) => {
-                                        return (<td key={objId + " " + index}>{objectData[keyName]}</td>)
-                                    })}
-                                    {
-                                        props.Editable ?
-                                            <td>  
-                                                <button onClick={() => {
-                                                    editHandler(objectData);
-                                                }}>Edit</button>
-                                                <button onClick={() => {
-                                                    const columnName = Object.keys(objectData)[0];
-                                                    deleteHandler(columnName, objectData[columnName]);
-                                                }
-                                                }>Delete</button>
-                                            </td>
+                        tableData ?
+                            tableData.map((objectData, objId) => {
+                                return (
+                                    <tr key={objId}>
+                                        {
+                                            objectData ?
+                                            Object.keys(objectData).map((keyName, index) => {
+                                                return (<td key={objId + " " + index}>{objectData[keyName]}</td>)
+                                            })
                                             : null
-                                    }
-                                </tr>
-                            )
-                        })
+                                        }
+                                        {
+                                            props.Editable ?
+                                                <td>
+                                                    <button onClick={() => {
+                                                        editHandler(objectData);
+                                                    }}>Edit</button>
+                                                    <button onClick={() => {
+                                                        const columnName = Object.keys(objectData)[0];
+                                                        deleteHandler(columnName, objectData[columnName]);
+                                                    }
+                                                    }>Delete</button>
+                                                </td>
+                                                : null
+                                        }
+                                    </tr>
+                                )
+                            }) : null
                     }
                 </tbody>
             </table>
