@@ -48,7 +48,7 @@ expressApp.post('/delete/:tableName', (req, res) => {
         }
         else {
             res.send(result);
-            console.log(query);
+            console.log(result);
             console.log('affected rows: ' + result.affectedRows);
         }
     })

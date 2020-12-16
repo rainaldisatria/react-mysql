@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import sendNotification from '../components/Notification/Notification';
 
 const Server = {
     fetchTableData: (tableName) => {
@@ -18,21 +19,31 @@ const Server = {
     },
     insertIntoTable: (tableName, objectToAdd) => {
         return Axios.post(`http://localhost:3001/insert/${tableName}`, objectToAdd)
-            .then(response => response)
+            .then(response => {
+                sendNotification(`Insert OK. ${response.data.affectedRows} row(s) inserted`, 'success', 1)
+                return response;
+            })
     },
     deleteFromTable: (tableName, columnName, value) => {
         return Axios.post(`http://localhost:3001/delete/${tableName}`,
             {
                 columnName: columnName,
                 value: value,
-            }).then(response => response)
+            }).then(response => {
+                console.log(response);
+                sendNotification(`Delete OK. ${response.data.affectedRows} row(s) affected`, 'success', 1)
+                return response;
+            })
     },
-    editTableFields: (tableName, editedObject, whereTo) => { 
+    editTableFields: (tableName, editedObject, whereTo) => {
         return Axios.post(`http://localhost:3001/update/${tableName}`,
             {
                 editedObject: editedObject,
                 whereTo: whereTo,
-            }).then(res => res)
+            }).then(response => {
+                sendNotification(`Edit OK. ${response.data.affectedRows} row(s) affected`, 'success', 1)
+                return response;
+            })
     }
 }
 

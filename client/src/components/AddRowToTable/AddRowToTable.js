@@ -10,6 +10,7 @@ const AddRowToTable = (props) => {
         ServerAPI.fetchTableDesc(props.tableName).then(response => {
             setColumnNames(response.data);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []) 
 
     return (

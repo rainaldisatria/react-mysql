@@ -3,6 +3,7 @@ import AddRowToTable from '../AddRowToTable/AddRowToTable';
 import Server from '../../Axios/ServerAPI';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions';
+import Notification from '../Notification/Notification'
 
 const EditableTable = (props) => {
     const dispatch = useDispatch();
@@ -40,8 +41,7 @@ const EditableTable = (props) => {
 
     if (!props.Editable) {
         addButton = null;
-        actionHeader = null;
-        console.log(null);
+        actionHeader = null; 
     }
 
     return (
