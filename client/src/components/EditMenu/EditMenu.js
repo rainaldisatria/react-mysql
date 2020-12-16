@@ -20,8 +20,8 @@ const EditMenu = (props) => {
     const [tableDesc, setTableDesc] = useState([{}]);
 
     let modalContent = (
-        <div>
-            <h1>Edit Value</h1>
+        <form>
+            <h2>Edit Value</h2>
             <table style={{ width: "100%" }}>
                 <thead>
                     <tr>
@@ -44,21 +44,18 @@ const EditMenu = (props) => {
                     {
                         defaultData ?
                             Object.keys(defaultData).map((dataName, dataID) => {
-                                return (
-
+                                return ( 
                                     tableDesc[dataID] ?
-                                        <tr>
+                                        <tr key={dataName}>
                                             {
                                                 Object.keys(tableDesc[dataID]).map((descName, descId) => {
                                                     return (
-                                                        <td>{tableDesc[dataID][descName]}</td>
+                                                        <td key={descName}>{tableDesc[dataID][descName]}</td>
                                                     )
                                                 })
                                             }
-                                            <td>
-                                                <form style={{ width: '100%' }}>
-                                                    <input placeholder={dataName}></input>
-                                                </form>
+                                            <td> 
+                                                    <input defaultValue={defaultData[dataName]}></input> 
                                             </td>
                                         </tr>
                                         : null
@@ -67,7 +64,9 @@ const EditMenu = (props) => {
                     }
                 </tbody>
             </table>
-        </div>
+            <button>Cancel</button>
+            <button>Save Changes</button>
+        </form>
     )
 
     const onOpenHandler = () => {
