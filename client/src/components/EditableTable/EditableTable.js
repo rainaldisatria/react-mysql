@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import AddRowToTable from '../AddRowToTable/AddRowToTable';
 import Server from '../../Axios/Server';
+import {useSelector, useDispatch} from 'react-redux';
+import * as actions from '../../store/actions';
 
 const EditableTable = (props) => {
+    const dispatch = useDispatch();
     const [tableData, setTableData] = useState([{}]);
 
     // Start
     useEffect(() => {
         update();
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const update = () => {
-        Server.fetchTableData(props.tableName).then(res => { setTableData(res.data) }) 
+        Server.fetchTableData(props.tableName).then(res => { setTableData(res.data) })
+    }
+
+    const editHandler = (defaultData) => {
+        dispatch(actions.setEditModal(true, defaultData, props.tableName));
     }
 
     const deleteHandler = (columnName, value) => {
         Server.deleteFromTable(props.tableName, columnName, value).then(res => {
             update();
-        }) 
+        })
     }
     let actionHeader = <th>Action</th>;
 
@@ -55,9 +63,11 @@ const EditableTable = (props) => {
                                     })}
                                     {
                                         props.Editable ?
-                                            <td>
-                                                {props.Editable}
-                                                <button>Edit</button>
+                                            <td> 
+                                                {console.log(objectData)}
+                                                <button onClick={() => {
+                                                    editHandler(objectData);
+                                                }}>Edit</button>
                                                 <button onClick={() => {
                                                     const columnName = Object.keys(objectData)[0];
                                                     deleteHandler(columnName, objectData[columnName]);

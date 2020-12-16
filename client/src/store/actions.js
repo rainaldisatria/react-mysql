@@ -7,6 +7,15 @@ export const fetchTablesSync = (tables) => {
         payload: tables,
     }
 }
+
+export const setEditModal = (status, data, tableName) => {
+    return {
+        type: SET_EDIT_MODAL,
+        status: status,
+        defaultData: data,
+        tableName: tableName,
+    }
+} 
 //#endregion Sync methods
 
 //#region Async methods
@@ -20,5 +29,8 @@ export const fetchTables = () => {
 //#endregion
 
 //#region Actions name 
-export const FETCH_TABLES = "FETCH_TABLES"; // Initialize list of tables in this db.  
+export const FETCH_TABLES = "FETCH_TABLES"; // Initialize list of tables in this db. 
+
+export const SET_EDIT_MODAL = "SET_EDIT_MODAL";
+export const OPEN_EDIT_MODAL = "OPEN_EDIT_MODAL";
 //#endregion

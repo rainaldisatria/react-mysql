@@ -2,6 +2,11 @@ import * as actionType from './actions.js';
 
 const initialState = {
     tables: [], // List of all Tables   
+
+    editModal: false, 
+    defaultData: {},
+    table: '',
+
 }
 
 const reducer = (state = initialState, action) => {
@@ -15,6 +20,14 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 tables: tableNames,
             } 
+        
+        case actionType.SET_EDIT_MODAL:
+            return {
+                ...state,
+                editModal: action.status,
+                defaultData: action.defaultData,
+                table: action.tableName,
+            }
  
         default:
             return state;

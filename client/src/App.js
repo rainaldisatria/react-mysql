@@ -1,15 +1,13 @@
 import './App.css';
-import React from "react"; 
+import React, { useEffect } from "react";
 import EditableTable from './components/EditableTable/EditableTable';
-import DatabaseList from './components/DatabaseLIst/DatabaseList'; 
-import Modal from 'react-modal';
+import DatabaseList from './components/DatabaseLIst/DatabaseList';
+import EditMenu from './components/EditMenu/EditMenu'; 
 
-function App() {
+function App() {    
   return (
-    <div className="App">
-      <Modal>
-
-      </Modal>
+    <div className="App"> 
+      <EditMenu></EditMenu>
       <h1>Apotek Jakarta</h1>
       <br></br>
       <DatabaseList></DatabaseList>
