@@ -5,7 +5,7 @@ const initialState = {
 
     editModal: false, 
     defaultData: {},
-    table: '',
+    tableName: '',
 
 }
 
@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 editModal: action.status,
                 defaultData: action.defaultData,
-                table: action.tableName,
+                tableName: action.tableName,
             }
  
         default:

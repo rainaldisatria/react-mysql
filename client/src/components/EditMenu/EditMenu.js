@@ -9,28 +9,47 @@ Modal.setAppElement('#root');
 const EditMenu = (props) => {
     const dispatch = useDispatch();
 
-    const tableName = useSelector(state => state.table)
+    const tableName = useSelector(state => state.tableName);
     const editModal = useSelector(state => state.editModal);
+
+    // {Kode_Obat: "SRSCF1723", Nama_Obat: "SUCRALFATE", Bentuk_Obat: "Syrup", 
+    // Tgl_Produksi: "2017-03-22T17:00:00.000Z", Tgl_Kadaluarsa: "2023-03-19T17:00:00.000Z", …}
+    const defaultData = useSelector(state => state.defaultData);
 
     const [tableDesc, setTableDesc] = useState({});
 
     let modalContent = (
         <div>
             <h1>Edit Value</h1>
-            <table style={{width: "100%"}}>
+            <table style={{ width: "100%" }}>
                 <thead>
+                    <tr>
+                        {
+                            Object.keys(tableDesc).map((columnName, colId) => {
+                                return (
+                                    <th key={colId}>
+                                        {columnName}
+                                    </th>
+                                )
+                            })
+                        }
+                        <th>
+                            Value
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
                     {
-                        Object.keys(tableDesc).map((columnName, colId) => {
+                        Object.keys(defaultData).map((tableData, tableDataID) => {
                             return (
-                                <th>
-                                    {columnName}
-                                </th>
+                                <tr key={tableDataID}>
+                                    {Object.keys(tableDesc).map((descName, descId) => {
+                                        return <td>{tableDesc[descName]}</td>
+                                    })}
+                                </tr>
                             )
                         })
                     }
-                </thead>
-                <tbody>
-
                 </tbody>
             </table>
         </div>

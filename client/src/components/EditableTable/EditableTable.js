@@ -63,8 +63,7 @@ const EditableTable = (props) => {
                                     })}
                                     {
                                         props.Editable ?
-                                            <td> 
-                                                {console.log(objectData)}
+                                            <td>  
                                                 <button onClick={() => {
                                                     editHandler(objectData);
                                                 }}>Edit</button>
