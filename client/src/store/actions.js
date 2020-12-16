@@ -1,4 +1,4 @@
-import Server from '../Axios/Server';
+import Server from '../Axios/ServerAPI';
 
 //#region Sync methods 
 export const fetchTablesSync = (tables) => {

@@ -1,32 +1,42 @@
-import React, { useState } from 'react';
-import Server from '../../Axios/Server';
+import React, { useEffect, useState } from 'react';
+import Server from '../../Axios/ServerAPI';
+import ServerAPI from '../../Axios/ServerAPI';
 
 const AddRowToTable = (props) => {
     const [addFields, setAddFields] = useState({});
+    const [columnNames, setColumnNames] = useState([]);
+
+    useEffect(() => {
+        ServerAPI.fetchTableDesc(props.tableName).then(response => {
+            setColumnNames(response.data);
+        })
+    }, [])
+
+    console.log(columnNames);
 
     return (
         <div>
             <h4>Add To Table: </h4>
             <form>
                 {
-                    props.tableData[0] ?
-                    Object.keys(props.tableData[0]).map((columnName, index) => {
-                        return (
-                            <input
-                                key={columnName}
-                                placeholder={columnName}
-                                onChange={(event) => {
-                                    const value = event.target.value;
-                                    setAddFields((prevValue) => {
-                                        return {
-                                            ...prevValue,
-                                            [columnName]: value,
-                                        }
-                                    })
-                                }}
-                            ></input>
-                        )
-                    }) : null
+                    columnNames ?
+                        columnNames.map((columnName, index) => {
+                            return (
+                                <input
+                                    key={index}
+                                    placeholder={columnName.Field}
+                                    onChange={(event) => {
+                                        const value = event.target.value;
+                                        setAddFields((prevValue) => {
+                                            return {
+                                                ...prevValue,
+                                                [columnName.Field]: value,
+                                            }
+                                        })
+                                    }}
+                                ></input>
+                            )
+                        }) : null
                 }
                 <button onClick={(e) => {
                     e.preventDefault();

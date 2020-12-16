@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions';
-import Server from '../../Axios/Server';
+import Server from '../../Axios/ServerAPI';
 
 Modal.setAppElement('#root');
 

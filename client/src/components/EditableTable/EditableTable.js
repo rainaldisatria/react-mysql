@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AddRowToTable from '../AddRowToTable/AddRowToTable';
-import Server from '../../Axios/Server';
+import Server from '../../Axios/ServerAPI';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions';
 
@@ -30,8 +30,7 @@ const EditableTable = (props) => {
     let actionHeader = <th>Action</th>;
 
     let addButton = <AddRowToTable
-        tableName={props.tableName}
-        tableData={tableData}
+        tableName={props.tableName} 
         onClick={update}
     ></AddRowToTable>
 
