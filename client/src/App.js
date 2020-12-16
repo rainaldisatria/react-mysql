@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect } from "react";
+import React from "react";
 import EditableTable from './components/EditableTable/EditableTable';
 import DatabaseList from './components/DatabaseLIst/DatabaseList';
 import EditMenu from './components/EditMenu/EditMenu'; 
@@ -18,7 +18,7 @@ function App() {
       ></EditableTable>
       <EditableTable
         Editable
-        tableName={'tabel_persediaan'}
+        tableName={'obat_kadaluarsa'}
       ></EditableTable>
     </div>
   );

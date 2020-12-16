@@ -19,6 +19,13 @@ const EditMenu = (props) => {
     //[{"Field":"Kode_Obat","Type":"varchar(10)","Null":"NO","Key":"PRI","Default":null,"Extra":""},
     const [tableDesc, setTableDesc] = useState([{}]);
 
+    const [editFields, setEditFields] = useState({});
+
+    const saveChanges = () => { 
+        console.log('clicked');
+        Server.editTableFields(tableName, editFields, defaultData).then(res => res);
+    }
+
     let modalContent = (
         <form>
             <h2>Edit Value</h2>
@@ -44,7 +51,7 @@ const EditMenu = (props) => {
                     {
                         defaultData ?
                             Object.keys(defaultData).map((dataName, dataID) => {
-                                return ( 
+                                return (
                                     tableDesc[dataID] ?
                                         <tr key={dataName}>
                                             {
@@ -54,8 +61,19 @@ const EditMenu = (props) => {
                                                     )
                                                 })
                                             }
-                                            <td> 
-                                                    <input defaultValue={defaultData[dataName]}></input> 
+                                            <td>
+                                                <input
+                                                    defaultValue={defaultData[dataName]}
+                                                    onChange={(e) => {
+                                                      const value = e.target.value;
+                                                      setEditFields(prevValue => {
+                                                          return {
+                                                              ...prevValue,
+                                                              [dataName]: value,
+                                                          }
+                                                      })
+                                                    }}
+                                                ></input>
                                             </td>
                                         </tr>
                                         : null
@@ -64,10 +82,16 @@ const EditMenu = (props) => {
                     }
                 </tbody>
             </table>
-            <button>Cancel</button>
-            <button>Save Changes</button>
+            <button onClick={(e) => {
+                e.preventDefault();
+                onCloseHandler();
+            }}>Cancel</button>
+            <button onClick={(e) => {
+                e.preventDefault();
+                saveChanges();
+            }}>Save Changes</button>
         </form>
-    )
+    ) 
 
     const onOpenHandler = () => {
         Server.fetchTableDesc(tableName).then(response => {

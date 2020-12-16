@@ -8,12 +8,12 @@ export const fetchTablesSync = (tables) => {
     }
 }
 
-export const setEditModal = (status, data, tableName) => {
+export const setEditModal = (status, defaultData, tableName) => {
     return {
         type: SET_EDIT_MODAL,
         status: status,
-        defaultData: data,
-        tableName: tableName,
+        defaultData: defaultData,
+        tableName: tableName, 
     }
 } 
 //#endregion Sync methods

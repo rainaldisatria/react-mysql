@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AddRowToTable from '../AddRowToTable/AddRowToTable';
 import Server from '../../Axios/Server';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import * as actions from '../../store/actions';
 
 const EditableTable = (props) => {

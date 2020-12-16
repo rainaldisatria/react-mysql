@@ -48,7 +48,38 @@ expressApp.post('/delete/:tableName', (req, res) => {
         }
         else {
             res.send(result);
+            console.log(query);
             console.log('affected rows: ' + result.affectedRows);
+        }
+    })
+})
+
+expressApp.post(`/update/:tableName`, (req, res) => {
+    const tableName = req.params.tableName;  
+
+    const updatedData = req.body.editedObject;
+    let updateQuery = [];
+    Object.keys(updatedData).map((columnName, colId) => {
+        updateQuery.push(`${columnName} = '${updatedData[columnName]}'`)
+    })   
+    
+    const whereData = req.body.whereTo;
+    let whereQuery = []; 
+    Object.keys(whereData).map((columnName, colId) => {
+        whereQuery.push(`${columnName} = '${whereData[columnName]}`)
+    })     
+    let newWhereQuery = `${Object.keys(whereData)[0]} = '${whereData[Object.keys(whereData)[0]]}'`
+
+    const query = `UPDATE ${tableName} SET ${updateQuery} WHERE ${newWhereQuery}`
+
+    currentDB.query(query, (err, result) => {
+        if(err){
+            res.send(err);
+            console.log(err);
+        }
+        else{
+            res.send(result)
+            console.log(result);
         }
     })
 })
