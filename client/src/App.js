@@ -8,13 +8,15 @@ import Dashboard from './container/StatisticPage/Dashboard';
 import Header from './components/Layouts/Header';
 import Footer from './components/Layouts/Footer'; 
 import {Route, Switch} from 'react-router-dom';
+import ShoppingPage from './container/ShoppingPage/ShoppingPage';
 
 function App() {
   let route = (
     <Switch>
-      <route path='/' exact component={LogInPage} />
-      <route path='/login' exact component={LogInPage} />
-      <route path='/signup' exact component={SignUpPage} />
+      <Route path='/admin' exact component={LogInPage} />
+      <Route path='/login' exact component={LogInPage} />
+      <Route path='/signup' exact component={SignUpPage} />
+      <Route path='/' component={ShoppingPage} />
     </Switch>
   )
 
