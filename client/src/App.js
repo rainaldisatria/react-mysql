@@ -5,7 +5,8 @@ import AdminDashboard from './container/AdminDashboard/AdminDashboard';
 import LogInPage from './container/LoginPage/LoginPage';
 import SignUpPage from './container/SignUpPage/SignUpPage'; 
 import Dashboard from './container/StatisticPage/Dashboard';
-import {Header, Footer} from './components/Layouts/';
+import Header from './components/Layouts/Header';
+import Footer from './components/Layouts/Footer';
 
 function App() {
   return (
@@ -13,13 +14,10 @@ function App() {
       {/*HOC*/}
       <Notification />
       <Header />
-      <LogInPage />
+      <LogInPage /> 
+      <Dashboard />
       
-      //<Dashboard />
-      //<SignUpPage />
-      
-      {/*Components*/}
-      <h1>Apotek Jakarta</h1>
+      {/*Components*/} 
       <br></br>
       <AdminDashboard />
 
