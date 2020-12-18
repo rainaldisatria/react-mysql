@@ -78,7 +78,7 @@ const Header = () => {
 
     return (
         <>
-            <AppBar position='sticky'>
+            <AppBar position='relative'>
                 <Toolbar>
                     <Link to='/'>
                         <Button className={classes.white}>
@@ -107,10 +107,9 @@ const Header = () => {
                     <div className={classes.root} />
                     {signUp}
                     {admin}
-                    {logIn}
+                    {logIn} 
                 </Toolbar>
-            </AppBar>
-            <div className={classes.appBarSpacer}></div>
+            </AppBar> 
         </>
     )
 }
