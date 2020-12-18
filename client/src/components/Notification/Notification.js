@@ -7,8 +7,8 @@ export const sendNotification = (message, type, duration) => {
         type: type,
         insert: "top",
         container: "top-center",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
+        animationIn: ["animate__animated"],
+        animationOut: ["animate__animated"],
         dismiss: {
             duration: duration * 1000,
             pauseOnHover: true, 
