@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('md')]: {
             marginLeft: theme.spacing(3),
             width: '40%',
-        }, 
+        },
     },
     inputRoot: {
         color: 'inherit',
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
     },
+    appBarSpacer: theme.mixins.toolbar
 }));
 
 
@@ -76,10 +77,9 @@ const Header = () => {
         </Link>
 
     return (
-        <div className={classes.root}>
-            <AppBar>
+        <>
+            <AppBar position='sticky'>
                 <Toolbar>
-
                     <Link to='/'>
                         <Button className={classes.white}>
                             <LocalHospitalIcon className={classes.menuButton} />
@@ -110,7 +110,8 @@ const Header = () => {
                     {logIn}
                 </Toolbar>
             </AppBar>
-        </div>
+            <div className={classes.appBarSpacer}></div>
+        </>
     )
 }
 
