@@ -4,9 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import './style.css';
 
 export const sendNotification = (message, type, duration, position='top-center') => {
+    toast.dismiss();
+
     const config = {
         autoClose: duration * 1000,
         position: position,
+        toastId: '123',
     }
 
     switch (type) {
@@ -25,7 +28,7 @@ export const sendNotification = (message, type, duration, position='top-center')
 const myZoom = cssTransition({
     enter: 'zoomIn',
     exit: 'zoomOut',
-    duration: [500, 200],
+    duration: [500, 150],
     collapse: false,
 });
 

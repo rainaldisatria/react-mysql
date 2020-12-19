@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
     },
-    appBarSpacer: theme.mixins.toolbar
 }));
 
 
@@ -78,7 +77,7 @@ const Header = () => {
 
     return (
         <>
-            <AppBar position='relative'>
+            <AppBar position='fixed'>
                 <Toolbar>
                     <Link to='/'>
                         <Button className={classes.white}>
@@ -107,7 +106,7 @@ const Header = () => {
                     <div className={classes.root} />
                     {signUp}
                     {admin}
-                    {logIn} 
+                    {logIn}  
                 </Toolbar>
             </AppBar> 
         </>
