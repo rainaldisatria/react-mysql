@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 import sendNotification from '../components/Notification/Notification';
-import {continuousStart, complete} from '../components/TopLoadingBar/TopLoadingBar';
+import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadingBar';
 
 const Server = {
     //#region Authenthication 
@@ -12,11 +12,10 @@ const Server = {
                 if (response.data.sqlMessage) {
                     if (response.data.sqlMessage.startsWith('Duplicate')) {
                         sendNotification('username already exist', 'error', 2);
-                        console.log('notification sended');
                     }
                 }
                 else {
-                    sendNotification("Register Success!", 'success', 1);
+                    sendNotification(`Register Success! Please Log In!`, 'success', 2);
                 }
                 complete();
                 return response;

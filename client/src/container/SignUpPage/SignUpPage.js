@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import ServerAPI from '../../Axios/ServerAPI';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,10 +38,72 @@ export default function SignUpPage() {
   const classes = useStyles();
 
   const [signUpFields, setSignUpFields] = useState({})
-  
+  const [errorTexts, setErrorTexts] = useState({});
+
+  const isFirstNameErr = () => {
+    if (signUpFields?.firstName?.length <= 5) {
+      console.log(signUpFields.firstName.length);
+      setErrorTexts(prevValue => ({ ...prevValue, firstName: 'Enter first names', }))
+      return true;
+    }
+    return false;
+  }
+
+  //#region 
+  const isLastNameErr = () => {
+    if (signUpFields?.lastName?.length <= 5) {
+      setErrorTexts(prevValue => ({ ...prevValue, lastName: 'Enter last names', }))
+      return true;
+    }
+    return false;
+  }
+
+  const isUsernameErr = () => {
+    if (signUpFields?.username.length <= 5) {
+      setErrorTexts(prevValue => ({ ...prevValue, username: 'Choose a valid username', }))
+      return true
+    }
+    return false;
+  }
+
+  const isPasswordErr = () => {
+    if (signUpFields?.password.length <= 7) {
+      setErrorTexts(prevValue => ({ ...prevValue, password: 'Use 8 characters or more for your password', }))
+      return true;
+    }
+
+    return false;
+  }
+
+  const validate = () => {
+    var isError = false;
+
+    isError = isFirstNameErr();
+    isError = isLastNameErr();
+    isError = isUsernameErr(); 
+    isError = isPasswordErr();
+
+    return isError;
+  }
+  //#endregion
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const err = validate();
+
+    if (!err) {
+      console.log('sent');
+      <Redirect to='/login' />
+    }
+    else {
+      console.log('err');
+    }
+  }
+
 
   const handleInput = (event) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
 
     setSignUpFields(prevValue => {
       return {
@@ -60,10 +123,12 @@ export default function SignUpPage() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={(e) => onSubmitHandler(e)}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={isFirstNameErr}
+                helperText={errorTexts?.firstName}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -77,6 +142,8 @@ export default function SignUpPage() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={signUpFields?.lastName}
+                helperText={errorTexts?.lastName}
                 variant="outlined"
                 required
                 fullWidth
@@ -89,6 +156,8 @@ export default function SignUpPage() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={signUpFields?.username}
+                helperText={errorTexts?.username}
                 variant="outlined"
                 required
                 fullWidth
@@ -101,6 +170,8 @@ export default function SignUpPage() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={signUpFields?.password}
+                helperText={errorTexts?.password}
                 variant="outlined"
                 required
                 fullWidth
@@ -114,18 +185,15 @@ export default function SignUpPage() {
             </Grid>
           </Grid>
           <Button
+            required
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={
-              (e) => {
-                e.preventDefault();
-                ServerAPI.signup(signUpFields).then(res =>
-                  console.log('done'));
-              }
-            }
+            onClick={(e) => {
+              onSubmitHandler(e);
+            }}
           >
             Sign Up
           </Button>
