@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import LoadingBar from 'react-top-loading-bar';
 
+var ref = null;
+
 export const continuousStart = () => {
     ref.current.continuousStart();
 }
@@ -14,7 +16,7 @@ export const staticStart = () => {
 }
 
 export const TopLoadingBar = () => { 
-    const ref = useRef(null)
+    ref = useRef(null)
     
     return (
         <>

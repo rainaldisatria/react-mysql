@@ -10,7 +10,7 @@ const initialState = {
     callback: () => {},
 
     ref: null,
-    
+
 }
 
 const reducer = (state = initialState, action) => {
@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 editModal: false,
-            }
+            } 
  
         default:
             return state;
