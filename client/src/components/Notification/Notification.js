@@ -1,24 +1,49 @@
-import ReactNotification, { store } from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
+import React from 'react';
+import { ToastContainer, toast, Slide, Zoom, Flip, Bounce, cssTransition } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './style.css';
 
-export const sendNotification = (message, type, duration) => {
-    store.addNotification({
-        message: message,
-        type: type,
-        insert: "top",
-        container: "top-center",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-            duration: duration * 1000,
-            pauseOnHover: true, 
-        }
-    })
+export const sendNotification = (message, type, duration, position='top-center') => {
+    const config = {
+        autoClose: duration * 1000,
+        position: position,
+    }
+
+    switch (type) {
+        case 'error':
+            toast.error(message, config)
+            break;
+        case 'success':
+            toast.success(message, config)
+            break;
+        case 'info':
+            toast.info(message, config)
+            break;
+    } 
 }
 
+const myZoom = cssTransition({
+    enter: 'zoomIn',
+    exit: 'zoomOut',
+    duration: [500, 200],
+    collapse: false,
+});
 
 export const Notification = () => {
-    return <ReactNotification />
+    return (
+        <ToastContainer
+            style={{ textAlign: 'center' }}
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={true}
+            newestOnTop={true}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            transition={myZoom}
+        />
+    )
 }
 
 export default sendNotification;

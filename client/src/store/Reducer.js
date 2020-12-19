@@ -1,4 +1,5 @@
-import * as actionType from './actions.js';
+import { useRef } from 'react';
+import * as actionType from './actions.js'; 
 
 const initialState = {
     tables: [], // List of all Tables   
@@ -7,6 +8,9 @@ const initialState = {
     defaultData: {},
     tableName: '',  
     callback: () => {},
+
+    ref: null,
+    
 }
 
 const reducer = (state = initialState, action) => {

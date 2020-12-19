@@ -1,26 +1,72 @@
 import Axios from 'axios';
+
 import sendNotification from '../components/Notification/Notification';
+import {continuousStart, complete} from '../components/TopLoadingBar/TopLoadingBar';
 
 const Server = {
+    //#region Authenthication 
+    signup: (signupFields) => {
+        continuousStart();
+        return Axios.post('http://localhost:3001/signup', signupFields)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    if (response.data.sqlMessage.startsWith('Duplicate')) {
+                        sendNotification('username already exist', 'error', 2);
+                        console.log('notification sended');
+                    }
+                }
+                else {
+                    sendNotification("Register Success!", 'success', 1);
+                }
+                complete();
+                return response;
+            }).catch(err => {
+                sendNotification('Could not connect to database', 'error', 2);
+                complete();
+            })
+    },
+    //#endregion    
+
+    //#region Database Management (CRUD)
     fetchTableData: (tableName) => {
         return Axios.get(`http://localhost:3001/table/${tableName}`)
-            .then(response => response)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification('username already exist', 'error', 2);
+                }
+                return response
+            })
     },
     fetchTablesData: () => {
         //[{"Tables_in_rumah_sakit":"log_perubahan"},
         //{"Tables_in_rumah_sakit":"obat_kadaluarsa"},{"Tables_in_rumah_sakit":"tabel_obat"},
         //{"Tables_in_rumah_sakit":"tabel_persediaan"},{"Tables_in_rumah_sakit":"tabel_transaksi"}]
         return Axios.get('http://localhost:3001/', {})
-            .then(response => response)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification('username already exist', 'error', 2);
+                }
+                return response
+            })
     },
     fetchTableDesc: (tableName) => {
         return Axios.get(`http://localhost:3001/desc/${tableName}`, {})
-            .then(response => response)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification('username already exist', 'error', 2);
+                }
+                return response
+            })
     },
     insertIntoTable: (tableName, objectToAdd) => {
         return Axios.post(`http://localhost:3001/insert/${tableName}`, objectToAdd)
             .then(response => {
-                sendNotification(`Insert OK. ${response.data.affectedRows} row(s) inserted`, 'success', 1)
+                if (response.data.sqlMessage) {
+                    sendNotification('username already exist', 'error', 2);
+                }
+                else {
+                    sendNotification(`Insert OK. ${response.data.affectedRows} row(s) inserted`, 'success', 1)
+                }
                 return response;
             })
     },
@@ -45,6 +91,7 @@ const Server = {
                 return response;
             })
     }
+    //#endregion
 }
 
 export default Server;

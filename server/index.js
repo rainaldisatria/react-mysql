@@ -15,6 +15,35 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
+//#region 
+expressApp.post('/signup', (req, res) => {
+    const data = req.body;
+    var columnsName = [];
+    var values = [];
+    Object.keys(data).map((columnName, colId) => {
+        columnsName.push(columnName);
+        values.push(data[columnName]);
+    })
+
+
+    const query = `INSERT INTO users (${columnsName}, userType) VALUES 
+        (${values.map(val => `'${val}'`).join(", ")}, 'user')`;
+    console.log(query);
+
+    currentDB.query(query, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    })
+})
+//#endregion
+
+//#region Database management
 expressApp.post('/selectTable', (req, res) => {
     selected_table = Object.keys(req.body)[0];
     res.send(selected_table);
@@ -55,29 +84,29 @@ expressApp.post('/delete/:tableName', (req, res) => {
 })
 
 expressApp.post(`/update/:tableName`, (req, res) => {
-    const tableName = req.params.tableName;  
+    const tableName = req.params.tableName;
 
     const updatedData = req.body.editedObject;
     let updateQuery = [];
     Object.keys(updatedData).map((columnName, colId) => {
         updateQuery.push(`${columnName} = '${updatedData[columnName]}'`)
-    })   
-    
+    })
+
     const whereData = req.body.whereTo;
-    let whereQuery = []; 
+    let whereQuery = [];
     Object.keys(whereData).map((columnName, colId) => {
         whereQuery.push(`${columnName} = '${whereData[columnName]}`)
-    })     
+    })
     let newWhereQuery = `${Object.keys(whereData)[0]} = '${whereData[Object.keys(whereData)[0]]}'`
 
     const query = `UPDATE ${tableName} SET ${updateQuery} WHERE ${newWhereQuery}`
 
     currentDB.query(query, (err, result) => {
-        if(err){
+        if (err) {
             res.send(err);
             console.log(err);
         }
-        else{
+        else {
             res.send(result)
             console.log(result);
         }
@@ -139,6 +168,7 @@ expressApp.get('/desc/:tableName', (req, res) => {
         }
     })
 })
+//#endregion
 
 expressApp.listen(3001, () => {
     console.log("Server is running on port 3001");
