@@ -30,6 +30,7 @@ export const setEditModal = (status, defaultData, tableName, callback) => {
 export const autoLogIn = () => {
     const authenticationStat = localStorage.getItem(authenticationStatFileName);
     const usernameStat = localStorage.getItem(usernameStatFileName);
+    
     return dispatch => {
         if (authenticationStat && usernameStat) {
             dispatch(setLoginStat(authenticationStat, usernameStat));

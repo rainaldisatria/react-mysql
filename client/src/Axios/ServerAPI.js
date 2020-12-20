@@ -4,6 +4,25 @@ import sendNotification from '../components/Notification/Notification';
 import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadingBar';
 
 const Server = {
+    //#region Shopping
+    fetchCart: (username) => {
+        continuousStart();
+        return Axios.post('http://localhost:3001/fetchCart', username)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 2);
+                }
+
+                complete();
+                console.log(response);
+                return response;
+            }).catch(err => {
+                complete();
+                return err;
+            })
+    },
+    //#endregion
+
     //#region Authenthication 
     signup: (signupFields) => {
         continuousStart();
@@ -40,10 +59,10 @@ const Server = {
             complete();
         })
     },
-    fetchAccountType: (username) => {
-        return Axios.post('http://localhost:3001/fetchAccountType', username)
-            .then(response => { 
-                return response?.data[0]?.userType;
+    fetchAccount: (username) => {
+        return Axios.post('http://localhost:3001/fetchAccount', username)
+            .then(response => {
+                return response;
             })
     },
     //#endregion    

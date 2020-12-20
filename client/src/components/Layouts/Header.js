@@ -92,10 +92,9 @@ const Header = () => {
     } 
 
     useEffect(() => {
-        ServerAPI.fetchAccountType(username)
+        ServerAPI.fetchAccount(username)
             .then(response => {
-                setUserType(response);
-                console.log(userType);
+                setUserType(response.data[0]?.userType); 
             });
     }, [username])
 

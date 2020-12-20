@@ -15,18 +15,32 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
-expressApp.post('/fetchAccountType', (req, res) => {
+expressApp.post('/fetchCart', (req, res) => {
     const username = Object.keys(req.body)[0];
-    const query = `SELECT userType FROM users WHERE username='${username}'`;
+    console.log(req.body); 
+
+    const query = `SELECT * FROM cart WHERE username='${username}'`; 
     console.log(query);
 
     currentDB.query(query, (error, result) => {
-        if(error){
-            console.log(error);
+        if(error) { 
             res.send(error);
         }
-        else{
-            console.log(result);
+        else{ 
+            res.send(result);
+        }
+    })
+})
+
+expressApp.post('/fetchAccount', (req, res) => {
+    const username = Object.keys(req.body)[0];
+    const query = `SELECT * FROM users WHERE username='${username}'`; 
+
+    currentDB.query(query, (error, result) => {
+        if(error){ 
+            res.send(error);
+        }
+        else{ 
             res.send(result);
         }
     })
