@@ -30,15 +30,21 @@ const Server = {
             username: username,
             password: password,
         }).then(response => {
-            if(response.data.sqlMessage){
+            if (response.data.sqlMessage) {
                 sendNotification(response.data.sqlMessage, 'error', 2);
-            } 
+            }
             complete();
             return response;
         }).catch(err => {
             sendNotification('Could not connect to database', 'error', 2);
             complete();
         })
+    },
+    fetchAccountType: (username) => {
+        return Axios.post('http://localhost:3001/fetchAccountType', username)
+            .then(response => { 
+                return response?.data[0]?.userType;
+            })
     },
     //#endregion    
 

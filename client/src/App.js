@@ -13,6 +13,7 @@ import { Grid, makeStyles } from '@material-ui/core';
 import TopLoadingBar from './components/TopLoadingBar/TopLoadingBar';
 import { useDispatch } from 'react-redux';
 import {autoLogIn} from './store/actions';
+import Cart from './container/Cart/Cart';
 
 const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar
@@ -20,18 +21,15 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const tryAutoSignIn = () => {
-    dispatch(autoLogIn())
-  }
+  const dispatch = useDispatch(); 
 
   useEffect(() => {
-    tryAutoSignIn();
+    dispatch(autoLogIn())
   }, [])
 
   let route = (
     <Switch>
+      <Route path='/cart' exact component={Cart} />
       <Route path='/admin' exact component={AdminDashboard} />
       <Route path='/login' exact component={LogInPage} />
       <Route path='/signup' exact component={SignUpPage} />

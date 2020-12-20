@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Button, Toolbar, Typography, makeStyles, fade } from "@material-ui/core";
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import SearchIcon from '@material-ui/icons/Search';
@@ -6,6 +6,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStat } from '../../store/actions';
+import ServerAPI from '../../Axios/ServerAPI';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,7 +64,17 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const isAuthenticated = useSelector(store => store.authenticated);
-    const userType = useSelector(store => store.userType);
+    const username = useSelector(store => store.username);
+
+    const [userType, setUserType] = useState('');
+
+    useEffect(() => {  
+        ServerAPI.fetchAccountType(username)
+        .then(response => { 
+            setUserType(response); 
+            console.log(userType);
+        });
+    }, [username])
 
     let logIn = null;
     let signUp = null;
@@ -104,7 +115,7 @@ const Header = () => {
             <Link to='signup'>
                 <Button variant={'paragraph'} className={classes.white}> Sign Up </Button>
             </Link>;
-    } 
+    }
 
     return (
         <>

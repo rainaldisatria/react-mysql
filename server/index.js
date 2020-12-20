@@ -15,6 +15,23 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
+expressApp.post('/fetchAccountType', (req, res) => {
+    const username = Object.keys(req.body)[0];
+    const query = `SELECT userType FROM users WHERE username='${username}'`;
+    console.log(query);
+
+    currentDB.query(query, (error, result) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(result);
+            res.send(result);
+        }
+    })
+})
+
 //#region 
 expressApp.post('/signup', (req, res) => {
     const data = req.body;
