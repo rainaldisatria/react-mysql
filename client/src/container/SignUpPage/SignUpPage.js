@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,8 @@ import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import ServerAPI from '../../Axios/ServerAPI';
 import { Redirect } from 'react-router-dom';
+import sendNotification from '../../components/Notification/Notification'
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,56 +38,47 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpPage() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [signUpFields, setSignUpFields] = useState({})
   const [errorTexts, setErrorTexts] = useState({});
 
-  const isFirstNameErr = () => {
-    if (signUpFields?.firstName?.length <= 5) {
-      console.log(signUpFields.firstName.length);
-      setErrorTexts(prevValue => ({ ...prevValue, firstName: 'Enter first names', }))
-      return true;
-    }
-    return false;
-  }
-
-  //#region 
-  const isLastNameErr = () => {
-    if (signUpFields?.lastName?.length <= 5) {
-      setErrorTexts(prevValue => ({ ...prevValue, lastName: 'Enter last names', }))
-      return true;
-    }
-    return false;
-  }
-
-  const isUsernameErr = () => {
-    if (signUpFields?.username.length <= 5) {
-      setErrorTexts(prevValue => ({ ...prevValue, username: 'Choose a valid username', }))
-      return true
-    }
-    return false;
-  }
-
-  const isPasswordErr = () => {
-    if (signUpFields?.password.length <= 7) {
-      setErrorTexts(prevValue => ({ ...prevValue, password: 'Use 8 characters or more for your password', }))
-      return true;
-    }
-
-    return false;
-  }
-
   const validate = () => {
     var isError = false;
 
-    isError = isFirstNameErr();
-    isError = isLastNameErr();
-    isError = isUsernameErr(); 
-    isError = isPasswordErr();
+    if (signUpFields?.firstName?.length <= 0) {
+      setErrorTexts(prevValue => ({ ...prevValue, firstName: 'Enter first names', }))
+      isError = true;
+    } else {
+      setErrorTexts(prevValue => ({ ...prevValue, firstName: '', }))
+    }
+
+    if (signUpFields?.lastName?.length <= 0) {
+      setErrorTexts(prevValue => ({ ...prevValue, lastName: 'Enter last names' }));
+      isError = true;
+    }
+    else {
+      setErrorTexts(prevValue => ({ ...prevValue, lastName: '' }));
+    }
+
+    if (signUpFields?.username?.length < 2) {
+      setErrorTexts(prevValue => ({ ...prevValue, username: 'Username must be atleast 2 characters long' }));
+      isError = true;
+    }
+    else {
+      setErrorTexts(prevValue => ({ ...prevValue, username: '' }));
+    }
+
+    if (signUpFields?.password?.length < 8) {
+      setErrorTexts(prevValue => ({ ...prevValue, password: 'Password must be atleast 8 characters long' }));
+      isError = true;
+    }
+    else {
+      setErrorTexts(prevValue => ({ ...prevValue, password: '' }));
+    }
 
     return isError;
   }
-  //#endregion
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -93,18 +86,22 @@ export default function SignUpPage() {
     const err = validate();
 
     if (!err) {
-      console.log('sent');
-      <Redirect to='/login' />
+      ServerAPI.signup(signUpFields).then((response) => {
+        console.log('redicrected');
+        history.push('/login');
+      });
     }
     else {
-      console.log('err');
+      sendNotification('Please fill all the input fields', 'error', 2)
     }
   }
 
+  useEffect(() => {
+    validate();
+  }, [signUpFields])
 
   const handleInput = (event) => {
     const { name, value } = event.target;
-
     setSignUpFields(prevValue => {
       return {
         ...prevValue,
@@ -127,8 +124,9 @@ export default function SignUpPage() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                error={isFirstNameErr}
+                error={!!errorTexts?.firstName}
                 helperText={errorTexts?.firstName}
+                onChange={(e) => handleInput(e)}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -137,12 +135,11 @@ export default function SignUpPage() {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={(e) => handleInput(e)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                error={signUpFields?.lastName}
+                error={!!errorTexts?.lastName}
                 helperText={errorTexts?.lastName}
                 variant="outlined"
                 required
@@ -156,7 +153,7 @@ export default function SignUpPage() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                error={signUpFields?.username}
+                error={!!errorTexts?.username}
                 helperText={errorTexts?.username}
                 variant="outlined"
                 required
@@ -170,7 +167,7 @@ export default function SignUpPage() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                error={signUpFields?.password}
+                error={!!errorTexts?.password}
                 helperText={errorTexts?.password}
                 variant="outlined"
                 required

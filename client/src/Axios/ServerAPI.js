@@ -15,7 +15,7 @@ const Server = {
                     }
                 }
                 else {
-                    sendNotification(`Register Success! Please Log In!`, 'success', 2);
+                    sendNotification(`Registration Success! Please Log In!`, 'success', 2);
                 }
                 complete();
                 return response;
