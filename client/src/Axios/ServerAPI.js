@@ -13,8 +13,7 @@ const Server = {
                     sendNotification(response.data.sqlMessage, 'error', 2);
                 }
 
-                complete();
-                console.log(response);
+                complete(); 
                 return response;
             }).catch(err => {
                 complete();

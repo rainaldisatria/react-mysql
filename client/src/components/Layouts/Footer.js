@@ -1,18 +1,36 @@
 import React from 'react';
-import { Typography, Box } from '@material-ui/core';
+import { Typography, Box, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+const useStyles = makeStyles({
+    content:{
+        marginLeft: '30%',
+    }
+})
+
 const Footer = () => {
+    const classes = useStyles();
+
     return (
         <Box mt={8}>
             <Typography variant="body2" color="textSecondary" align="center">
                 {'Copyright © '}
                 <Link color="inherit">
                     Kelompok 4 PBDL UPNVJ
-          </Link>{' '}
+                </Link>{' '}
                 {new Date().getFullYear()}
                 {'.'}
             </Typography>
+            <div className={classes.content}>
+                <br />
+                <Typography variant="body2" color="textSecondary" align="left">
+                    Kelompok:
+                    Rainaldi Satria S
+                </Typography>
+                <br />
+                <br />
+                <br />
+            </div>
         </Box>
     );
 }

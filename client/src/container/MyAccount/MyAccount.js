@@ -93,7 +93,7 @@ const MyAccount = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth
                                 id="username"
                                 label="Username"
