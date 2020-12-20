@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox'; 
-import Grid from '@material-ui/core/Grid'; 
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container'; 
-import {Link} from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import { Link } from 'react-router-dom';
+import ServerAPI from '../../Axios/ServerAPI';
+import sendNotification from '../../components/Notification/Notification';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +37,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LogInPage() {
   const classes = useStyles();
+  const history = useHistory();
+
+  const [fields, setFields] = useState({});
+  const [errorFields, setErrorFields] = useState({});
+
+  const onSubmitHandler = event => {
+    event.preventDefault();
+
+    ServerAPI.login(fields?.username, fields?.password).then(response => {
+      const data = response.data;
+      if (data.length > 0) {
+        history.push('/');
+      }
+      else {
+        sendNotification('Username or password is incorrect', 'error', 2);
+        setErrorFields({ username: ' ', password: ' ' });
+      }
+    });
+  }
+
+  const onChangeHandler = event => {
+    const { name, value } = event.target;
+
+    setFields(prevValue => ({ ...prevValue, [name]: value }));
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,18 +73,21 @@ export default function LogInPage() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={(e) => onSubmitHandler(e)}>
           <TextField
+            error={!!errorFields.username}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="username"
             label="Username"
-            name="email" 
+            name="username"
             autoFocus
+            onChange={(e) => onChangeHandler(e)}
           />
           <TextField
+            error={!!errorFields.password}
             variant="outlined"
             margin="normal"
             required
@@ -66,6 +97,7 @@ export default function LogInPage() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => onChangeHandler(e)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -77,6 +109,7 @@ export default function LogInPage() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={(e) => onSubmitHandler(e)}
           >
             Sign In
           </Button>

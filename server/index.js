@@ -41,6 +41,24 @@ expressApp.post('/signup', (req, res) => {
         }
     })
 })
+
+expressApp.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const query = `SELECT * FROM users WHERE username='${username}' and password='${password}'`;
+    console.log(query)
+    currentDB.query(query, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    })
+})
 //#endregion
 
 //#region Database management

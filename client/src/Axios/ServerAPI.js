@@ -24,6 +24,22 @@ const Server = {
                 complete();
             })
     },
+    login: (username, password) => {
+        continuousStart();
+        return Axios.post('http://localhost:3001/login', {
+            username: username,
+            password: password,
+        }).then(response => {
+            if(response.data.sqlMessage){
+                sendNotification(response.data.sqlMessage, 'error', 2);
+            } 
+            complete();
+            return response;
+        }).catch(err => {
+            sendNotification('Could not connect to database', 'error', 2);
+            complete();
+        })
+    },
     //#endregion    
 
     //#region Database Management (CRUD)
@@ -31,7 +47,7 @@ const Server = {
         return Axios.get(`http://localhost:3001/table/${tableName}`)
             .then(response => {
                 if (response.data.sqlMessage) {
-                    sendNotification('username already exist', 'error', 2);
+                    sendNotification(response.data.sqlMessage, 'error', 2);
                 }
                 return response
             })
@@ -43,7 +59,7 @@ const Server = {
         return Axios.get('http://localhost:3001/', {})
             .then(response => {
                 if (response.data.sqlMessage) {
-                    sendNotification('username already exist', 'error', 2);
+                    sendNotification(response.data.sqlMessage, 'error', 2);
                 }
                 return response
             })
@@ -52,7 +68,7 @@ const Server = {
         return Axios.get(`http://localhost:3001/desc/${tableName}`, {})
             .then(response => {
                 if (response.data.sqlMessage) {
-                    sendNotification('username already exist', 'error', 2);
+                    sendNotification(response.data.sqlMessage, 'error', 2);
                 }
                 return response
             })
@@ -61,7 +77,7 @@ const Server = {
         return Axios.post(`http://localhost:3001/insert/${tableName}`, objectToAdd)
             .then(response => {
                 if (response.data.sqlMessage) {
-                    sendNotification('username already exist', 'error', 2);
+                    sendNotification(response.data.sqlMessage, 'error', 2);
                 }
                 else {
                     sendNotification(`Insert OK. ${response.data.affectedRows} row(s) inserted`, 'success', 1)
