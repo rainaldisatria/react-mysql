@@ -2,15 +2,17 @@ import { useRef } from 'react';
 import * as actionType from './actions.js'; 
 
 const initialState = {
+    // Databse reducer
     tables: [], // List of all Tables   
 
+    // Modal reducer
     editModal: false, 
     defaultData: {},
     tableName: '',  
     callback: () => {},
 
-    ref: null,
-
+    // Authentication reducer
+    authenticated: false,  
 }
 
 const reducer = (state = initialState, action) => {

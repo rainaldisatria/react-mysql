@@ -4,7 +4,7 @@ import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,20 +60,42 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
     const classes = useStyles();
 
-    let logIn =
-        <Link to='/login'>
-            <Button variant={'paragraph'} className={classes.white}> Log In </Button>
-        </Link>
+    const isAuthenticated = useSelector(store => store.authenticated);
+    const userType = useSelector(store => store.userType);
 
-    let admin =
-        <Link to='admin'>
-            <Button variant={'paragraph'} className={classes.white}> Admin </Button>
-        </Link>
+    let logIn = null;
+    let signUp = null;
+    let admin = null;
+    let cart = null;
+    let myProfile = null;
 
-    let signUp =
-        <Link to='signup'>
-            <Button variant={'paragraph'} className={classes.white}> Sign Up </Button>
-        </Link>
+    if (isAuthenticated) {
+        if (userType === 'admin') {
+            admin =
+                <Link to='admin'>
+                    <Button variant={'paragraph'} className={classes.white}> Admin </Button>
+                </Link>
+        }
+        else {
+            cart =
+                <Link to='/cart'>
+                    <Button variant={'paragraph'} className={classes.white}> Cart </Button>
+                </Link>
+        }
+
+        logIn = null;
+        signUp = null;
+    }
+    else {
+        logIn =
+            <Link to='/login'>
+                <Button variant={'paragraph'} className={classes.white}> Log In </Button>
+            </Link>;
+        signUp =
+            <Link to='signup'>
+                <Button variant={'paragraph'} className={classes.white}> Sign Up </Button>
+            </Link>;
+    }
 
     return (
         <>
@@ -104,11 +126,15 @@ const Header = () => {
                     </div>
 
                     <div className={classes.root} />
-                    {signUp}
                     {admin}
-                    {logIn}  
+
+                    {signUp}
+                    {logIn}
+
+                    {cart}
+                    {myProfile}
                 </Toolbar>
-            </AppBar> 
+            </AppBar>
         </>
     )
 }
