@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Button, Toolbar, Typography, makeStyles, fade } from "@material-ui/core";
+import { AppBar, Button, Toolbar, Typography, makeStyles, fade, Menu, MenuItem, IconButton } from "@material-ui/core";
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import SearchIcon from '@material-ui/icons/Search';
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputBase from '@material-ui/core/InputBase';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStat } from '../../store/actions';
 import ServerAPI from '../../Axios/ServerAPI';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -62,18 +64,39 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const isAuthenticated = useSelector(store => store.authenticated);
     const username = useSelector(store => store.username);
 
     const [userType, setUserType] = useState('');
 
-    useEffect(() => {  
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const logOut = () => {
+        dispatch(setLoginStat(false));
+        history.push('/');
+    }
+
+    const myAccount = () => {
+        history.push('/myaccount');
+    } 
+
+    useEffect(() => {
         ServerAPI.fetchAccountType(username)
-        .then(response => { 
-            setUserType(response); 
-            console.log(userType);
-        });
+            .then(response => {
+                setUserType(response);
+                console.log(userType);
+            });
     }, [username])
 
     let logIn = null;
@@ -97,11 +120,42 @@ const Header = () => {
         }
 
         myProfile =
-            <Button
-                variant={'paragraph'}
-                className={classes.white}
-                onClick={() => dispatch(setLoginStat(false))}>
-                Log Out </Button>
+            <div>
+                <IconButton
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right"
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right"
+                    }}
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={() => {
+                        handleClose();
+                        myAccount();
+                    }}>My account</MenuItem>
+
+                    <MenuItem onClick={() => { 
+                        handleClose();
+                        logOut();
+                    }}>Log Out</MenuItem>
+                </Menu>
+            </div>
 
         logIn = null;
         signUp = null;
@@ -115,6 +169,8 @@ const Header = () => {
             <Link to='signup'>
                 <Button variant={'paragraph'} className={classes.white}> Sign Up </Button>
             </Link>;
+
+        myProfile = null;
     }
 
     return (

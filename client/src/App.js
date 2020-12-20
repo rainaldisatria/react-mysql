@@ -14,6 +14,7 @@ import TopLoadingBar from './components/TopLoadingBar/TopLoadingBar';
 import { useDispatch } from 'react-redux';
 import {autoLogIn} from './store/actions';
 import Cart from './container/Cart/Cart';
+import MyAccount from './container/MyAccount/MyAccount';
 
 const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar
@@ -29,6 +30,7 @@ function App() {
 
   let route = (
     <Switch>
+      <Route path='/myaccount' exact component={MyAccount} />
       <Route path='/cart' exact component={Cart} />
       <Route path='/admin' exact component={AdminDashboard} />
       <Route path='/login' exact component={LogInPage} />
