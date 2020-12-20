@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom';
 import ServerAPI from '../../Axios/ServerAPI';
 import sendNotification from '../../components/Notification/Notification';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoginStat } from '../../store/actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LogInPage() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [fields, setFields] = useState({});
   const [errorFields, setErrorFields] = useState({});
@@ -49,6 +52,7 @@ export default function LogInPage() {
       const data = response.data;
       if (data.length > 0) {
         history.push('/');
+        dispatch(setLoginStat(true, fields.username));
       }
       else {
         sendNotification('Username or password is incorrect', 'error', 2);

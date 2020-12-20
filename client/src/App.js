@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, {useEffect} from "react";
 import { Notification } from './components/Notification/Notification';
 import AdminDashboard from './container/AdminDashboard/AdminDashboard';
 import LogInPage from './container/LoginPage/LoginPage';
@@ -11,6 +11,8 @@ import { Route, Switch } from 'react-router-dom';
 import ShoppingPage from './container/ShoppingPage/ShoppingPage';
 import { Grid, makeStyles } from '@material-ui/core';
 import TopLoadingBar from './components/TopLoadingBar/TopLoadingBar';
+import { useDispatch } from 'react-redux';
+import {autoLogIn} from './store/actions';
 
 const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar
@@ -18,6 +20,15 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const tryAutoSignIn = () => {
+    dispatch(autoLogIn())
+  }
+
+  useEffect(() => {
+    tryAutoSignIn();
+  }, [])
 
   let route = (
     <Switch>

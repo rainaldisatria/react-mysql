@@ -12,7 +12,8 @@ const initialState = {
     callback: () => {},
 
     // Authentication reducer
-    authenticated: false,  
+    authenticated: false,   
+    username: '', 
 }
 
 const reducer = (state = initialState, action) => {
@@ -25,7 +26,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 tables: tableNames,
-            } 
+            }  
         
         case actionType.SET_EDIT_MODAL:
             return {
@@ -42,7 +43,14 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 editModal: false,
             } 
- 
+            
+        case actionType.SET_LOGIN_STAT:
+            return{
+                ...state,
+                authenticated: action.condition,
+                username: action.username,
+            }
+
         default:
             return state;
     } 

@@ -5,6 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { setLoginStat } from '../../store/actions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const isAuthenticated = useSelector(store => store.authenticated);
     const userType = useSelector(store => store.userType);
@@ -83,6 +85,13 @@ const Header = () => {
                 </Link>
         }
 
+        myProfile =
+            <Button
+                variant={'paragraph'}
+                className={classes.white}
+                onClick={() => dispatch(setLoginStat(false))}>
+                Log Out </Button>
+
         logIn = null;
         signUp = null;
     }
@@ -95,7 +104,7 @@ const Header = () => {
             <Link to='signup'>
                 <Button variant={'paragraph'} className={classes.white}> Sign Up </Button>
             </Link>;
-    }
+    } 
 
     return (
         <>
