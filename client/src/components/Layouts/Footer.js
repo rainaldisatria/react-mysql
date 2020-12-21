@@ -23,9 +23,7 @@ const Footer = () => {
             </Typography>
             <div className={classes.content}>
                 <br />
-                <Typography variant="body2" color="textSecondary" align="left">
-                    Kelompok:
-                    Rainaldi Satria S
+                <Typography variant="body2" color="textSecondary" align="left"> 
                 </Typography>
                 <br />
                 <br />

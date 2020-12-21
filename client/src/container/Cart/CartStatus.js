@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1
     },
     paper: {
-        padding: theme.spacing(2),  
+        padding: theme.spacing(2),   
     },
     image: {
         width: 128,
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CartItem = () => {
+const CartStatus = () => {
     const classes = useStyles();
 
     const username = useSelector(store => store.username);
@@ -83,4 +83,4 @@ const CartItem = () => {
     )
 }
 
-export default CartItem;
+export default CartStatus;

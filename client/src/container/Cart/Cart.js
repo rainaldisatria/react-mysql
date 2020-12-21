@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ServerAPI from '../../Axios/ServerAPI';
 import { useSelector } from 'react-redux';
-import { AppBar, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Container, CssBaseline, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import ShoppingItem from '../../components/ShoppingComponents/ShoppingItem';
 import CartItem from './CartItem';
 
@@ -30,39 +30,33 @@ const Cart = () => {
     }, [username]);
 
     return (
-        <React.Fragment>
+        <Container component="main" maxWidth="lg">
+            <CssBaseline />
             <div className={classes.appBarSpacer} />
 
-            <Grid container direction={'column'}>
-                <Grid item container>
-                    <Grid item xs={0} sm={2} />
-                    <Grid item xs={12} sm={8} >
-                        <Grid container diretion='row'>
-                            <Grid container spacing={4}>
-                                <Grid item sm={12}>
-                                    <CartItem title='RHINNOS' description='Kaplet' />
-                                </Grid>
-                                <Grid item sm={12}>
-                                    <CartItem title='RHINNOS' description='Kaplet' />
-                                </Grid>
-                                <Grid item sm={12}>
-                                    <CartItem title='RHINNOS' description='Kaplet' />
-                                </Grid>
-                                <Grid item sm={12}>
-                                    <CartItem title='RHINNOS' description='Kaplet' />
-                                </Grid>
-                                <Grid item sm={12}>
-                                    <CartItem title='RHINNOS' description='Kaplet' />
-                                </Grid>
-                            </Grid>
-                            <Grid item>
-                                <CartItem title='Status' description='Kaplet' />
-                            </Grid>
+            <Grid container>
+                <Grid item container xs={6}>
+                    <Grid item direction={'column'} xs container spacing={3}>
+                        <Grid item xs>
+                            <CartItem></CartItem>
+                        </Grid>
+                        <Grid item xs>
+                            <CartItem></CartItem>
+                        </Grid>
+                        <Grid item xs>
+                            <CartItem></CartItem>
                         </Grid>
                     </Grid>
                 </Grid>
+
+                <Grid item container xs={4}>
+                    <Grid item xs>
+                        <CartItem></CartItem>
+                    </Grid>
+                </Grid>
             </Grid>
-        </React.Fragment>
+
+        </Container>
     )
 }
 
