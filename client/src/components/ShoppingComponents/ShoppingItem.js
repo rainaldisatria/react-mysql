@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const ShoppingItem = (props) => {
+const ShoppingItem = ({title, description}) => {
 
     return (
         <Card>
@@ -22,10 +22,10 @@ const ShoppingItem = (props) => {
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        {props.title}
+                        {title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {props.description}
+                        {description}
                     </Typography>
                 </CardContent>
             </CardActionArea>

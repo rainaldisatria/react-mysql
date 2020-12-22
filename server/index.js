@@ -15,6 +15,21 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
+expressApp.get('/fetchHome', (req, res) => {
+    const query = `SELECT * FROM tabel_obat`;
+
+    currentDB.query(query, (error, result) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(result);
+            res.send(result);
+        }
+    })
+})
+
 expressApp.post('/fetchCart', (req, res) => {
     const username = Object.keys(req.body)[0];
     console.log(req.body); 

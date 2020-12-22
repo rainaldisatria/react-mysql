@@ -5,6 +5,22 @@ import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadin
 
 const Server = {
     //#region Shopping
+    fetchHome: () => {
+        continuousStart();
+        return Axios.get('http://localhost:3001/fetchHome')
+            .then(response => {
+                if(response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 2);
+                }
+
+                complete();
+                return response;
+            })
+            .catch(error => {
+                complete();
+                return error;
+            })
+    },
     fetchCart: (username) => {
         continuousStart();
         return Axios.post('http://localhost:3001/fetchCart', username)
@@ -13,7 +29,7 @@ const Server = {
                     sendNotification(response.data.sqlMessage, 'error', 2);
                 }
 
-                complete(); 
+                complete();
                 return response;
             }).catch(err => {
                 complete();
@@ -58,6 +74,9 @@ const Server = {
             complete();
         })
     },
+    //#endregion
+
+    //#region Account
     fetchAccount: (username) => {
         return Axios.post('http://localhost:3001/fetchAccount', username)
             .then(response => {
