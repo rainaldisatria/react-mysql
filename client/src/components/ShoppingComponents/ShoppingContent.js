@@ -9,7 +9,9 @@ const ShoppingContent = ({ items }) => {
                 items.map((objectData, objId) => {
                     return (
                         <Grid item xs={12} sm={12} md={4}>
-                            <ShoppingItem title={objectData['Nama_Obat']} />
+                            <ShoppingItem
+                                title={objectData['Nama_Obat']}
+                                description={objectData['Harga_Satuan']} />
                         </Grid>
                     )
                 })

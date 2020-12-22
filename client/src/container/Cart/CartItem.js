@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CartItem = () => {
+const CartItem = ({prodName, desc, id, price}) => {
     const classes = useStyles();
 
     const username = useSelector(store => store.username);
@@ -58,16 +58,16 @@ const CartItem = () => {
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography gutterBottom variant="h6">
-                                    RHINNOS
+                                    {prodName}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    Obat berbentuk Kaplet
+                                    {desc}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    ID: 1030114
+                                    ID: {id}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    $19.00
+                                    Rp. {price}
                                 </Typography>
                             </Grid>
                         </Grid>

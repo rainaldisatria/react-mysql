@@ -9,10 +9,11 @@ import ButtonBase from "@material-ui/core/ButtonBase";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(2),   
+        padding: theme.spacing(2), 
+        margin: 'auto',  
     },
     image: {
         width: 128,

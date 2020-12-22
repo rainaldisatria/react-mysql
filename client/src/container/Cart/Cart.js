@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import ServerAPI from '../../Axios/ServerAPI';
 import { useSelector } from 'react-redux';
 import { AppBar, Container, CssBaseline, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import ShoppingItem from '../../components/ShoppingComponents/ShoppingItem';
 import CartItem from './CartItem';
+import CartStatus from './CartStatus';
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -35,24 +35,27 @@ const Cart = () => {
             <div className={classes.appBarSpacer} />
 
             <Grid container>
-                <Grid item container xs={6}>
+                <Grid item container xs={8}>
                     <Grid item direction={'column'} xs container spacing={3}>
-                        <Grid item xs>
-                            <CartItem></CartItem>
-                        </Grid>
-                        <Grid item xs>
-                            <CartItem></CartItem>
-                        </Grid>
-                        <Grid item xs>
-                            <CartItem></CartItem>
-                        </Grid>
+                        {
+                            cartFields?.map((objectData, objId) => {
+                                return (
+                                    <Grid item xs>
+                                        <CartItem
+                                            prodName={objectData['kodeObat']}
+                                            id={objectData['kodeObat']}
+                                            desc={objectData['kodeObat']}
+                                            price={objectData['kodeObat']}
+                                        />
+                                    </Grid>
+                                )
+                            })
+                        }
                     </Grid>
                 </Grid>
 
-                <Grid item container xs={4}>
-                    <Grid item xs>
-                        <CartItem></CartItem>
-                    </Grid>
+                <Grid item xs={4}>
+                    <CartStatus></CartStatus>
                 </Grid>
             </Grid>
 
