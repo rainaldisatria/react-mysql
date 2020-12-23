@@ -18,14 +18,17 @@ const Cart = () => {
     const username = useSelector(store => store.username);
     const [cartFields, setCartFields] = useState();
     const [cartData, setCartData] = useState();
-    
-    const update = () => { 
+
+    const update = () => {
         fetchCart();
         fetchCartData();
     }
-
+    
+    console.log(cartFields);
+    console.log(cartData);
+    
     const fetchCartData = () => {
-        ServerAPI.fetchCartData(username).then(res => { 
+        ServerAPI.fetchCartData(username).then(res => {
             setCartData(res.data);
         })
     }
@@ -35,6 +38,12 @@ const Cart = () => {
             .then(res => {
                 setCartFields(res.data);
             })
+    }
+
+    const buy = () => {
+        ServerAPI.buy(username, cartFields, cartData).then(res => {
+            
+        })
     }
 
     const removeCart = (kodeObat) => {
@@ -58,9 +67,9 @@ const Cart = () => {
         }
 
         ServerAPI.setCartItemQuantity(cartItemToBeModified)
-            .then(response => { 
+            .then(response => {
                 update();
-                
+
                 return response;
             });
     }
@@ -94,12 +103,12 @@ const Cart = () => {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={4}> 
+                <Grid item xs={4}>
                     <CartStatus
                         totalItem={cartData?.[1][0]['totalItem']}
                         totalHarga={cartData?.[0][0]['totalHarga']}
                     ></CartStatus>
-            </Grid>
+                </Grid>
             </Grid>
 
         </Container >

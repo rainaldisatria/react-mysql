@@ -38,18 +38,22 @@ const CartStatus = ({totalItem, totalHarga}) => {
 
     const username = useSelector(store => store.username);  
 
+    const buy = () => {
+
+    }
+
     return (
         <>
             <Paper className={classes.paper}>
                 <Box fontWeight='fontWeightBold'>
-                    Ringkasan Belanja:
+                    Cart Summary:
                     </Box>
                 <Box>
-                    Total Harga: {moneyFormat(totalHarga)}
+                    Total Price: {moneyFormat(totalHarga)}
                     </Box>
 
-                <Button variant='contained' className={classes.button} color='primary'>
-                    Beli ({totalItem})
+                <Button variant='contained' className={classes.button} color='primary' onClick={buy}>
+                    Buy ({totalItem})
                 </Button>
             </Paper>
         </>
