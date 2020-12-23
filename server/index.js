@@ -33,6 +33,27 @@ expressApp.post('/removeCartItem', (req, res) => {
     })
 })
 
+expressApp.post('/setCartItemQuantity', (req, res) => {
+    const username = req.body.username;
+    const kodeObat = req.body.kodeObat;
+    const quantity = req.body.quantity;
+
+    const query = `INSERT INTO cart (username, kodeObat, quantity) VALUES ('${username}', "${kodeObat}", ${quantity}) ON DUPLICATE KEY UPDATE quantity=${quantity}`;
+
+    console.log(query);
+
+    currentDB.query(query, (error, result) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(result);
+            res.send(result);
+        }
+    })
+})
+
 expressApp.post('/addToCart', (req, res) => {
     const username = req.body.username;
     const kodeObat = req.body.kodeObat;

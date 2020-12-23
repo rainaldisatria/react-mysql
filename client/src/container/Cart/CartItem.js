@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, updateQuantityDB}) => {
+const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, updateQuantityInDB}) => {
     const classes = useStyles(); 
 
     const [timeOut, setTimeOut] = useState(0);
@@ -48,7 +48,7 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, upda
         }
 
         setTimeOut(setTimeout(() => {
-            updateQuantityDB();
+            updateQuantityInDB(id, value);
         }, 300))
     }
 
@@ -99,7 +99,7 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, upda
                             shrink: true,
                         }} 
                         value={quantity}
-                        onChange={onChangeHandler}
+                        onChange={(e) => onChangeHandler(e)}
                     />
                 </CardActions>
             </Paper>

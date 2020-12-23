@@ -39,7 +39,20 @@ const Cart = () => {
             })
     }
 
-    const updateQuantityDB = (kodeObat, nweQuantity) => { 
+    const updateQuantityInDB = (kodeObat, newQuantity) => {
+        const cartItemToBeModified = {
+            username: username,
+            kodeObat: kodeObat,
+            quantity: newQuantity,
+        }
+
+        ServerAPI.setCartItemQuantity(cartItemToBeModified)
+            .then(response => {
+                // update cart status;
+
+                console.log('updated');
+                return response;
+            });
     }
 
     useEffect(() => {
@@ -65,7 +78,7 @@ const Cart = () => {
                                             price={`objectData['HARGA']`}
                                             initialQuantity={objectData['quantity']}
                                             removeCart={removeCart}
-                                            updateQuantityDB={updateQuantityDB}
+                                            updateQuantityInDB={updateQuantityInDB}
                                         />
                                     </Grid>
                                 )

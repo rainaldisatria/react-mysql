@@ -5,6 +5,20 @@ import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadin
 
 const Server = {
     //#region Shopping
+    setCartItemQuantity: (cartItemToBeModified) => {
+        return Axios.post('http://localhost:3001/setCartItemQuantity', cartItemToBeModified)
+        .then(response => {
+            if (response.data.sqlMessage) {
+                sendNotification(response.data.sqlMessage, 'error', 5);
+            }
+            else {
+                sendNotification('Item up!', 'success', 2);
+            }
+
+            return response;
+        })
+    },
+
     removeCart: (cartToBeRemoved) => {
         return Axios.post('http://localhost:3001/removeCartItem', cartToBeRemoved)
             .then(response => {
