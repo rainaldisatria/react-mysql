@@ -13,6 +13,7 @@ const ShoppingContent = ({ items }) => {
                                 title={objectData['Nama_Obat']} 
                                 description={objectData['Bentuk_Obat']} 
                                 price={objectData['Harga_Satuan']}
+                                id={objectData['Kode_Obat']}
                                 />
                         </Grid>
                     )

@@ -4,12 +4,29 @@ import sendNotification from '../components/Notification/Notification';
 import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadingBar';
 
 const Server = {
+
     //#region Shopping
+    addToCart: (username, kodeObat, quantity) => {
+        return Axios.post('http://localhost:3001/addToCart', {
+            username: username,
+            kodeObat: kodeObat,
+            quantity: quantity,
+        }).then(response => { 
+            if (response.data.sqlMessage) {
+                sendNotification(response.data.sqlMessage, 'error', 5);
+            }
+            else {
+                sendNotification('Added to cart!', 'success', 2);
+            }
+            return response;
+        })
+    },
+
     fetchHome: () => {
         continuousStart();
         return Axios.get('http://localhost:3001/fetchHome')
             .then(response => {
-                if(response.data.sqlMessage) {
+                if (response.data.sqlMessage) {
                     sendNotification(response.data.sqlMessage, 'error', 2);
                 }
 

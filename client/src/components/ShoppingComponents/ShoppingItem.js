@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Card, Box} from '@material-ui/core/';
+import { Card, Box, TextField } from '@material-ui/core/';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useSelector } from 'react-redux';
+import ServerAPI from '../../Axios/ServerAPI';
+import sendNotification from '../Notification/Notification';
 
-const ShoppingItem = ({ title, description, price }) => {
+const useStyles = makeStyles({
+    textField: {
+        maxWidth: '75px',
+    }
+})
+
+const ShoppingItem = ({ title, description, price, id }) => {
+    const classes = useStyles();
     const priceWithDot = price?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+
+    const username = useSelector(store => store.username);
+    const [quantity, setQuantity] = useState(1);
+
+    const addToCart = () => {
+        ServerAPI.addToCart(username, id, quantity).then(response => {
+            return response;
+        })
+    }
+
+    console.log(id);
 
     return (
         <Card>
@@ -36,9 +57,28 @@ const ShoppingItem = ({ title, description, price }) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
+                <TextField className={classes.textField}
+                    size='small'
+                    variant='outlined'
+                    id="standard-number"
+                    label="Quantity"
+                    type="number"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    value={quantity}
+                    onChange={e => {
+                        const value = e.target.value;
+                        setQuantity(value);
+                    }}
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={addToCart}
+                >
                     Add To Cart
-        </Button>
+                </Button>
             </CardActions>
         </Card>
 

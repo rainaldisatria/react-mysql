@@ -15,8 +15,17 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
-expressApp.get('/fetchHome', (req, res) => {
-    const query = `SELECT * FROM tabel_obat`;
+expressApp.post('/addToCart', (req, res) => {
+    const username = req.body.username;
+    const kodeObat = req.body.kodeObat;
+    const quantity = req.body.quantity;
+
+    const query = `INSERT INTO cart 
+    (username, kodeObat, quantity) VALUES
+    ('${username}', "${kodeObat}", ${quantity}) ON DUPLICATE KEY 
+    UPDATE quantity=quantity + ${quantity}`;
+
+    console.log(query);
 
     currentDB.query(query, (error, result) => {
         if(error){
@@ -30,18 +39,33 @@ expressApp.get('/fetchHome', (req, res) => {
     })
 })
 
+expressApp.get('/fetchHome', (req, res) => {
+    const query = `SELECT * FROM tabel_obat`;
+
+    currentDB.query(query, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    })
+})
+
 expressApp.post('/fetchCart', (req, res) => {
     const username = Object.keys(req.body)[0];
-    console.log(req.body); 
+    console.log(req.body);
 
-    const query = `SELECT * FROM cart WHERE username='${username}'`; 
+    const query = `SELECT * FROM cart WHERE username='${username}'`;
     console.log(query);
 
     currentDB.query(query, (error, result) => {
-        if(error) { 
+        if (error) {
             res.send(error);
         }
-        else{ 
+        else {
             res.send(result);
         }
     })
@@ -49,13 +73,13 @@ expressApp.post('/fetchCart', (req, res) => {
 
 expressApp.post('/fetchAccount', (req, res) => {
     const username = Object.keys(req.body)[0];
-    const query = `SELECT * FROM users WHERE username='${username}'`; 
+    const query = `SELECT * FROM users WHERE username='${username}'`;
 
     currentDB.query(query, (error, result) => {
-        if(error){ 
+        if (error) {
             res.send(error);
         }
-        else{ 
+        else {
             res.send(result);
         }
     })
