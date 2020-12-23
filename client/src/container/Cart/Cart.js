@@ -21,7 +21,7 @@ const Cart = () => {
     const fetchCart = () => {
         ServerAPI.fetchCart(username)
             .then(res => {
-                setCartFields(res.data);
+                setCartFields(res.data); 
             })
     }
 
@@ -29,6 +29,7 @@ const Cart = () => {
         fetchCart();
     }, [username]);
 
+    console.log(cartFields);
     let cartList = null;
     if(cartList){
         cartList = cartFields?.map((objectData, objId) => {

@@ -107,14 +107,14 @@ const Header = () => {
     if (isAuthenticated) {
         if (userType === 'admin') {
             admin =
-                <Link to='admin'>
-                    <Button variant={'paragraph'} className={classes.white}> Admin </Button>
+                <Link to='/admin'>
+                    <Button className={classes.white}> Admin </Button>
                 </Link>
         }
         else {
             cart =
                 <Link to='/cart'>
-                    <Button variant={'paragraph'} className={classes.white}> Cart </Button>
+                    <Button className={classes.white}> Cart </Button>
                 </Link>
         }
 
@@ -162,11 +162,11 @@ const Header = () => {
     else {
         logIn =
             <Link to='/login'>
-                <Button variant={'paragraph'} className={classes.white}> Log In </Button>
+                <Button className={classes.white}> Log In </Button>
             </Link>;
         signUp =
-            <Link to='signup'>
-                <Button variant={'paragraph'} className={classes.white}> Sign Up </Button>
+            <Link to='/signup'>
+                <Button className={classes.white}> Sign Up </Button>
             </Link>;
 
         myProfile = null;

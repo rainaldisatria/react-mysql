@@ -76,7 +76,7 @@ const CartStatus = () => {
                 </Grid>
                 <CardActions disableSpacing>
                     <Button className={classes.expand}>
-                        <Typography variant="body"> REMOVE </Typography>
+                        <Typography> REMOVE </Typography>
                     </Button>
                 </CardActions>
             </Paper>
