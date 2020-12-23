@@ -15,6 +15,58 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 }); 
 
+//#region Anonymouse
+expressApp.post('/fetchCartData', (req, res) => {
+    const username = req.body.username;
+
+    const getItemCountQuery = `SELECT SUM(quantity) FROM cart WHERE username = '${username}'`;
+    const getTotalPriceQuery = `SELECT SUM(cart.quantity * tabel_obat.Harga_Satuan) AS total FROM cart LEFT JOIN tabel_obat ON kodeObat = Kode_Obat`
+
+    let data = null;
+
+    currentDB.query(getItemCountQuery, (error, result) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(result);
+            data.push(result);
+        }
+    })
+
+    currentDB.query(getTotalPriceQuery, (error, result) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(result);
+            data.push(result);
+        }
+    })
+
+    console.log(data);
+    res.send(data)
+})
+
+expressApp.post('/fetchObatData', (req, res) => {
+    const kodeObat = Object.keys(req.body)[0];
+
+    const query = `SELECT * FROM tabel_obat WHERE Kode_Obat = '${kodeObat}'`; 
+    currentDB.query(query, (error, result) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(result);
+            res.send(result)
+        }
+    })
+})
+//#endregion
+
 expressApp.post('/removeCartItem', (req, res) => {
     const username = req.body.username;
     const kodeObat = req.body.kodeObat;

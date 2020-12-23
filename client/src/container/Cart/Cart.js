@@ -16,21 +16,20 @@ const useStyles = makeStyles((theme) => ({
 const Cart = () => {
     const classes = useStyles();
     const username = useSelector(store => store.username);
-    const [cartFields, setCartFields] = useState();
-    const [obatFields, setObatFields] = useState();
+    const [cartFields, setCartFields] = useState();   
+    const [cartData, setCartData] = useState();
 
-    const fetchObat = () => {
-        ServerAPI.fetchObat().then(response => {
-            setObatFields(response.data);
-            console.log(response.data);
-            return response;
+    const fetchCartData = () => {
+        ServerAPI.fetchCartData(username).then(res => {
+            console.log(res.data);
+            setCartData(res.data);
         })
     }
 
     const fetchCart = () => {
         ServerAPI.fetchCart(username)
             .then(res => {
-                setCartFields(res.data);
+                setCartFields(res.data);  
             })
     }
 
@@ -64,8 +63,8 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        fetchCart();
-        fetchObat();
+        fetchCart(); 
+        fetchCartData();
     }, [username]);
 
     return (
@@ -81,7 +80,7 @@ const Cart = () => {
                                 return (
                                     <Grid key={objectData['kodeObat']} item xs>
                                         <CartItem
-                                            prodName={`objectData['PROD NAME']`}
+                                            prodName={'test'}
                                             id={objectData['kodeObat']}
                                             desc={`objectData['DESC']`}
                                             price={`objectData['HARGA']`}

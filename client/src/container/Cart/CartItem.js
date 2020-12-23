@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import DeleteIcon from '@material-ui/icons/Delete';
+import {moneyFormat} from '../../Utility';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, updateQuantityInDB}) => {
     const classes = useStyles(); 
 
+    const [data, setData] = useState();
     const [timeOut, setTimeOut] = useState(0);
     const [quantity, setQuantity] = useState(initialQuantity);
 
@@ -56,6 +58,13 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, upda
         }, 300))
     }
 
+    useEffect(() => {
+        ServerAPI.fetchObatData(id).then(response => {
+            console.log(response.data);
+            setData(response.data[0]);
+        })
+    }, [id])
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -73,16 +82,16 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, upda
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography gutterBottom variant="h6">
-                                    {prodName}
+                                    {data?.['Nama_Obat']}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    {desc}
+                                    {data?.['Bentuk_Obat']}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     ID: {id}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    Rp. {price}
+                                    Rp. {moneyFormat(data?.['Harga_Satuan'])}
                                 </Typography>
                             </Grid>
                         </Grid>

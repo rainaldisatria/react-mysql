@@ -5,15 +5,33 @@ import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadin
 
 const Server = {
     //#region Shopping
+    fetchCartData: (username) => {
+        return Axios.post('http://localhost:3001/fetchCartData', username)
+        .then(response => {
+            if (response.data.sqlMessage) {
+                sendNotification(response.data.sqlMessage, 'error', 5);
+            } 
+            
+            return response;
+        })
+    },
+
+    fetchObatData: (id) => {
+        return Axios.post('http://localhost:3001/fetchObatData', id).then(response => {
+            if (response.data.sqlMessage) {
+                sendNotification(response.data.sqlMessage, 'error', 5);
+            } 
+
+            return response;
+        })
+    },
+
     setCartItemQuantity: (cartItemToBeModified) => {
         return Axios.post('http://localhost:3001/setCartItemQuantity', cartItemToBeModified)
         .then(response => {
             if (response.data.sqlMessage) {
                 sendNotification(response.data.sqlMessage, 'error', 5);
-            }
-            else {
-                sendNotification('Item up!', 'success', 2);
-            }
+            } 
 
             return response;
         })

@@ -49,11 +49,11 @@ const ShoppingItem = ({ title, description, price, id }) => {
                     <Typography variant="body1" color="textSecondary" component="p">
                         Obat berbentuk {description}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        <Box fontWeight='fontWeightBold'>
+                    <Box fontWeight='fontWeightBold'>
+                        <Typography variant="body2" color="textSecondary" component="p">
                             Rp. {priceWithDot}
-                        </Box>
-                    </Typography>
+                        </Typography>
+                    </Box>
                 </CardContent>
             </CardActionArea>
             <CardActions>
@@ -69,7 +69,7 @@ const ShoppingItem = ({ title, description, price, id }) => {
                     value={quantity}
                     onChange={e => {
                         let value = e.target.value;
-                        if(value < 1) 
+                        if (value < 1)
                             value = 1;
 
                         setQuantity(value);
