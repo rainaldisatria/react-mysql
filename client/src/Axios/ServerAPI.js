@@ -4,14 +4,27 @@ import sendNotification from '../components/Notification/Notification';
 import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadingBar';
 
 const Server = {
-
     //#region Shopping
+    removeCart: (cartToBeRemoved) => {
+        return Axios.post('http://localhost:3001/removeCart', cartToBeRemoved)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 5);
+                }
+                else {
+                    sendNotification('Cart removed!', 'success', 2);
+                }
+                
+                return response;
+            })
+    },
+
     addToCart: (username, kodeObat, quantity) => {
         return Axios.post('http://localhost:3001/addToCart', {
             username: username,
             kodeObat: kodeObat,
             quantity: quantity,
-        }).then(response => { 
+        }).then(response => {
             if (response.data.sqlMessage) {
                 sendNotification(response.data.sqlMessage, 'error', 5);
             }

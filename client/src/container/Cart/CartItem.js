@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ServerAPI from '../../Axios/ServerAPI';
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, CardActions, Button } from "@material-ui/core/";
+import { Grid, CardActions, Button, TextField } from "@material-ui/core/";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
     },
     paper: {
-        padding: theme.spacing(2),  
+        padding: theme.spacing(2),
     },
     image: {
         width: 128,
@@ -27,19 +28,15 @@ const useStyles = makeStyles((theme) => ({
     expand: {
         marginLeft: "auto"
     },
+    textField: {
+        maxWidth: '75px',
+    }
 }));
 
-const CartItem = ({prodName, desc, id, price}) => {
-    const classes = useStyles();
+const CartItem = ({ prodName, desc, id, price, initialQuantity, remove}) => {
+    const classes = useStyles(); 
 
-    const username = useSelector(store => store.username);
-    const [cartData, setCartData] = useState();
-
-    useEffect(() => {
-        ServerAPI.fetchCart(username).then(response => {
-            setCartData(response.data);
-        })
-    }, [username])
+    const [quantity, setQuantity] = useState(initialQuantity);
 
     return (
         <div className={classes.root}>
@@ -74,9 +71,21 @@ const CartItem = ({prodName, desc, id, price}) => {
                     </Grid>
                 </Grid>
                 <CardActions disableSpacing>
-                    <Button className={classes.expand}>
-                        <Typography> REMOVE </Typography>
+                    <div className={classes.expand}></div>
+                    <Button onClick={remove}>
+                        <DeleteIcon />
                     </Button>
+                    <TextField className={classes.textField}
+                        size='small'
+                        variant='outlined'
+                        id="standard-number"
+                        label="Quantity"
+                        type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }} 
+                        value={quantity}
+                    />
                 </CardActions>
             </Paper>
         </div>

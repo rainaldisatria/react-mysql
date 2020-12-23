@@ -42,10 +42,11 @@ const Cart = () => {
                                 return (
                                     <Grid key={objId} item xs>
                                         <CartItem
-                                            prodName={objectData['kodeObat']}
+                                            prodName={`objectData['PROD NAME']`}
                                             id={objectData['kodeObat']}
-                                            desc={objectData['kodeObat']}
-                                            price={objectData['kodeObat']}
+                                            desc={`objectData['DESC']`}
+                                            price={`objectData['HARGA']`}
+                                            initialQuantity={objectData['quantity']}
                                         />
                                     </Grid>
                                 )
