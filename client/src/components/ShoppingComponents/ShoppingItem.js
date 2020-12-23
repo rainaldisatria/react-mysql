@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+import {Card, Box} from '@material-ui/core/';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,7 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const ShoppingItem = ({title, description}) => {
+const ShoppingItem = ({ title, description, price }) => {
+    const priceWithDot = price?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 
     return (
         <Card>
@@ -24,8 +25,13 @@ const ShoppingItem = ({title, description}) => {
                     <Typography gutterBottom variant="h5" component="h2">
                         {title}
                     </Typography>
+                    <Typography variant="body1" color="textSecondary" component="p">
+                        Obat berbentuk {description}
+                    </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {description}
+                        <Box fontWeight='fontWeightBold'>
+                            Rp. {priceWithDot}
+                        </Box>
                     </Typography>
                 </CardContent>
             </CardActionArea>

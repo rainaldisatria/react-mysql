@@ -8,10 +8,12 @@ const ShoppingContent = ({ items }) => {
             {
                 items.map((objectData, objId) => {
                     return (
-                        <Grid item xs={12} sm={12} md={4}>
+                        <Grid key={objId} item xs={12} sm={12} md={4}>
                             <ShoppingItem
-                                title={objectData['Nama_Obat']}
-                                description={objectData['Harga_Satuan']} />
+                                title={objectData['Nama_Obat']} 
+                                description={objectData['Bentuk_Obat']} 
+                                price={objectData['Harga_Satuan']}
+                                />
                         </Grid>
                     )
                 })

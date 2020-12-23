@@ -17,9 +17,7 @@ const ShoppingPage = () => {
         ServerAPI.fetchHome().then(response => {
             setItems(response.data);
         })
-    }, [])
-
-    console.log(items);
+    }, []) 
 
     return (
         <Container component="main" maxWidth="lg">

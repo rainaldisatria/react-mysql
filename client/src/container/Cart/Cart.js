@@ -21,30 +21,13 @@ const Cart = () => {
     const fetchCart = () => {
         ServerAPI.fetchCart(username)
             .then(res => {
-                setCartFields(res.data); 
+                setCartFields(res.data);
             })
     }
 
     useEffect(() => {
         fetchCart();
     }, [username]);
-
-    console.log(cartFields);
-    let cartList = null;
-    if(cartList){
-        cartList = cartFields?.map((objectData, objId) => {
-            return (
-                <Grid item xs>
-                    <CartItem
-                        prodName={objectData['kodeObat']}
-                        id={objectData['kodeObat']}
-                        desc={objectData['kodeObat']}
-                        price={objectData['kodeObat']}
-                    />
-                </Grid>
-            )
-        })
-    }
 
     return (
         <Container component="main" maxWidth="lg">
@@ -55,7 +38,18 @@ const Cart = () => {
                 <Grid item container xs={8}>
                     <Grid item direction={'column'} xs container spacing={3}>
                         {
-                            cartList
+                            cartFields?.map((objectData, objId) => {
+                                return (
+                                    <Grid key={objId} item xs>
+                                        <CartItem
+                                            prodName={objectData['kodeObat']}
+                                            id={objectData['kodeObat']}
+                                            desc={objectData['kodeObat']}
+                                            price={objectData['kodeObat']}
+                                        />
+                                    </Grid>
+                                )
+                            })
                         }
                     </Grid>
                 </Grid>

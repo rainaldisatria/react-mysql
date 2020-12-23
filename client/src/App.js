@@ -17,7 +17,8 @@ import Cart from './container/Cart/Cart';
 import MyAccount from './container/MyAccount/MyAccount';
 
 const useStyles = makeStyles(theme => ({
-  appBarSpacer: theme.mixins.toolbar
+  appBarSpacer: theme.mixins.toolbar,
+  
 }))
 
 function App() {
