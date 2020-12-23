@@ -68,7 +68,10 @@ const ShoppingItem = ({ title, description, price, id }) => {
                     }}
                     value={quantity}
                     onChange={e => {
-                        const value = e.target.value;
+                        let value = e.target.value;
+                        if(value < 1) 
+                            value = 1;
+
                         setQuantity(value);
                     }}
                 />
