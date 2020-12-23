@@ -28,9 +28,7 @@ const ShoppingItem = ({ title, description, price, id }) => {
         ServerAPI.addToCart(username, id, quantity).then(response => {
             return response;
         })
-    }
-
-    console.log(id);
+    } 
 
     return (
         <Card>

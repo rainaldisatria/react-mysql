@@ -35,17 +35,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CartStatus = () => {
+const CartStatus = ({totalItem, totalHarga}) => {
     const classes = useStyles();
 
-    const username = useSelector(store => store.username);
-    const [cartData, setCartData] = useState();
-
-    useEffect(() => {
-        ServerAPI.fetchCart(username).then(response => {
-            setCartData(response.data);
-        })
-    }, [username])
+    const username = useSelector(store => store.username);  
 
     return (
         <>
@@ -54,11 +47,11 @@ const CartStatus = () => {
                     Ringkasan Belanja:
                     </Box>
                 <Box>
-                    Total Harga: Rp. 250.000
+                    Total Harga: {totalHarga}
                     </Box>
 
                 <Button variant='contained' className={classes.button} color='primary'>
-                    Beli (2)
+                    Beli ({totalItem})
                 </Button>
             </Paper>
         </>

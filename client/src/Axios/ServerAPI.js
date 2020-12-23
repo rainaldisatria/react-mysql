@@ -11,7 +11,7 @@ const Server = {
             if (response.data.sqlMessage) {
                 sendNotification(response.data.sqlMessage, 'error', 5);
             } 
-            
+
             return response;
         })
     },

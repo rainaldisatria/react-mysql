@@ -16,12 +16,11 @@ const useStyles = makeStyles((theme) => ({
 const Cart = () => {
     const classes = useStyles();
     const username = useSelector(store => store.username);
-    const [cartFields, setCartFields] = useState();   
+    const [cartFields, setCartFields] = useState();
     const [cartData, setCartData] = useState();
 
     const fetchCartData = () => {
-        ServerAPI.fetchCartData(username).then(res => {
-            console.log(res.data);
+        ServerAPI.fetchCartData(username).then(res => { 
             setCartData(res.data);
         })
     }
@@ -29,11 +28,11 @@ const Cart = () => {
     const fetchCart = () => {
         ServerAPI.fetchCart(username)
             .then(res => {
-                setCartFields(res.data);  
+                setCartFields(res.data);
             })
     }
 
-    const removeCart = (kodeObat) => { 
+    const removeCart = (kodeObat) => {
         const cartToBeRemoved = {
             username: username,
             kodeObat: kodeObat,
@@ -63,7 +62,7 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        fetchCart(); 
+        fetchCart();
         fetchCartData();
     }, [username]);
 
@@ -80,10 +79,7 @@ const Cart = () => {
                                 return (
                                     <Grid key={objectData['kodeObat']} item xs>
                                         <CartItem
-                                            prodName={'test'}
                                             id={objectData['kodeObat']}
-                                            desc={`objectData['DESC']`}
-                                            price={`objectData['HARGA']`}
                                             initialQuantity={objectData['quantity']}
                                             removeCart={removeCart}
                                             updateQuantityInDB={updateQuantityInDB}
@@ -95,12 +91,15 @@ const Cart = () => {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={4}>
-                    <CartStatus></CartStatus>
-                </Grid>
+                <Grid item xs={4}> 
+                    <CartStatus
+                        totalItem={cartData?.[1][0]['totalItem']}
+                        totalHarga={cartData?.[0][0]['totalHarga']}
+                    ></CartStatus>
+            </Grid>
             </Grid>
 
-        </Container>
+        </Container >
     )
 }
 

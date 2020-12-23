@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, updateQuantityInDB}) => {
+const CartItem = ({ id, initialQuantity, removeCart, updateQuantityInDB}) => {
     const classes = useStyles(); 
 
     const [data, setData] = useState();
@@ -59,8 +59,7 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, upda
     }
 
     useEffect(() => {
-        ServerAPI.fetchObatData(id).then(response => {
-            console.log(response.data);
+        ServerAPI.fetchObatData(id).then(response => { 
             setData(response.data[0]);
         })
     }, [id])

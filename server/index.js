@@ -13,41 +13,26 @@ const currentDB = mysql.createConnection({
     host: 'localhost',
     password: '',
     database: 'rumah_sakit',
+    multipleStatements: true,
 }); 
 
 //#region Anonymouse
+
 expressApp.post('/fetchCartData', (req, res) => {
-    const username = req.body.username;
+    const username = Object.keys(req.body)[0];
+    const getTotalPriceQuery = `SELECT SUM(cart.quantity * tabel_obat.Harga_Satuan) AS totalHarga FROM cart LEFT JOIN tabel_obat ON kodeObat = Kode_Obat WHERE cart.username = '${username}';`;
+    const getItemCountQuery = `SELECT SUM(quantity) as totalItem FROM cart WHERE username = '${username}';`;
 
-    const getItemCountQuery = `SELECT SUM(quantity) FROM cart WHERE username = '${username}'`;
-    const getTotalPriceQuery = `SELECT SUM(cart.quantity * tabel_obat.Harga_Satuan) AS total FROM cart LEFT JOIN tabel_obat ON kodeObat = Kode_Obat`
-
-    let data = null;
-
-    currentDB.query(getItemCountQuery, (error, result) => {
+    currentDB.query(getTotalPriceQuery + getItemCountQuery, (error, result) => {
         if(error){
             console.log(error);
             res.send(error);
         }
-        else{
+        else{ 
             console.log(result);
-            data.push(result);
+            res.send(result);
         }
-    })
-
-    currentDB.query(getTotalPriceQuery, (error, result) => {
-        if(error){
-            console.log(error);
-            res.send(error);
-        }
-        else{
-            console.log(result);
-            data.push(result);
-        }
-    })
-
-    console.log(data);
-    res.send(data)
+    }) 
 })
 
 expressApp.post('/fetchObatData', (req, res) => {
