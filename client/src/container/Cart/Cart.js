@@ -25,6 +25,23 @@ const Cart = () => {
             })
     }
 
+    const removeCart = (kodeObat) => {
+        console.log('removed');
+        const cartToBeRemoved = {
+            username: username,
+            kodeObat: kodeObat,
+        }
+
+        ServerAPI.removeCart(cartToBeRemoved)
+            .then(response => {
+                fetchCart();
+                return response;
+            })
+    }
+
+    const updateQuantityDB = (kodeObat, nweQuantity) => { 
+    }
+
     useEffect(() => {
         fetchCart();
     }, [username]);
@@ -40,13 +57,15 @@ const Cart = () => {
                         {
                             cartFields?.map((objectData, objId) => {
                                 return (
-                                    <Grid key={objId} item xs>
+                                    <Grid key={objectData['kodeObat']} item xs>
                                         <CartItem
                                             prodName={`objectData['PROD NAME']`}
                                             id={objectData['kodeObat']}
                                             desc={`objectData['DESC']`}
                                             price={`objectData['HARGA']`}
                                             initialQuantity={objectData['quantity']}
+                                            removeCart={removeCart}
+                                            updateQuantityDB={updateQuantityDB}
                                         />
                                     </Grid>
                                 )

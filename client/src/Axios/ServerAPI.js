@@ -6,13 +6,13 @@ import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadin
 const Server = {
     //#region Shopping
     removeCart: (cartToBeRemoved) => {
-        return Axios.post('http://localhost:3001/removeCart', cartToBeRemoved)
+        return Axios.post('http://localhost:3001/removeCartItem', cartToBeRemoved)
             .then(response => {
                 if (response.data.sqlMessage) {
                     sendNotification(response.data.sqlMessage, 'error', 5);
                 }
                 else {
-                    sendNotification('Cart removed!', 'success', 2);
+                    sendNotification('Item removed!', 'success', 2);
                 }
                 
                 return response;

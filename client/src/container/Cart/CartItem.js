@@ -33,10 +33,24 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CartItem = ({ prodName, desc, id, price, initialQuantity, remove}) => {
+const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, updateQuantityDB}) => {
     const classes = useStyles(); 
 
+    const [timeOut, setTimeOut] = useState(0);
     const [quantity, setQuantity] = useState(initialQuantity);
+
+    const onChangeHandler = (e) => {
+        const value = e.target.value;
+        setQuantity(value);
+
+        if(timeOut) {
+            clearTimeout(timeOut);
+        }
+
+        setTimeOut(setTimeout(() => {
+            updateQuantityDB();
+        }, 300))
+    }
 
     return (
         <div className={classes.root}>
@@ -72,7 +86,7 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, remove}) => {
                 </Grid>
                 <CardActions disableSpacing>
                     <div className={classes.expand}></div>
-                    <Button onClick={remove}>
+                    <Button onClick={() => removeCart(id)}>
                         <DeleteIcon />
                     </Button>
                     <TextField className={classes.textField}
@@ -85,6 +99,7 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, remove}) => {
                             shrink: true,
                         }} 
                         value={quantity}
+                        onChange={onChangeHandler}
                     />
                 </CardActions>
             </Paper>

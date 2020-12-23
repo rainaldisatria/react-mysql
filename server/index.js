@@ -15,6 +15,24 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
 });
 
+expressApp.post('/removeCartItem', (req, res) => {
+    const username = req.body.username;
+    const kodeObat = req.body.kodeObat;
+
+    const query = `DELETE FROM cart WHERE username = '${username}' and kodeObat = '${kodeObat}'`;
+
+    currentDB.query(query, (error, response) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(response);
+            res.send(response);
+        }
+    })
+})
+
 expressApp.post('/addToCart', (req, res) => {
     const username = req.body.username;
     const kodeObat = req.body.kodeObat;
