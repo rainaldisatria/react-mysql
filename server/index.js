@@ -13,7 +13,7 @@ const currentDB = mysql.createConnection({
     host: 'localhost',
     password: '',
     database: 'rumah_sakit',
-});
+}); 
 
 expressApp.post('/removeCartItem', (req, res) => {
     const username = req.body.username;
@@ -78,7 +78,7 @@ expressApp.post('/addToCart', (req, res) => {
     })
 })
 
-expressApp.get('/fetchHome', (req, res) => {
+expressApp.get('/fetchObat', (req, res) => {
     const query = `SELECT * FROM tabel_obat`;
 
     currentDB.query(query, (error, result) => {

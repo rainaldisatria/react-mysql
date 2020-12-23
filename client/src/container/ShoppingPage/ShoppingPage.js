@@ -14,7 +14,7 @@ const ShoppingPage = () => {
     const [items, setItems] = useState([{}]);
 
     useEffect(() => {
-        ServerAPI.fetchHome().then(response => {
+        ServerAPI.fetchObat().then(response => {
             setItems(response.data);
         })
     }, []) 

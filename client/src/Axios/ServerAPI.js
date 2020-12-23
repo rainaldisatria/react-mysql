@@ -49,9 +49,9 @@ const Server = {
         })
     },
 
-    fetchHome: () => {
+    fetchObat: () => {
         continuousStart();
-        return Axios.get('http://localhost:3001/fetchHome')
+        return Axios.get('http://localhost:3001/fetchObat')
             .then(response => {
                 if (response.data.sqlMessage) {
                     sendNotification(response.data.sqlMessage, 'error', 2);

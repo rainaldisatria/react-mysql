@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ServerAPI from '../../Axios/ServerAPI';
 import { useSelector } from 'react-redux';
-import { AppBar, Container, CssBaseline, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { Container, CssBaseline, Grid, makeStyles } from '@material-ui/core';
 import CartItem from './CartItem';
 import CartStatus from './CartStatus';
 
@@ -17,6 +17,15 @@ const Cart = () => {
     const classes = useStyles();
     const username = useSelector(store => store.username);
     const [cartFields, setCartFields] = useState();
+    const [obatFields, setObatFields] = useState();
+
+    const fetchObat = () => {
+        ServerAPI.fetchObat().then(response => {
+            setObatFields(response.data);
+            console.log(response.data);
+            return response;
+        })
+    }
 
     const fetchCart = () => {
         ServerAPI.fetchCart(username)
@@ -25,8 +34,7 @@ const Cart = () => {
             })
     }
 
-    const removeCart = (kodeObat) => {
-        console.log('removed');
+    const removeCart = (kodeObat) => { 
         const cartToBeRemoved = {
             username: username,
             kodeObat: kodeObat,
@@ -57,6 +65,7 @@ const Cart = () => {
 
     useEffect(() => {
         fetchCart();
+        fetchObat();
     }, [username]);
 
     return (
