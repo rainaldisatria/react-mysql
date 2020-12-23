@@ -19,6 +19,8 @@ const ShoppingPage = () => {
         })
     }, [])
 
+    console.log(items);
+
     return (
         <Container component="main" maxWidth="lg">
             <CssBaseline />

@@ -29,6 +29,22 @@ const Cart = () => {
         fetchCart();
     }, [username]);
 
+    let cartList = null;
+    if(cartList){
+        cartList = cartFields?.map((objectData, objId) => {
+            return (
+                <Grid item xs>
+                    <CartItem
+                        prodName={objectData['kodeObat']}
+                        id={objectData['kodeObat']}
+                        desc={objectData['kodeObat']}
+                        price={objectData['kodeObat']}
+                    />
+                </Grid>
+            )
+        })
+    }
+
     return (
         <Container component="main" maxWidth="lg">
             <CssBaseline />
@@ -38,18 +54,7 @@ const Cart = () => {
                 <Grid item container xs={8}>
                     <Grid item direction={'column'} xs container spacing={3}>
                         {
-                            cartFields?.map((objectData, objId) => {
-                                return (
-                                    <Grid item xs>
-                                        <CartItem
-                                            prodName={objectData['kodeObat']}
-                                            id={objectData['kodeObat']}
-                                            desc={objectData['kodeObat']}
-                                            price={objectData['kodeObat']}
-                                        />
-                                    </Grid>
-                                )
-                            })
+                            cartList
                         }
                     </Grid>
                 </Grid>
