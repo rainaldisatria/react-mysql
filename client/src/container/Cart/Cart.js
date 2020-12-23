@@ -18,6 +18,11 @@ const Cart = () => {
     const username = useSelector(store => store.username);
     const [cartFields, setCartFields] = useState();
     const [cartData, setCartData] = useState();
+    
+    const update = () => { 
+        fetchCart();
+        fetchCartData();
+    }
 
     const fetchCartData = () => {
         ServerAPI.fetchCartData(username).then(res => { 
@@ -40,7 +45,7 @@ const Cart = () => {
 
         ServerAPI.removeCart(cartToBeRemoved)
             .then(response => {
-                fetchCart();
+                update();
                 return response;
             })
     }
@@ -53,17 +58,15 @@ const Cart = () => {
         }
 
         ServerAPI.setCartItemQuantity(cartItemToBeModified)
-            .then(response => {
-                // update cart status;
-
-                console.log('updated');
+            .then(response => { 
+                update();
+                
                 return response;
             });
     }
 
     useEffect(() => {
-        fetchCart();
-        fetchCartData();
+        update();
     }, [username]);
 
     return (

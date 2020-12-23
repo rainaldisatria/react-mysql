@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import ServerAPI from '../../Axios/ServerAPI';
+import { useSelector } from 'react-redux'; 
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, CardActions, Button, Box } from "@material-ui/core/";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
+import Paper from "@material-ui/core/Paper"; 
+import {moneyFormat} from '../../Utility';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,7 +45,7 @@ const CartStatus = ({totalItem, totalHarga}) => {
                     Ringkasan Belanja:
                     </Box>
                 <Box>
-                    Total Harga: {totalHarga}
+                    Total Harga: {moneyFormat(totalHarga)}
                     </Box>
 
                 <Button variant='contained' className={classes.button} color='primary'>
