@@ -40,7 +40,11 @@ const CartItem = ({ prodName, desc, id, price, initialQuantity, removeCart, upda
     const [quantity, setQuantity] = useState(initialQuantity);
 
     const onChangeHandler = (e) => {
-        const value = e.target.value;
+        let value = e.target.value;
+
+        if(value < 1)
+            value = 1;
+
         setQuantity(value);
 
         if(timeOut) {
