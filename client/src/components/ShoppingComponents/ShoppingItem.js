@@ -36,9 +36,7 @@ const ShoppingItem = ({ title, description, price, id }) => {
             setMaxQuantity(response.data[0]?.['Jumlah_Sedia']);
         }) 
     }, [id])
-
-    console.log(maximumQuantity);
-
+    
     return (
         <Card>
             <CardActionArea>

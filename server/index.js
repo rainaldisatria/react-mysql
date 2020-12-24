@@ -123,6 +123,7 @@ expressApp.post('/setCartItemQuantity', (req, res) => {
             res.send(error);
         }
         else{ 
+            console.log(result);
             res.send(result);
         }
     })
