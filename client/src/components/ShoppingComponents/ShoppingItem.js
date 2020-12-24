@@ -9,7 +9,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
 import ServerAPI from '../../Axios/ServerAPI';
-import sendNotification from '../Notification/Notification'; 
+import sendNotification from '../Notification/Notification';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
     textField: {
@@ -20,23 +21,35 @@ const useStyles = makeStyles({
 const ShoppingItem = ({ title, description, price, id }) => {
     const classes = useStyles();
     const priceWithDot = price?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+    const history = useHistory();
 
     const username = useSelector(store => store.username);
-    const [quantity, setQuantity] = useState(1); 
-    const [maximumQuantity, setMaxQuantity] = useState(); 
+    const [quantity, setQuantity] = useState(1);
+    const [maximumQuantity, setMaxQuantity] = useState();
+    const [disabled, setDisabled] = useState(false);
 
     const addToCart = () => {
-        ServerAPI.addToCart(username, id, quantity).then(response => {
-            return response;
-        })
-    } 
+        if (username) {
+            ServerAPI.addToCart(username, id, quantity).then(response => {
+                return response;
+            })
+        }
+        else{
+            history.push('/login');
+            sendNotification('Please log in first!', 'info', 2);
+        }
+    }
 
-    useEffect(() => { 
-        ServerAPI.getJumlahPersediaan(id).then(response => { 
-            setMaxQuantity(response.data[0]?.['Jumlah_Sedia']);
-        }) 
+    useEffect(() => {
+        ServerAPI.getJumlahPersediaan(id).then(response => {
+            const maximumQuantity = response.data[0]?.['Jumlah_Sedia'];
+            setMaxQuantity(maximumQuantity);
+            if (maximumQuantity < 1) {
+                setDisabled(true);
+            }
+        })
     }, [id])
-    
+
     return (
         <Card>
             <CardActionArea>
@@ -76,13 +89,14 @@ const ShoppingItem = ({ title, description, price, id }) => {
                         let value = e.target.value;
                         if (value < 1)
                             value = 1;
-                        if(value > maximumQuantity)
+                        if (value > maximumQuantity)
                             value = maximumQuantity;
 
                         setQuantity(value);
                     }}
                 />
                 <Button
+                    disabled={disabled}
                     variant="contained"
                     color="primary"
                     onClick={addToCart}
