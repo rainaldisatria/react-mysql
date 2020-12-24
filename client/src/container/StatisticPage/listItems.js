@@ -47,7 +47,7 @@ export const statistik = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Penjualan" />
+      <ListItemText primary="Ringkasan Penjualan" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -61,5 +61,17 @@ export const statistik = (
       </ListItemIcon>
       <ListItemText primary="Transaksi" />
     </ListItem>
+  </div>
+);
+
+export const superAdmin = (
+  <div>
+    <ListSubheader inset>Super Admin</ListSubheader>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Control Panel" />
+    </ListItem> 
   </div>
 );

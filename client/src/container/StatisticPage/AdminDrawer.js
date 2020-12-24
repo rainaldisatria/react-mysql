@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, List, Drawer } from '@material-ui/core/';
-import { produk, statistik } from './listItems';
+import { produk, statistik, superAdmin } from './listItems';
 
 const drawerWidth = 240;
 
@@ -69,6 +69,8 @@ const AdminDrawer = () => {
             <List>{produk}</List>
             <Divider />
             <List>{statistik}</List>
+            <Divider />
+            <List>{superAdmin}</List>
         </Drawer>
     )
 }
