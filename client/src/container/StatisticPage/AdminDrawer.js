@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, List, Drawer } from '@material-ui/core/';
-import { produk, statistik, superAdmin } from './listItems';
+import { produk, statistik, superAdmin } from './DrawerItems';
 
 const drawerWidth = 240;
 

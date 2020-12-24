@@ -22,7 +22,7 @@ export const produk = (
         <ListItemText primary="List Obat" />
       </ListItem>
     </Link>
-    <Link to='/admin/persediaan'>
+    <Link to='/admin/persediaanObat'>
       <ListItem button>
         <ListItemIcon>
           <ShoppingCartIcon />
@@ -52,7 +52,7 @@ export const produk = (
 export const statistik = (
   <div>
     <ListSubheader inset>Statistik</ListSubheader>
-    <Link>
+    <Link to='/admin/statistik'>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />
