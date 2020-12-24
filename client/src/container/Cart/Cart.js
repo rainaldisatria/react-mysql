@@ -5,6 +5,7 @@ import { Box, Button, Container, CssBaseline, Grid, makeStyles, Typography } fro
 import CartItem from './CartItem';
 import CartStatus from './CartStatus';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+import sendNotification from '../../components/Notification/Notification';
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -65,6 +66,7 @@ const Cart = () => {
                 ServerAPI.buy(username, data)
                     .then(response => {
                         update();
+                        sendNotification('Pembelian mu berhasil!', 'success', 2);
                         return response;
                     })
             })
