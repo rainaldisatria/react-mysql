@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import {autoLogIn} from './store/actions';
 import Cart from './container/Cart/Cart';
 import MyAccount from './container/MyAccount/MyAccount';
+import NotFoundPage from './container/NotFoundPage/NotFoundPage';
 
 const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -36,7 +37,8 @@ function App() {
       <Route path='/admin' exact component={AdminDashboard} />
       <Route path='/login' exact component={LogInPage} />
       <Route path='/signup' exact component={SignUpPage} />
-      <Route path='/' component={ShoppingPage} />
+      <Route path='/' exact component={ShoppingPage} />
+      <Route path='/' component={NotFoundPage} />
     </Switch>
   )
 
