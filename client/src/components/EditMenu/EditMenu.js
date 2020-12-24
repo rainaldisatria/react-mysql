@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
-import { Modal } from '@material-ui/core'
+import { makeStyles, Modal } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions';
 import Server from '../../Axios/ServerAPI'; 
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+      position: 'absolute',
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
+
 const EditMenu = (props) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
     const tableName = useSelector(state => state.tableName);
@@ -41,7 +52,7 @@ const EditMenu = (props) => {
 
 
     let modalContent = (
-        <form>
+        <form className={classes.paper}>
             <h2>Edit Value</h2>
             <table style={{ width: "100%" }}>
                 <thead>
