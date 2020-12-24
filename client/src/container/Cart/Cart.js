@@ -6,6 +6,7 @@ import CartItem from './CartItem';
 import CartStatus from './CartStatus';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import sendNotification from '../../components/Notification/Notification';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
     const classes = useStyles();
+    const history = useHistory();
     const username = useSelector(store => store.username);
     const [cartFields, setCartFields] = useState([]);
     const [cartData, setCartData] = useState([]);
@@ -116,7 +118,12 @@ const Cart = () => {
                 <Typography>Daripada dianggurin, mending isi dengan barang-barang impianmu. Yuk, cek sekarang!</Typography>
             </Box>
             <Box className={classes.mulaiBelanjaButton}>
-                <Button variant='contained' color='primary' >
+                <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={() => {
+                        history.push('/');
+                    }}>
                     Mulai Belanja
             </Button>
             </Box>
