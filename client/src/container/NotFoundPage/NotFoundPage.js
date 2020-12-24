@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(8, 0, 6),
     },
     heroButtons: {
-        marginTop: theme.spacing(4),
+        marginTop: theme.spacing(16),
     }, 
 })); 
 
@@ -51,7 +51,7 @@ const NotFoundPage = () => {
             <main>
                 {/* Hero unit */}
                 <div className={classes.heroContent}>
-                    <Container maxWidth="sm">
+                    <Container maxWidth="xl">
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                             Waduh, tujuanmu nggak ada!
                         </Typography>

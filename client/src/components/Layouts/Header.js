@@ -58,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
     },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 5,
+    }
 }));
 
 
@@ -172,7 +175,7 @@ const Header = () => {
 
     return (
         <>
-            <AppBar position='fixed'>
+            <AppBar position='fixed' className={classes.appBar}>
                 <Toolbar>
                     <Link to='/'>
                         <Button className={classes.white}>

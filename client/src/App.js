@@ -34,7 +34,7 @@ function App() {
     <Switch>
       <Route path='/myaccount' exact component={MyAccount} />
       <Route path='/cart' exact component={Cart} />
-      <Route path='/admin' exact component={AdminDashboard} />
+      <Route path='/admin' exact component={Dashboard} />
       <Route path='/login' exact component={LogInPage} />
       <Route path='/signup' exact component={SignUpPage} />
       <Route path='/' exact component={ShoppingPage} />
