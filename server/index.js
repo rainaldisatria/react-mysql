@@ -17,6 +17,22 @@ const currentDB = mysql.createConnection({
 }); 
 
 //#region Anonymouse
+expressApp.post('/fetchJumlahPersediaan', (req, res) => { 
+    const kodeObat = req.body.kodeObat;
+
+    const query = `SELECT Jumlah_Sedia FROM tabel_persediaan WHERE Kode_Obat = '${kodeObat}'`;
+    console.log(query);
+    currentDB.query(query, (error, response) =>  {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{ 
+            res.send(response);
+        }
+    })
+})
+
 
 expressApp.post('/fetchCartData', (req, res) => {
     const username = Object.keys(req.body)[0];
@@ -28,8 +44,7 @@ expressApp.post('/fetchCartData', (req, res) => {
             console.log(error);
             res.send(error);
         }
-        else{ 
-            console.log(result);
+        else{  
             res.send(result);
         }
     }) 
@@ -44,8 +59,7 @@ expressApp.post('/fetchObatData', (req, res) => {
             console.log(error);
             res.send(error);
         }
-        else{
-            console.log(result);
+        else{ 
             res.send(result)
         }
     })
@@ -63,8 +77,7 @@ expressApp.post('/removeCartItem', (req, res) => {
             console.log(error);
             res.send(error);
         }
-        else{
-            console.log(response);
+        else{ 
             res.send(response);
         }
     })
@@ -84,8 +97,7 @@ expressApp.post('/setCartItemQuantity', (req, res) => {
             console.log(error);
             res.send(error);
         }
-        else{
-            console.log(result);
+        else{ 
             res.send(result);
         }
     })
@@ -108,8 +120,7 @@ expressApp.post('/addToCart', (req, res) => {
             console.log(error);
             res.send(error);
         }
-        else{
-            console.log(result);
+        else{ 
             res.send(result);
         }
     })
@@ -123,8 +134,7 @@ expressApp.get('/fetchObat', (req, res) => {
             console.log(error);
             res.send(error);
         }
-        else {
-            console.log(result);
+        else { 
             res.send(result);
         }
     })

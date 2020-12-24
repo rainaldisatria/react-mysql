@@ -5,6 +5,17 @@ import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadin
 
 const Server = {
     //#region Shopping
+    getJumlahPersediaan: (id) => {
+        return Axios.post('http://localhost:3001/fetchJumlahPersediaan', {kodeObat: id})
+        .then(response => {
+            if (response.data.sqlMessage) {
+                sendNotification(response.data.sqlMessage, 'error', 5);
+            } 
+
+            return response;
+        })
+    },
+
     fetchCartData: (username) => {
         return Axios.post('http://localhost:3001/fetchCartData', username)
         .then(response => {

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShoppingPage = () => {
     const classes = useStyles()
-    const [items, setItems] = useState([{}]);
+    const [items, setItems] = useState([{}]); 
 
     useEffect(() => {
         ServerAPI.fetchObat().then(response => {

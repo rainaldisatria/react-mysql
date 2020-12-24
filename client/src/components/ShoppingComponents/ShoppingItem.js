@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Box, TextField } from '@material-ui/core/';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
 import ServerAPI from '../../Axios/ServerAPI';
-import sendNotification from '../Notification/Notification';
+import sendNotification from '../Notification/Notification'; 
 
 const useStyles = makeStyles({
     textField: {
@@ -22,13 +22,23 @@ const ShoppingItem = ({ title, description, price, id }) => {
     const priceWithDot = price?.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 
     const username = useSelector(store => store.username);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(1); 
+    const [maximumQuantity, setMaxQuantity] = useState(); 
 
     const addToCart = () => {
         ServerAPI.addToCart(username, id, quantity).then(response => {
             return response;
         })
     } 
+
+    useEffect(() => { 
+        ServerAPI.getJumlahPersediaan(id).then(response => {
+            console.log(response.data[0]?.['Jumlah_Sedia']);
+            setMaxQuantity(response.data[0]?.['Jumlah_Sedia']);
+        }) 
+    }, [id])
+
+    console.log(maximumQuantity);
 
     return (
         <Card>
@@ -69,6 +79,8 @@ const ShoppingItem = ({ title, description, price, id }) => {
                         let value = e.target.value;
                         if (value < 1)
                             value = 1;
+                        if(value > maximumQuantity)
+                            value = maximumQuantity;
 
                         setQuantity(value);
                     }}

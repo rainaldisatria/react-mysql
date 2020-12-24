@@ -1,8 +1,8 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
-import ShoppingItem from './ShoppingItem';
+import ShoppingItem from './ShoppingItem'; 
 
-const ShoppingContent = ({ items }) => {
+const ShoppingContent = ({ items }) => { 
     return (
         <Grid container spacing={4}>
             {
@@ -13,7 +13,7 @@ const ShoppingContent = ({ items }) => {
                                 title={objectData['Nama_Obat']} 
                                 description={objectData['Bentuk_Obat']} 
                                 price={objectData['Harga_Satuan']}
-                                id={objectData['Kode_Obat']}
+                                id={objectData['Kode_Obat']} 
                                 />
                         </Grid>
                     )
