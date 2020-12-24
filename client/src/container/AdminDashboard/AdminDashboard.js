@@ -11,15 +11,15 @@ const AdminDashboard = () => {
                 tableName={'log_perubahan'}
             ></EditableTable>
             <EditableTable
-                Editable
+                editable
                 tableName={'obat_kadaluarsa'}
             ></EditableTable>
             <EditableTable
-                Editable
+                editable
                 tableName={'tabel_obat'}
             ></EditableTable>
             <EditableTable
-                Editable
+                editable
                 tableName={'tabel_persediaan'}
             ></EditableTable>
         </div>

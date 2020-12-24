@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions';
 import Notification from '../Notification/Notification'
 
-const EditableTable = (props) => {
+const EditableTable = ({tableName, editable}) => {
     const dispatch = useDispatch();
     const [tableData, setTableData] = useState([{}]);
 
@@ -16,22 +16,22 @@ const EditableTable = (props) => {
     }, [])
 
     const update = () => {
-        Server.fetchTableData(props.tableName).then(res => { setTableData(res.data) })
+        Server.fetchTableData(tableName).then(res => { setTableData(res.data) })
     }
 
     const editHandler = (defaultData) => {
-        dispatch(actions.setEditModal(true, defaultData, props.tableName, update));
+        dispatch(actions.setEditModal(true, defaultData, tableName, update));
     }
 
     const deleteHandler = (columnName, value) => {
-        Server.deleteFromTable(props.tableName, columnName, value).then(res => {
+        Server.deleteFromTable(tableName, columnName, value).then(res => {
             update();
         })
     }
     let actionHeader = <th>Action</th>;
 
     let addButton = <AddRowToTable
-        tableName={props.tableName} 
+        tableName={tableName} 
         onClick={update}
     ></AddRowToTable>
 
@@ -39,14 +39,14 @@ const EditableTable = (props) => {
         actionHeader = <th>Empty Table</th>
     }
 
-    if (!props.Editable) {
+    if (!editable) {
         addButton = null;
         actionHeader = null; 
     }
 
     return (
         <div>
-            <h3>{props.tableName}</h3>
+            <h3>{tableName}</h3>
             <table style={{ width: "100%" }}>
                 <thead>
                     <tr>
@@ -74,7 +74,7 @@ const EditableTable = (props) => {
                                             : null
                                         }
                                         {
-                                            props.Editable ?
+                                            editable ?
                                                 <td>
                                                     <button onClick={() => {
                                                         editHandler(objectData);

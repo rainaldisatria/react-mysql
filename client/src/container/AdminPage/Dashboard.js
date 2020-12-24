@@ -13,6 +13,7 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import { Switch, Route } from 'react-router-dom';
+import ListObatPage from './ListObat/ListObatPage';
 
 const drawerWidth = 240;
 
@@ -81,6 +82,7 @@ export default function Dashboard() {
 
   let route =
     <Switch>
+      <Route path='/admin/listObat' exact component={ListObatPage} />
       <Route path='/admin/statistik' exact component={statistik} />
       <Route path='/admin' exact component={content} />
     </Switch>
