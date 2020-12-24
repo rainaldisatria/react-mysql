@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, List, Drawer } from '@material-ui/core/';
-import { mainListItems, secondaryListItems } from './listItems';
+import { produk, statistik } from './listItems';
 
 const drawerWidth = 240;
 
@@ -66,9 +66,9 @@ const AdminDrawer = () => {
             }}
         >
             <div className={classes.appBarSpacer} />
-            <List>{mainListItems}</List>
+            <List>{produk}</List>
             <Divider />
-            <List>{secondaryListItems}</List>
+            <List>{statistik}</List>
         </Drawer>
     )
 }
