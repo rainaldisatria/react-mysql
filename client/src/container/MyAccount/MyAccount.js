@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-    },
+    }, 
 }));
 
 const MyAccount = () => {
@@ -61,7 +61,7 @@ const MyAccount = () => {
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
-                            <TextField
+                            <TextField InputLabelProps={{ shrink: true }}
                                 autoComplete="fname"
                                 name="firstName"
                                 variant="outlined"
@@ -77,7 +77,7 @@ const MyAccount = () => {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField
+                            <TextField InputLabelProps={{ shrink: true }}
                                 variant="outlined"
                                 fullWidth
                                 id="lastName"
@@ -92,7 +92,7 @@ const MyAccount = () => {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
+                            <TextField InputLabelProps={{ shrink: true }}
                                 variant="outlined"
                                 fullWidth
                                 id="username"
@@ -107,7 +107,7 @@ const MyAccount = () => {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
+                            <TextField InputLabelProps={{ shrink: true }}
                                 variant="outlined"
                                 fullWidth
                                 name="password"
