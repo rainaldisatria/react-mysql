@@ -40,12 +40,16 @@ const CartItem = ({ id, initialQuantity, removeCart, updateQuantityInDB}) => {
     const [data, setData] = useState();
     const [timeOut, setTimeOut] = useState(0);
     const [quantity, setQuantity] = useState(initialQuantity);
+    const [maxQuantity, setMaxQuantity] = useState();
 
     const onChangeHandler = (e) => {
         let value = e.target.value;
 
         if(value < 1)
             value = 1;
+
+        if(value > maxQuantity)
+            value = maxQuantity;
 
         setQuantity(value);
 
@@ -58,7 +62,15 @@ const CartItem = ({ id, initialQuantity, removeCart, updateQuantityInDB}) => {
         }, 300))
     }
 
+    
+    const getMaxQuantity = () => {
+        ServerAPI.getJumlahPersediaan(id).then(response => { 
+            setMaxQuantity(response.data[0]?.['Jumlah_Sedia']);
+        }) 
+    }
+
     useEffect(() => {
+        getMaxQuantity();
         ServerAPI.fetchObatData(id).then(response => { 
             setData(response.data[0]);
         })
