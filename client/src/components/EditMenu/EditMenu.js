@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
+import { Modal } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions';
-import Server from '../../Axios/ServerAPI';
-
-Modal.setAppElement('#root');
+import Server from '../../Axios/ServerAPI'; 
 
 const EditMenu = (props) => {
     const dispatch = useDispatch();
@@ -14,7 +12,7 @@ const EditMenu = (props) => {
 
     // {Kode_Obat: "SRSCF1723", Nama_Obat: "SUCRALFATE", Bentuk_Obat: "Syrup", 
     // Tgl_Produksi: "2017-03-22T17:00:00.000Z", Tgl_Kadaluarsa: "2023-03-19T17:00:00.000Z", …}
-    const defaultData = useSelector(state => state.defaultData); 
+    const defaultData = useSelector(state => state.defaultData);
 
     //[{"Field":"Kode_Obat","Type":"varchar(10)","Null":"NO","Key":"PRI","Default":null,"Extra":""},
     const [tableDesc, setTableDesc] = useState([{}]);
@@ -24,8 +22,8 @@ const EditMenu = (props) => {
     const saveChanges = (e) => {
         e.preventDefault();
         Server.editTableFields(tableName, editFields, defaultData)
-            .then(res => { 
-                dispatch(actions.diasbleEditModal()); 
+            .then(res => {
+                dispatch(actions.diasbleEditModal());
                 return res
             });
     }
@@ -104,13 +102,16 @@ const EditMenu = (props) => {
             }}>Cancel</button>
             <button onClick={(e) => saveChanges(e)}>Save Changes</button>
         </form>
-    ) 
+    )
 
     return (
         <Modal
-            isOpen={editModal}
-            onAfterOpen={onOpenHandler}
-            onRequestClose={onCloseHandler}>
+            open={editModal}
+            onRendered={onOpenHandler}
+            onClose={onCloseHandler}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+        >
             {modalContent}
         </Modal>
     )
