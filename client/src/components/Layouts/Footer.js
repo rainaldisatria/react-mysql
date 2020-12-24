@@ -14,11 +14,12 @@ const Footer = () => {
     return (
         <Box mt={8}>
             <Typography variant="body2" color="textSecondary" align="center">
-                {'Copyright © '}
+                {'Dikembangkan oleh: '}
                 <Link to='/' color="inherit">
                     Kelompok 4 PBDL UPNVJ
                 </Link>{' '}
                 {new Date().getFullYear()}
+                {' Kelas A'}
                 {'.'}
             </Typography>
             <div className={classes.content}>

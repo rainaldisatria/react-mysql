@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStat } from '../../store/actions';
 import ServerAPI from '../../Axios/ServerAPI';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -89,12 +89,12 @@ const Header = () => {
 
     const myAccount = () => {
         history.push('/myaccount');
-    } 
+    }
 
     useEffect(() => {
         ServerAPI.fetchAccount(username)
             .then(response => {
-                setUserType(response.data[0]?.userType); 
+                setUserType(response.data[0]?.userType);
             });
     }, [username])
 
@@ -111,12 +111,10 @@ const Header = () => {
                     <Button className={classes.white}> Admin </Button>
                 </Link>
         }
-        else {
-            cart =
-                <Link to='/cart'>
-                    <Button className={classes.white}> Cart </Button>
-                </Link>
-        }
+        cart =
+            <Link to='/cart'>
+                <Button className={classes.white}> Cart </Button>
+            </Link>
 
         myProfile =
             <div>
@@ -149,7 +147,7 @@ const Header = () => {
                         myAccount();
                     }}>My account</MenuItem>
 
-                    <MenuItem onClick={() => { 
+                    <MenuItem onClick={() => {
                         handleClose();
                         logOut();
                     }}>Log Out</MenuItem>

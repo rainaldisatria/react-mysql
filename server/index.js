@@ -66,6 +66,31 @@ expressApp.post('/fetchObatData', (req, res) => {
 })
 //#endregion
 
+expressApp.post('/buy', (req, res) => {
+    const username = req.body.username;
+    const data = req.body.data;
+
+    const insertIntoOrdersQuery = `INSERT INTO orders (date, username, kodeObat, namaObat, hargaSatuan, bentukObat, quantity)
+    VALUES (CURDATE(), '${username}', '${data.Kode_Obat}', '${data.Nama_Obat}', '${data.Harga_Satuan}', '${data.Bentuk_Obat}', '${data.quantity}');`;
+
+    const insertToTableTransaksi = `INSERT INTO tabel_transaksi (Kode_Obat, Tgl_Transaksi, Jumlah_Obat) 
+    VALUES ('${data.Kode_Obat}', CURDATE(), '${data.quantity}') ON DUPLICATE KEY UPDATE
+    Jumlah_Obat = Jumlah_Obat + ${data.quantity};`;
+
+    const clearCartQuery = `DELETE FROM cart WHERE username = '${username}'`;
+
+    currentDB.query(insertIntoOrdersQuery + insertToTableTransaksi + clearCartQuery, (error, response) => {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(response);
+            res.send(response);
+        }
+    }) 
+})
+
 expressApp.post('/removeCartItem', (req, res) => {
     const username = req.body.username;
     const kodeObat = req.body.kodeObat;

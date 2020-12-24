@@ -32,8 +32,7 @@ const ShoppingItem = ({ title, description, price, id }) => {
     } 
 
     useEffect(() => { 
-        ServerAPI.getJumlahPersediaan(id).then(response => {
-            console.log(response.data[0]?.['Jumlah_Sedia']);
+        ServerAPI.getJumlahPersediaan(id).then(response => { 
             setMaxQuantity(response.data[0]?.['Jumlah_Sedia']);
         }) 
     }, [id])

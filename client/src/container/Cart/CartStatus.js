@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'; 
+import { useSelector } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, CardActions, Button, Box } from "@material-ui/core/";
-import Paper from "@material-ui/core/Paper"; 
-import {moneyFormat} from '../../Utility';
+import Paper from "@material-ui/core/Paper";
+import { moneyFormat } from '../../Utility';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,14 +33,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CartStatus = ({totalItem, totalHarga}) => {
+const CartStatus = ({ totalItem, totalHarga, buy, update }) => {
     const classes = useStyles();
 
-    const username = useSelector(store => store.username);  
-
-    const buy = () => {
-
-    }
+    const username = useSelector(store => store.username);
 
     return (
         <>
@@ -50,9 +46,12 @@ const CartStatus = ({totalItem, totalHarga}) => {
                     </Box>
                 <Box>
                     Total Price: {moneyFormat(totalHarga)}
-                    </Box>
+                </Box>
 
-                <Button variant='contained' className={classes.button} color='primary' onClick={buy}>
+                <Button variant='contained' className={classes.button} color='primary'
+                    onClick={() => {
+                        buy(); 
+                    }}>
                     Buy ({totalItem})
                 </Button>
             </Paper>
