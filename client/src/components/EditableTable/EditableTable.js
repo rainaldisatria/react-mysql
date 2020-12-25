@@ -4,7 +4,6 @@ import Server from '../../Axios/ServerAPI';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions';
 import Notification from '../Notification/Notification'
-import { Paper } from '@material-ui/core';
 
 const EditableTable = ({ tableName, editable, showHeader }) => {
     const dispatch = useDispatch();
@@ -47,7 +46,7 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
     }
 
     return (
-        <Paper>
+        <div>
             {showHeader ? <h3>{tableName}</h3> : null}
             <table style={{ width: "100%" }}>
                 <thead>
@@ -96,7 +95,7 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
                 </tbody>
             </table>
             {addButton}
-        </Paper>
+        </div>
     )
 }
 

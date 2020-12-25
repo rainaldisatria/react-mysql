@@ -12,6 +12,7 @@ import ControlPanel from './ControlPanel/ControlPanel';
 import PersediaanPage from './Produk/Persediaan/PersediaanPage'
 import LogPerubahanPage from './Produk/LogPerubahan/LogPerubahanPage';
 import ObatKadaluarsa from './Produk/ObatKadaluarsa/ObatKadaluarsaPage';
+import Footer from '../../components/Layouts/Footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,11 +23,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
+  }, 
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -59,11 +56,11 @@ export default function AdminDashboard() {
 
 
   return (
-    <div className={classes.root}>
+    <div>
       <CssBaseline />
       <EditMenu></EditMenu>
       <AdminDrawer />
-      {route}
+      {route} 
     </div>
   );
 }
