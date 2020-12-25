@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions';
 import Notification from '../Notification/Notification'
 
-const EditableTable = ({tableName, editable}) => {
+const EditableTable = ({ tableName, editable, showHeader }) => {
     const dispatch = useDispatch();
     const [tableData, setTableData] = useState([{}]);
 
@@ -20,6 +20,7 @@ const EditableTable = ({tableName, editable}) => {
     }
 
     const editHandler = (defaultData) => {
+      console.log('clicked');
         dispatch(actions.setEditModal(true, defaultData, tableName, update));
     }
 
@@ -31,22 +32,22 @@ const EditableTable = ({tableName, editable}) => {
     let actionHeader = <th>Action</th>;
 
     let addButton = <AddRowToTable
-        tableName={tableName} 
+        tableName={tableName}
         onClick={update}
     ></AddRowToTable>
 
-    if(tableData.length <= 0){
+    if (tableData.length <= 0) {
         actionHeader = <th>Empty Table</th>
     }
 
     if (!editable) {
         addButton = null;
-        actionHeader = null; 
+        actionHeader = null;
     }
 
     return (
         <div>
-            <h3>{tableName}</h3>
+            {showHeader ? <h3>{tableName}</h3> : null}
             <table style={{ width: "100%" }}>
                 <thead>
                     <tr>
@@ -68,10 +69,10 @@ const EditableTable = ({tableName, editable}) => {
                                     <tr key={objId}>
                                         {
                                             objectData ?
-                                            Object.keys(objectData).map((keyName, index) => {
-                                                return (<td key={objId + " " + index}>{objectData[keyName]}</td>)
-                                            })
-                                            : null
+                                                Object.keys(objectData).map((keyName, index) => {
+                                                    return (<td key={objId + " " + index}>{objectData[keyName]}</td>)
+                                                })
+                                                : null
                                         }
                                         {
                                             editable ?

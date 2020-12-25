@@ -14,6 +14,10 @@ import Deposits from './Deposits';
 import Orders from './Orders';
 import { Switch, Route } from 'react-router-dom';
 import ListObatPage from './ListObat/ListObatPage';
+import PersediaanPage from './Persediaan/PersediaanPage';
+import { Button } from '@material-ui/core';
+import AlertDialogSlide from './DialogTest';
+import EditMenu from '../../components/EditMenu/EditMenu';
 
 const drawerWidth = 240;
 
@@ -83,14 +87,20 @@ export default function Dashboard() {
   let route =
     <Switch>
       <Route path='/admin/listObat' exact component={ListObatPage} />
+      <Route path='/admin/persediaanObat ' exact component={PersediaanPage} />
       <Route path='/admin/statistik' exact component={statistik} />
-      <Route path='/admin' exact component={content} />
+      <Route path='/admin/logPerubahan' exact component={AlertDialogSlide} />
+      <Route path='/admin/' exact component={content} />
     </Switch>
 
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root}> 
+      <EditMenu></EditMenu>
       <CssBaseline />
+      <Button onClick={() => {
+
+      }}>TETS</Button>
       <AdminDrawer />
       {route}
     </div>

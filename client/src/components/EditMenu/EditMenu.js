@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
-import { makeStyles, Modal } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, makeStyles, Modal, Slide } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions';
-import Server from '../../Axios/ServerAPI'; 
+import Server from '../../Axios/ServerAPI';
+
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-      position: 'absolute',
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+        position: 'absolute',
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
     },
-  }));
+}));
 
 const EditMenu = (props) => {
     const classes = useStyles();
@@ -116,15 +123,29 @@ const EditMenu = (props) => {
     )
 
     return (
-        <Modal
+        <Dialog
             open={editModal}
-            onRendered={onOpenHandler}
+            TransitionComponent={Transition} 
+            onEnter={onOpenHandler}
             onClose={onCloseHandler}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
         >
-            {modalContent}
-        </Modal>
+            <DialogTitle id="alert-dialog-slide-title">{"Edit Table"}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                {modalContent}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onCloseHandler} color="primary">
+                    Disagree
+          </Button>
+                <Button onClick={onCloseHandler} color="primary">
+                    Agree
+          </Button>
+            </DialogActions>
+        </Dialog>
     )
 }
 

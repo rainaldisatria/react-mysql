@@ -30,7 +30,7 @@ export const produk = (
         <ListItemText primary="Persediaan" />
       </ListItem>
     </Link>
-    <Link>
+    <Link to='/admin/logPerubahan'>
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
