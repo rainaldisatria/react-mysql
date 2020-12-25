@@ -18,7 +18,7 @@ const ControlPanel = () => {
 
     return (
         <Container className={classes.content} maxWidth='lg' componenent='main'> 
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            <Typography component="h1" variant="h2" align="Left" color="textPrimary" gutterBottom>
                 Control Panel
             </Typography>
             <EditableTable
