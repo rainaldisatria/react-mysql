@@ -15,7 +15,7 @@ const PersediaanPage = () => {
     return (
         <Container component='main' maxWidth='md' className={classes.container}>
             <CssBaseline />
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            <Typography component="h1" variant="h2" align="left" color="textPrimary" gutterBottom>
                 Tabel Persediaan
             </Typography>
             <EditableTable

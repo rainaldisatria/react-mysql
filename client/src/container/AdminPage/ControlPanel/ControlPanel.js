@@ -24,6 +24,7 @@ const ControlPanel = () => {
             <EditableTable
                 tableName={'log_perubahan'}
                 showHeader
+                editable
             ></EditableTable>
             <EditableTable
                 editable
