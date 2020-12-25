@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, Paper, Typography, List, ListItem, Menu, ListItemText, MenuItem, TextField, Button } from '@material-ui/core';
+import { Container, Grid, makeStyles, Paper, Typography, List, ListItem, Menu, ListItemText, MenuItem, TextField, Button, Divider } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import Deposits from '../../Deposits';
 import Orders from '../../Orders';
@@ -25,14 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 340,
-  },
-  date: {
-    padding: '19px',
-  },
-  findButton: {
-    marginTop: '25px',
-    marginLeft: '380px'
-  }
+  },  
 }));
 
 const options = [
@@ -52,35 +45,33 @@ const StatisticPage = () => {
   let datePicker = null;
   if (selectedIndex === 3) {
     datePicker =
-      <Grid item container>
-        <Grid item xs={3}>
-          <form noValidate className={classes.date}>
-            <TextField
-              id="date"
-              label="From"
-              type="date"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </form>
+      <Grid item container style={{marginTop: '0px', padding: '20px'}}>
+        <Grid item xs={4}>
+          <TextField
+            id="firstName" 
+            label="From"
+            type='date'
+            InputLabelProps={{
+              shrink: true,
+            }}   
+            required
+            fullWidth  
+          />
         </Grid>
-        <Grid item xs={3}>
-          <form noValidate className={classes.date}>
-            <TextField
-              id="date"
-              label="Until"
-              type="date"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </form>
+        <Grid item xs={4}>
+          <TextField
+            id="date"
+            label="Until"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }} 
+            required
+            fullWidth  
+          />
         </Grid>
-        <Grid item xs className={classes.findButton}>
-          <Button variant='contained' color='primary'>
+        <Grid item xs={4} style={{margin: 'auto'}} justify="flex-end" container>
+          <Button color='primary'>
             Find
            </Button>
         </Grid>
@@ -138,14 +129,12 @@ const StatisticPage = () => {
       </Menu>
     </div>
 
-
-
   return <Container maxWidth="lg" className={classes.container}>
     <div className={classes.appBarSpacer} />
 
     <Typography component="h1" variant="h2" align="left" color="textPrimary" gutterBottom>
       Ringkasan Penjualan
-      </Typography>
+    </Typography>
 
     <Grid container spacing={3}>
       <Grid item xs={3}>
@@ -154,8 +143,8 @@ const StatisticPage = () => {
         </Paper>
       </Grid>
 
-      <Grid item xs={9}>
-        <Paper>
+      <Grid item xs={9} md={5} lg={6}>
+        <Paper >
           {datePicker}
         </Paper>
       </Grid>
@@ -167,6 +156,7 @@ const StatisticPage = () => {
         </Paper>
       </Grid>
 
+
       {/* Recent Deposits */}
       <Grid item xs={12} md={4} lg={3}>
         <Paper className={fixedHeightPaper}>
@@ -174,7 +164,27 @@ const StatisticPage = () => {
         </Paper>
       </Grid>
 
-      {/* Recent Orders */}
+      <Grid item xs={12}>
+        <Paper className={classes.paper}>
+          <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
+            Januari
+          </Typography>
+          <EditableTable
+            tableName='view_januari'
+          />
+        </Paper>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Divider />
+      </Grid>
+
+      <Grid item xs>
+        <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
+          Penjualan 3 bulan pertama
+      </Typography>
+      </Grid>
+
       <Grid item xs={12}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
