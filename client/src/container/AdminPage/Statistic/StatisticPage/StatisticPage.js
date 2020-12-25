@@ -60,13 +60,15 @@ const StatisticPage = () => {
   //#region Menu
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  console.log(tableData);
+
   const getLifeTimeAnalyticTableData = () => {
     const data = {
-      fromDate: '1000-01-01',
+      fromDate: '0000-01-01',
       untilDate: '9999-12-31',
     }
     ServerAPI.getAnalyticTable(data)
-      .then(response => { 
+      .then(response => {
         setTableData(response.data);
         setTableHeader(options[selectedIndex])
       })
@@ -75,19 +77,38 @@ const StatisticPage = () => {
 
   const getThisMonthAnalyticData = () => {
     var my_date = new Date();
-    var first_date = new Date(my_date.getFullYear(), my_date.getMonth(), 1);
-    var last_date = new Date(my_date.getFullYear(), my_date.getMonth() + 1, 0);
+    const month = my_date.toLocaleString('default', { month: 'long' });
 
-    console.log(`${my_date.getFullYear()}-${my_date.getMonth() + 1}-${0}`)
+    // To ISOString aga aneh. Dia ketinggalan 1 hari
+    var first_date = new Date(my_date.getFullYear(), my_date.getMonth(), 2).toISOString().split('T')[0];
+    var last_date = new Date(my_date.getFullYear(), my_date.getMonth() + 1, 1).toISOString().split('T')[0];
+
     const data = {
-      fromDate: `${my_date.getFullYear()}-${my_date.getMonth()}-${1}`,
-      untilDate: `${my_date.getFullYear()}-${my_date.getMonth() + 1}-${0}`,
+      fromDate: first_date,
+      untilDate: last_date,
     }
 
     ServerAPI.getAnalyticTable(data)
-      .then(response => { 
+      .then(response => {
         setTableData(response.data);
-        setTableHeader(my_date.getMonth())
+        setTableHeader(month);
+      })
+  }
+
+  const getThisYearAnalyticData = () => {
+    const curDate = new Date();
+    var fromDate = new Date(curDate.getFullYear(), 0, 2).toISOString().split('T')[0];
+    var untilDate = new Date(curDate.getFullYear(), 12, 1).toISOString().split('T')[0];
+
+    const data = {
+      fromDate: fromDate,
+      untilDate: untilDate,
+    }
+
+    ServerAPI.getAnalyticTable(data)
+      .then(response => {
+        setTableData(response.data);
+        setTableHeader(curDate.getFullYear());
       })
   }
 
@@ -104,7 +125,7 @@ const StatisticPage = () => {
         getThisMonthAnalyticData();
         break;
       case options.indexOf('This Year'):
-        console.log('This Year')
+        getThisYearAnalyticData();
         break;
       case options.indexOf('Pick Time Span'):
         console.log('Pick Time Span')

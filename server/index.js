@@ -68,7 +68,7 @@ expressApp.post('/fetchObatData', (req, res) => {
 
 expressApp.post('/getAnalyticTable', (req, res) => {
     const fromDate = req.body.fromDate;
-    const untilDate = req.body.untilDate;
+    const untilDate = req.body.untilDate; 
 
     // YYYY MM DD
     const query = `SELECT tabel_obat.kode_obat, nama_obat, harga_satuan, SUM(jumlah_obat) AS jumlah_terjual,

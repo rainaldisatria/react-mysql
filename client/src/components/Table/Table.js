@@ -15,12 +15,11 @@ const Table = ({ tableName, editable, showHeader, table }) => {
         if (tableName) {
             update();
         }
-        else{
-            console.log('else');
+        else{  
             setTableData(table)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [tableName, table])
 
     const update = () => {
         Server.fetchTableData(tableName).then(res => { setTableData(res.data) })
