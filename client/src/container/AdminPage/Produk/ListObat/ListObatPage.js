@@ -1,21 +1,19 @@
 import { Container, CssBaseline, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import EditableTable from '../../../components/EditableTable/EditableTable';
+import EditableTable from '../../../../components/EditableTable/EditableTable';
 
 const useStyles = makeStyles(theme => ({
     root: {
         textAlign: 'center',
-    },
-    appBarSpacer: {
-        appBarSpacer: theme.mixins.toolbar,
-    },
+    }, 
     content: {
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+
     },
     container: {
-        paddingTop: theme.spacing(4),
+        paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(4),
     },
 }))

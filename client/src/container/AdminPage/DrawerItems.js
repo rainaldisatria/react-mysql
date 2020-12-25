@@ -38,7 +38,7 @@ export const produk = (
         <ListItemText primary="Log Perubahan" />
       </ListItem>
     </Link>
-    <Link>
+    <Link to='/admin/obatKadaluarsa'>
       <ListItem button>
         <ListItemIcon>
           <BarChartIcon />
@@ -61,7 +61,7 @@ export const statistik = (
       </ListItem>
     </Link>
 
-    <Link>
+    <Link to='/admin/orders'>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />
@@ -70,7 +70,7 @@ export const statistik = (
       </ListItem>
     </Link>
 
-    <Link>
+    <Link to='/admin/transactions'>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />

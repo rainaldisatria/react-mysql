@@ -12,7 +12,7 @@ const Footer = () => {
     const classes = useStyles();
 
     return (
-        <Box mt={8}>
+        <Container className={classes.content} maxWidth='lg' componenent='main'> 
             <Typography variant="body2" color="textSecondary" align="center">
                 {'Dikembangkan oleh: '}
                 <Link to='/' color="inherit">
@@ -30,7 +30,7 @@ const Footer = () => {
                 <br />
                 <br />
             </div>
-        </Box>
+            </Container>
     );
 }
 
