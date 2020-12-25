@@ -4,6 +4,7 @@ import Server from '../../Axios/ServerAPI';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions';
 import Notification from '../Notification/Notification'
+import { Button } from '@material-ui/core';
 
 const EditableTable = ({ tableName, editable, showHeader }) => {
     const dispatch = useDispatch();
@@ -20,7 +21,6 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
     }
 
     const editHandler = (defaultData) => {
-      console.log('clicked');
         dispatch(actions.setEditModal(true, defaultData, tableName, update));
     }
 
@@ -77,14 +77,18 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
                                         {
                                             editable ?
                                                 <td>
-                                                    <button onClick={() => {
-                                                        editHandler(objectData);
-                                                    }}>Edit</button>
-                                                    <button onClick={() => {
-                                                        const columnName = Object.keys(objectData)[0];
-                                                        deleteHandler(columnName, objectData[columnName]);
-                                                    }
-                                                    }>Delete</button>
+                                                    <Button
+                                                        style={{ width: '50%' }}
+                                                        onClick={() => {
+                                                            editHandler(objectData);
+                                                        }}>Edit</Button>
+                                                    <Button
+                                                        style={{ width: '50%' }}
+                                                        onClick={() => {
+                                                            const columnName = Object.keys(objectData)[0];
+                                                            deleteHandler(columnName, objectData[columnName]);
+                                                        }
+                                                        }>Delete</Button>
                                                 </td>
                                                 : null
                                         }
