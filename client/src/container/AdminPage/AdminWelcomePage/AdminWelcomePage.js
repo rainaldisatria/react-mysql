@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(32),
-        marginRight: theme.spacing(23)
+        paddingBottom: theme.spacing(40), 
     },
     avatar: {
         margin: 'auto',

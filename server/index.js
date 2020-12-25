@@ -14,20 +14,20 @@ const currentDB = mysql.createConnection({
     password: '',
     database: 'rumah_sakit',
     multipleStatements: true,
-}); 
+});
 
 //#region Anonymouse
-expressApp.post('/fetchJumlahPersediaan', (req, res) => { 
+expressApp.post('/fetchJumlahPersediaan', (req, res) => {
     const kodeObat = req.body.kodeObat;
 
     const query = `SELECT Jumlah_Sedia FROM tabel_persediaan WHERE Kode_Obat = '${kodeObat}'`;
     console.log(query);
-    currentDB.query(query, (error, response) =>  {
-        if(error){
+    currentDB.query(query, (error, response) => {
+        if (error) {
             console.log(error);
             res.send(error);
         }
-        else{ 
+        else {
             res.send(response);
         }
     })
@@ -40,31 +40,44 @@ expressApp.post('/fetchCartData', (req, res) => {
     const getItemCountQuery = `SELECT SUM(quantity) as totalItem FROM cart WHERE username = '${username}';`;
 
     currentDB.query(getTotalPriceQuery + getItemCountQuery, (error, result) => {
-        if(error){
+        if (error) {
             console.log(error);
             res.send(error);
         }
-        else{  
+        else {
             res.send(result);
         }
-    }) 
+    })
 })
 
 expressApp.post('/fetchObatData', (req, res) => {
     const kodeObat = Object.keys(req.body)[0];
 
-    const query = `SELECT * FROM tabel_obat WHERE Kode_Obat = '${kodeObat}'`; 
+    const query = `SELECT * FROM tabel_obat WHERE Kode_Obat = '${kodeObat}'`;
     currentDB.query(query, (error, result) => {
-        if(error){
+        if (error) {
             console.log(error);
             res.send(error);
         }
-        else{ 
+        else {
             res.send(result)
         }
     })
 })
 //#endregion
+
+expressApp.get('/statistic', (req, res) => {
+    const firstDate = req.body.firstDate;
+    const secondDate = req.body.secondDate;
+
+    const query = `SELECT kode_obat, nama_obat, harga_satuan, SUM(jumlah_obat) AS jumlah_terjual,
+    harga_satuan * SUM(jumlah_obat) AS Total_Harga_Terjual, (100-SUM(jumlah_obat)) as sisa_stok
+    FROM tabel_obat JOIN tabel_transaksi ON
+    tabel_obat.kode_obat = tabel_transaksi.kode_obat JOIN tabel_persediaan ON 
+    tabel_persediaan.kode_obat = tabel_obat.kode_obat 
+    WHERE (tabel_transaksi.Tgl_Transaksi BETWEEN '${firstDate}' AND '${secondDate}') 
+    group by kode_obat ;`
+})
 
 expressApp.post('/buy', (req, res) => {
     const username = req.body.username;
@@ -80,15 +93,15 @@ expressApp.post('/buy', (req, res) => {
     const clearCartQuery = `DELETE FROM cart WHERE username = '${username}'`;
 
     currentDB.query(insertIntoOrdersQuery + insertToTableTransaksi + clearCartQuery, (error, response) => {
-        if(error){
+        if (error) {
             console.log(error);
             res.send(error);
         }
-        else{
+        else {
             console.log(response);
             res.send(response);
         }
-    }) 
+    })
 })
 
 expressApp.post('/removeCartItem', (req, res) => {
@@ -98,11 +111,11 @@ expressApp.post('/removeCartItem', (req, res) => {
     const query = `DELETE FROM cart WHERE username = '${username}' and kodeObat = '${kodeObat}'`;
 
     currentDB.query(query, (error, response) => {
-        if(error){
+        if (error) {
             console.log(error);
             res.send(error);
         }
-        else{ 
+        else {
             res.send(response);
         }
     })
@@ -118,11 +131,11 @@ expressApp.post('/setCartItemQuantity', (req, res) => {
     console.log(query);
 
     currentDB.query(query, (error, result) => {
-        if(error){
+        if (error) {
             console.log(error);
             res.send(error);
         }
-        else{ 
+        else {
             console.log(result);
             res.send(result);
         }
@@ -142,11 +155,11 @@ expressApp.post('/addToCart', (req, res) => {
     console.log(query);
 
     currentDB.query(query, (error, result) => {
-        if(error){
+        if (error) {
             console.log(error);
             res.send(error);
         }
-        else{ 
+        else {
             res.send(result);
         }
     })
@@ -160,7 +173,7 @@ expressApp.get('/fetchObat', (req, res) => {
             console.log(error);
             res.send(error);
         }
-        else { 
+        else {
             res.send(result);
         }
     })

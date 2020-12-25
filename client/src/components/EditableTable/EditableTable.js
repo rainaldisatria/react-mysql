@@ -76,7 +76,7 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
                                         }
                                         {
                                             editable ?
-                                                <td>
+                                                <td width='150px'>
                                                     <Button
                                                         color='primary'
                                                         style={{ width: '50%' }}
