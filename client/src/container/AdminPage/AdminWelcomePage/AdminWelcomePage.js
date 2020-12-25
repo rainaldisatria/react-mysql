@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     container: {
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(32),
+        marginRight: theme.spacing(23)
     },
     avatar: {
         margin: 'auto',
@@ -42,7 +43,7 @@ const AdminWelcomePage = () => {
                     <SupervisorAccountIcon style={{fontSize: 200}}/>
                 </Avatar>
                 <Box fontWeight='fontWeightBold' textAlign='center' fontSize={32}>
-                    Welcome to admin page!
+                    Welcome to admin page
                 </Box>
                 <div className={classes.subtitle} />
                 <Box textAlign='center' className=''>

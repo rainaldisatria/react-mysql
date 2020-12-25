@@ -48,7 +48,7 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
     return (
         <div>
             {showHeader ? <h3>{tableName}</h3> : null}
-            <table style={{ width: "100%" }}>
+            <table style={{ width: "100%", textAlign: 'center' }}>
                 <thead>
                     <tr>
                         { // Render table column name 

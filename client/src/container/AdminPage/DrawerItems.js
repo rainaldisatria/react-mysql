@@ -10,6 +10,10 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Link } from 'react-router-dom';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import ReceiptIcon from '@material-ui/icons/Receipt'; 
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import BuildIcon from '@material-ui/icons/Build';
 
 export const produk = (
   <div>
@@ -17,7 +21,7 @@ export const produk = (
     <Link to='/admin/listObat'>
       <ListItem button>
         <ListItemIcon>
-          <DashboardIcon />
+          <LocalHospitalIcon />
         </ListItemIcon>
         <ListItemText primary="List Obat" />
       </ListItem>
@@ -55,7 +59,7 @@ export const statistik = (
     <Link to='/admin/statistik'>
       <ListItem button>
         <ListItemIcon>
-          <AssignmentIcon />
+          <BarChartIcon />
         </ListItemIcon>
         <ListItemText primary="Ringkasan Penjualan" />
       </ListItem>
@@ -64,7 +68,7 @@ export const statistik = (
     <Link to='/admin/orders'>
       <ListItem button>
         <ListItemIcon>
-          <AssignmentIcon />
+          <AssignmentIndIcon />
         </ListItemIcon>
         <ListItemText primary="Pesanan" />
       </ListItem>
@@ -73,7 +77,7 @@ export const statistik = (
     <Link to='/admin/transactions'>
       <ListItem button>
         <ListItemIcon>
-          <AssignmentIcon />
+          <ReceiptIcon />
         </ListItemIcon>
         <ListItemText primary="Transaksi" />
       </ListItem>
@@ -87,7 +91,7 @@ export const superAdmin = (
     <Link to='/admin/controlpanel'>
       <ListItem button>
         <ListItemIcon>
-          <AssignmentIcon />
+          <BuildIcon />
         </ListItemIcon>
         <ListItemText primary="Control Panel" />
       </ListItem>
