@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AdminDrawer from './AdminDrawer'; 
+import AdminDrawer from './AdminDrawer';
 import { Switch, Route } from 'react-router-dom';
-import ListObatPage from './Produk/ListObat/ListObatPage'; 
+import ListObatPage from './Produk/ListObat/ListObatPage';
 import EditMenu from '../../components/EditMenu/EditMenu';
 import StatisticPage from './Statistic/StatisticPage';
 import AdminWelcomePage from './AdminWelcomePage/AdminWelcomePage';
@@ -16,14 +16,14 @@ import Footer from '../../components/Layouts/Footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    marginLeft: theme.spacing(9),
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
-  }, 
+  },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -40,14 +40,14 @@ export default function AdminDashboard() {
 
   let route =
     <Switch>
-      <Route path='/admin/listObat' exact component={ListObatPage} /> 
-      <Route path='/admin/persediaanObat' exact component={PersediaanPage} /> 
-      <Route path='/admin/logPerubahan' exact component={LogPerubahanPage} /> 
-      <Route path='/admin/obatKadaluarsa' exact component={ObatKadaluarsa} /> 
+      <Route path='/admin/listObat' exact component={ListObatPage} />
+      <Route path='/admin/persediaanObat' exact component={PersediaanPage} />
+      <Route path='/admin/logPerubahan' exact component={LogPerubahanPage} />
+      <Route path='/admin/obatKadaluarsa' exact component={ObatKadaluarsa} />
 
-      <Route path='/admin/statistik' exact component={StatisticPage} /> 
-      <Route path='/admin/orders' exact component={StatisticPage} /> 
-      <Route path='/admin/transactions' exact component={StatisticPage} /> 
+      <Route path='/admin/statistik' exact component={StatisticPage} />
+      <Route path='/admin/orders' exact component={StatisticPage} />
+      <Route path='/admin/transactions' exact component={StatisticPage} />
 
       <Route path='/admin/controlpanel' exact component={ControlPanel} />
       <Route path='/admin/' exact component={AdminWelcomePage} />
@@ -60,7 +60,9 @@ export default function AdminDashboard() {
       <CssBaseline />
       <EditMenu></EditMenu>
       <AdminDrawer />
-      {route} 
+      <div className={classes.root}>
+        {route}
+      </div>
     </div>
   );
 }

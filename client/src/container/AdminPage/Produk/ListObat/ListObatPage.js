@@ -5,13 +5,7 @@ import EditableTable from '../../../../components/EditableTable/EditableTable';
 const useStyles = makeStyles(theme => ({
     root: {
         textAlign: 'center',
-    }, 
-    content: {
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-
-    },
+    },  
     container: {
         paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(4),
