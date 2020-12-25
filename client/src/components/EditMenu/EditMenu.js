@@ -11,14 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        position: 'absolute',
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
+const useStyles = makeStyles((theme) => ({ 
 }));
 
 const EditMenu = (props) => {
@@ -123,7 +116,8 @@ const EditMenu = (props) => {
     )
 
     return (
-        <Dialog
+        <Dialog 
+        maxWidth='lg'
             open={editModal}
             TransitionComponent={Transition} 
             onEnter={onOpenHandler}
