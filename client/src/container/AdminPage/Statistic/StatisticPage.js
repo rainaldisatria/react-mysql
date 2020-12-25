@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 340,
-  },
+  }, 
   date:{
-    marginLeft: '15%',
+    padding: '19px',
   }
 }));
 
@@ -48,36 +48,32 @@ const StatisticPage = () => {
   let datePicker = null;
   if (selectedIndex === 3) {
     datePicker =
-      <Grid item container className={classes.date}>
-        <Grid item xs={6}>
-          <div>
-            <form className={classes.container} noValidate>
+      <Grid item container>
+        <Grid item xs={6}> 
+            <form noValidate className={classes.date}>
               <TextField
                 id="date"
                 label="From"
-                type="date" 
+                type="date"
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-            </form>
-          </div>
+            </form> 
         </Grid>
-        <Grid item xs={6}>
-          <div>
-            <form className={classes.container} noValidate>
+        <Grid item xs={6}> 
+            <form noValidate className={classes.date}>
               <TextField
                 id="date"
                 label="Until"
-                type="date" 
+                type="date"
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-            </form>
-          </div>
+            </form> 
         </Grid>
       </Grid>
   }
@@ -101,7 +97,7 @@ const StatisticPage = () => {
   //#endregion
 
   let menu =
-    <div>
+    <div className={classes.menu}>
       <List component="nav" aria-label="Device settings">
         <ListItem
           button
@@ -143,13 +139,13 @@ const StatisticPage = () => {
       </Typography>
 
     <Grid container spacing={3}>
-      <Grid item xs={12}>
+      <Grid item xs={3}>
         <Paper>
           {menu}
         </Paper>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={9}>
         <Paper>
           {datePicker}
         </Paper>

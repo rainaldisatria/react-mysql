@@ -70,7 +70,8 @@ expressApp.get('/statistic', (req, res) => {
     const firstDate = req.body.firstDate;
     const secondDate = req.body.secondDate;
 
-    const query = `SELECT kode_obat, nama_obat, harga_satuan, SUM(jumlah_obat) AS jumlah_terjual,
+    // YYYY MM DD
+    const query = `SELECT tabel_obat.kode_obat, nama_obat, harga_satuan, SUM(jumlah_obat) AS jumlah_terjual,
     harga_satuan * SUM(jumlah_obat) AS Total_Harga_Terjual, (100-SUM(jumlah_obat)) as sisa_stok
     FROM tabel_obat JOIN tabel_transaksi ON
     tabel_obat.kode_obat = tabel_transaksi.kode_obat JOIN tabel_persediaan ON 
