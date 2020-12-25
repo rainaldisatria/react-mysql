@@ -1,10 +1,12 @@
 import { Container, Grid, makeStyles, Paper, Typography, List, ListItem, Menu, ListItemText, MenuItem, TextField, Button, Divider } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import Deposits from '../../Deposits';
-import Orders from '../../Orders';
 import clsx from 'clsx';
 import Chart from '../../Chart';
-import EditableTable from '../../../../components/EditableTable/EditableTable'
+import Table from '../../../../components/Table/Table'
+import DatePicker from './DatePicker';
+import OptionMenu from './OptionMenu';
+import ServerAPI from '../../../../Axios/ServerAPI';
 
 const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 340,
-  },  
+  },
 }));
 
 const options = [
@@ -39,56 +41,64 @@ const StatisticPage = () => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [tableData, setTableData] = React.useState();
+
+
+  const getLifeTimeAnalyticTableData = () => {
+    const data = {
+      fromDate: '1000-01-01',
+      untilDate: '9999-12-31',
+    }
+    ServerAPI.getAnalyticTable(data)
+      .then(response => {
+        console.log(response.data);
+        setTableData(response.data);
+      })
+  }
+
+  useEffect(() => {
+    getLifeTimeAnalyticTableData();
+  }, [])
+
+  //#region Date 
+  const find = () => {
+
+  }
 
   let datePicker = null;
-  if (selectedIndex === 3) {
-    datePicker =
-      <Grid item container style={{marginTop: '0px', padding: '20px'}}>
-        <Grid item xs={4}>
-          <TextField
-            id="firstName" 
-            label="From"
-            type='date'
-            InputLabelProps={{
-              shrink: true,
-            }}   
-            required
-            fullWidth  
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            id="date"
-            label="Until"
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }} 
-            required
-            fullWidth  
-          />
-        </Grid>
-        <Grid item xs={4} style={{margin: 'auto'}} justify="flex-end" container>
-          <Button color='primary'>
-            Find
-           </Button>
-        </Grid>
-      </Grid>
+  if (selectedIndex === options.indexOf('Pick Time Span')) {
+    datePicker = <DatePicker find={find} />;
   }
-  else {
-    console.log(selectedIndex)
-  }
+  //#endregion
 
-  //#region Menu methods
+  //#region Menu
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  useEffect(() => {
+    switch (selectedIndex) {
+      case options.indexOf('Lifetime'):
+        getLifeTimeAnalyticTableData();
+        break;
+      case options.indexOf('This Month'):
+        console.log('This Month')
+        break;
+      case options.indexOf('This Year'):
+        console.log('This Year')
+        break;
+      case options.indexOf('Pick Time Span'):
+        console.log('Pick Time Span')
+        break;
+    }
+  }, [selectedIndex])
+
   const handleClickListItem = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
-    setAnchorEl(null);
+    handleClose();
   };
 
   const handleClose = () => {
@@ -96,38 +106,6 @@ const StatisticPage = () => {
   };
   //#endregion
 
-  let menu =
-    <div className={classes.menu}>
-      <List component="nav" aria-label="Device settings">
-        <ListItem
-          button
-          aria-haspopup="true"
-          aria-controls="lock-menu"
-          aria-label="Waktu Penjualan"
-          onClick={handleClickListItem}
-        >
-          <ListItemText primary="Waktu Penjualan" secondary={options[selectedIndex]} />
-        </ListItem>
-      </List>
-
-      <Menu
-        id="lock-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {options.map((option, index) => (
-          <MenuItem
-            key={option}
-            selected={index === selectedIndex}
-            onClick={(event) => handleMenuItemClick(event, index)}
-          >
-            {option}
-          </MenuItem>
-        ))}
-      </Menu>
-    </div>
 
   return <Container maxWidth="lg" className={classes.container}>
     <div className={classes.appBarSpacer} />
@@ -139,7 +117,13 @@ const StatisticPage = () => {
     <Grid container spacing={3}>
       <Grid item xs={3}>
         <Paper>
-          {menu}
+          <OptionMenu
+            options={options}
+            selectedIndex={selectedIndex}
+            handleClickListItem={handleClickListItem}
+            handleClose={handleClose}
+            handleMenuItemClick={handleMenuItemClick}
+            anchorEl={anchorEl} />
         </Paper>
       </Grid>
 
@@ -164,16 +148,19 @@ const StatisticPage = () => {
         </Paper>
       </Grid>
 
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
-            Januari
-          </Typography>
-          <EditableTable
-            tableName='view_januari'
-          />
-        </Paper>
-      </Grid>
+      {
+        tableData ?
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
+                Total Penjualan: {options[selectedIndex]}
+            </Typography>
+              <Table
+                table={tableData}
+              />
+            </Paper>
+          </Grid> : null
+      }
 
       <Grid item xs={12}>
         <Divider />
@@ -190,7 +177,7 @@ const StatisticPage = () => {
           <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
             Januari
           </Typography>
-          <EditableTable
+          <Table
             tableName='view_januari'
           />
         </Paper>
@@ -201,7 +188,7 @@ const StatisticPage = () => {
           <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
             Februari
           </Typography>
-          <EditableTable
+          <Table
             tableName='view_februari'
           />
         </Paper>
@@ -212,7 +199,7 @@ const StatisticPage = () => {
           <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
             Maret
           </Typography>
-          <EditableTable
+          <Table
             tableName='view_maret'
           />
         </Paper>

@@ -6,13 +6,19 @@ import * as actions from '../../store/actions';
 import Notification from '../Notification/Notification'
 import { Button } from '@material-ui/core';
 
-const EditableTable = ({ tableName, editable, showHeader }) => {
+const Table = ({ tableName, editable, showHeader, table }) => {
     const dispatch = useDispatch();
     const [tableData, setTableData] = useState([{}]);
 
     // Start
     useEffect(() => {
-        update();
+        if (tableName) {
+            update();
+        }
+        else{
+            console.log('else');
+            setTableData(table)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -36,7 +42,7 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
         onClick={update}
     ></AddRowToTable>
 
-    if (tableData.length <= 0) {
+    if (tableData?.length <= 0) {
         actionHeader = <th>Empty Table</th>
     }
 
@@ -52,7 +58,7 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
                 <thead>
                     <tr>
                         { // Render table column name 
-                            tableData[0] ?
+                            tableData?.[0] ?
                                 Object.keys(tableData[0]).map((columnName, index) => {
                                     return <th key={index}>{columnName}</th>
                                 })
@@ -105,4 +111,4 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
     )
 }
 
-export default EditableTable;
+export default Table;

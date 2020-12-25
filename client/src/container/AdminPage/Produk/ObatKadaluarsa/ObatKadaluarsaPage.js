@@ -1,6 +1,6 @@
 import { Container, CssBaseline, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import EditableTable from '../../../../components/EditableTable/EditableTable';
+import Table from '../../../../components/Table/Table';
 
 const useStyles = makeStyles(theme => ({ 
     content: {
@@ -23,7 +23,7 @@ const LogPerubahanPage = () => {
             <Typography component="h1" variant="h2" align="left" color="textPrimary" gutterBottom>
                 Obat Kadaluarsa
             </Typography>
-            <EditableTable
+            <Table
                 tableName='obat_kadaluarsa' 
             />
         </Container>

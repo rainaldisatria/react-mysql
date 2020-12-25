@@ -1,6 +1,6 @@
 import { Container, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import EditableTable from '../../../components/EditableTable/EditableTable';
+import Table from '../../../components/Table/Table';
 
 const useStyles = makeStyles(theme => ({
     content: {
@@ -21,26 +21,26 @@ const ControlPanel = () => {
             <Typography component="h1" variant="h2" align="Left" color="textPrimary" gutterBottom>
                 Control Panel
             </Typography>
-            <EditableTable
+            <Table
                 tableName={'log_perubahan'}
                 showHeader
                 editable
-            ></EditableTable>
-            <EditableTable
+            ></Table>
+            <Table
                 editable
                 tableName={'obat_kadaluarsa'}
                 showHeader
-            ></EditableTable>
-            <EditableTable
+            ></Table>
+            <Table
                 editable
                 tableName={'tabel_obat'}
                 showHeader
-            ></EditableTable>
-            <EditableTable
+            ></Table>
+            <Table
                 editable
                 tableName={'tabel_persediaan'}
                 showHeader
-            ></EditableTable>
+            ></Table>
         </Container>
     )
 }

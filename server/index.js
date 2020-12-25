@@ -66,9 +66,9 @@ expressApp.post('/fetchObatData', (req, res) => {
 })
 //#endregion
 
-expressApp.get('/statistic', (req, res) => {
-    const firstDate = req.body.firstDate;
-    const secondDate = req.body.secondDate;
+expressApp.post('/getAnalyticTable', (req, res) => {
+    const fromDate = req.body.fromDate;
+    const untilDate = req.body.untilDate;
 
     // YYYY MM DD
     const query = `SELECT tabel_obat.kode_obat, nama_obat, harga_satuan, SUM(jumlah_obat) AS jumlah_terjual,
@@ -76,8 +76,20 @@ expressApp.get('/statistic', (req, res) => {
     FROM tabel_obat JOIN tabel_transaksi ON
     tabel_obat.kode_obat = tabel_transaksi.kode_obat JOIN tabel_persediaan ON 
     tabel_persediaan.kode_obat = tabel_obat.kode_obat 
-    WHERE (tabel_transaksi.Tgl_Transaksi BETWEEN '${firstDate}' AND '${secondDate}') 
+    WHERE (tabel_transaksi.Tgl_Transaksi BETWEEN '${fromDate}' AND '${untilDate}') 
     group by kode_obat ;`
+    console.log(query);
+
+    currentDB.query(query, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    })
 })
 
 expressApp.post('/buy', (req, res) => {

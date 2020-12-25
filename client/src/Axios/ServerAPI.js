@@ -4,34 +4,50 @@ import sendNotification from '../components/Notification/Notification';
 import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadingBar';
 
 const Server = {
+    //#region Server
+    getAnalyticTable: (data) => {
+        return Axios.post('http://localhost:3001/getAnalyticTable', data)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 5);
+                }
+
+                return response;
+            }).catch(err => {
+                console.log(err);
+                return err;
+            })
+    },
+    //#endregion
+
     //#region Shopping
     buy: (username, data) => {
-        return Axios.post('http://localhost:3001/buy', {username: username, data: data})
-        .then(response => {
-            if (response.data.sqlMessage) {
-                sendNotification(response.data.sqlMessage, 'error', 5);
-            } 
+        return Axios.post('http://localhost:3001/buy', { username: username, data: data })
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 5);
+                }
 
-            return response;
-        })
+                return response;
+            })
     },
 
     getJumlahPersediaan: (id) => {
-        return Axios.post('http://localhost:3001/fetchJumlahPersediaan', {kodeObat: id})
-        .then(response => {
-            if (response.data.sqlMessage) {
-                sendNotification(response.data.sqlMessage, 'error', 5);
-            } 
+        return Axios.post('http://localhost:3001/fetchJumlahPersediaan', { kodeObat: id })
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 5);
+                }
 
-            return response;
-        })
+                return response;
+            })
     },
 
     fetchObatData: (id) => {
         return Axios.post('http://localhost:3001/fetchObatData', id).then(response => {
             if (response.data.sqlMessage) {
                 sendNotification(response.data.sqlMessage, 'error', 5);
-            } 
+            }
 
             return response;
         })
@@ -39,13 +55,13 @@ const Server = {
 
     setCartItemQuantity: (cartItemToBeModified) => {
         return Axios.post('http://localhost:3001/setCartItemQuantity', cartItemToBeModified)
-        .then(response => {
-            if (response.data.sqlMessage) {
-                sendNotification(response.data.sqlMessage, 'error', 5);
-            } 
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 5);
+                }
 
-            return response;
-        })
+                return response;
+            })
     },
 
     removeCart: (cartToBeRemoved) => {
@@ -57,7 +73,7 @@ const Server = {
                 else {
                     sendNotification('Item removed!', 'success', 2);
                 }
-                
+
                 return response;
             })
     },
@@ -112,16 +128,16 @@ const Server = {
 
     fetchCartData: (username) => {
         return Axios.post('http://localhost:3001/fetchCartData', username)
-        .then(response => {
-            if (response.data.sqlMessage) {
-                sendNotification(response.data.sqlMessage, 'error', 5);
-            } 
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 5);
+                }
 
-            return response;
-        })
-        .catch(err => {
-            return err;
-        })
+                return response;
+            })
+            .catch(err => {
+                return err;
+            })
     },
     //#endregion
 
