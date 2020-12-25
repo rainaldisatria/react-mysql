@@ -35,7 +35,7 @@ const options = [
   'Lifetime',
   'This Month',
   'This Year',
-  'Pick Time Span',
+  'Time Span',
 ];
 
 const StatisticPage = () => {
@@ -46,21 +46,39 @@ const StatisticPage = () => {
   const [tableData, setTableData] = React.useState();
   const [tableHeader, setTableHeader] = React.useState();
 
-  //#region Date 
-  const find = () => {
+  //#region Date  
+  const [fromDate, setFromDate] = React.useState();
+  const [untilDate, setUntilDate] = React.useState();
 
+  const find = () => {
+    const formatedFromDate = fromDate;
+    const formatedUntilDate = untilDate;  
+
+    const data = {
+      fromDate: formatedFromDate,
+      untilDate: formatedUntilDate,
+    }
+    ServerAPI.getAnalyticTable(data)
+      .then(response => {
+        setTableData(response.data);
+        setTableHeader(`${fromDate} - ${untilDate}`)
+      })
   }
 
   let datePicker = null;
-  if (selectedIndex === options.indexOf('Pick Time Span')) {
-    datePicker = <DatePicker find={find} />;
+  if (selectedIndex === options.indexOf('Time Span')) {
+    datePicker = <DatePicker
+      find={find}
+      fromDate={fromDate}
+      untilDate={untilDate}
+      setFromDate={setFromDate}
+      setUntilDate={setUntilDate} />;
   }
+
   //#endregion
 
   //#region Menu
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  console.log(tableData);
+  const [anchorEl, setAnchorEl] = React.useState(null); 
 
   const getLifeTimeAnalyticTableData = () => {
     const data = {
@@ -127,8 +145,7 @@ const StatisticPage = () => {
       case options.indexOf('This Year'):
         getThisYearAnalyticData();
         break;
-      case options.indexOf('Pick Time Span'):
-        console.log('Pick Time Span')
+      case options.indexOf('Time Span'):
         break;
     }
   }, [selectedIndex])
