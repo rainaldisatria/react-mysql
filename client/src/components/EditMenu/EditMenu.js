@@ -4,18 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions';
 import Server from '../../Axios/ServerAPI';
 
-
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
-});
+});  
 
-
-const useStyles = makeStyles((theme) => ({ 
-}));
-
-const EditMenu = (props) => {
-    const classes = useStyles();
+const EditMenu = (props) => { 
     const dispatch = useDispatch();
 
     const tableName = useSelector(state => state.tableName);
@@ -46,14 +39,14 @@ const EditMenu = (props) => {
         })
     }
 
-    const onCloseHandler = () => {
+    const onCloseHandler = (e) => {
+        e.preventDefault();
         dispatch(actions.diasbleEditModal());
     }
 
 
     let modalContent = (
-        <form className={classes.paper}>
-            <h2>Edit Value</h2>
+        <form onSubmit={(e) => saveChanges(e)}>
             <table style={{ width: "100%" }}>
                 <thead>
                     <tr>
@@ -107,36 +100,37 @@ const EditMenu = (props) => {
                     }
                 </tbody>
             </table>
-            <button onClick={(e) => {
-                e.preventDefault();
-                onCloseHandler();
-            }}>Cancel</button>
-            <button onClick={(e) => saveChanges(e)}>Save Changes</button>
         </form>
     )
 
     return (
-        <Dialog 
-        maxWidth='lg'
+        <Dialog
+            maxWidth='lg'
             open={editModal}
-            TransitionComponent={Transition} 
+            TransitionComponent={Transition}
             onEnter={onOpenHandler}
             onClose={onCloseHandler}
             aria-labelledby="alert-dialog-slide-title"
             aria-describedby="alert-dialog-slide-description"
         >
-            <DialogTitle id="alert-dialog-slide-title">{"Edit Table"}</DialogTitle>
+            <DialogTitle id="alert-dialog-slide-title">{"Edit Fields"}</DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
                 {modalContent}
-                </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onCloseHandler} color="primary">
-                    Disagree
+                <Button
+                    onClick={(e) => onCloseHandler(e)}
+                    size='small'
+                    variant='outlined' 
+                >
+                    Cancel
           </Button>
-                <Button onClick={onCloseHandler} color="primary">
-                    Agree
+                <Button
+                    onClick={(e) => saveChanges(e)}
+                    size='small'
+                    variant='outlined'
+                >
+                    Save Changes
           </Button>
             </DialogActions>
         </Dialog>
