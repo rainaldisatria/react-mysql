@@ -7,6 +7,7 @@ import Table from '../../../../components/Table/Table'
 import DatePicker from './DatePicker';
 import OptionMenu from './OptionMenu';
 import ServerAPI from '../../../../Axios/ServerAPI';
+import { getCurrentDateToSQL } from '../../../../Utility';
 
 const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -43,23 +44,7 @@ const StatisticPage = () => {
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tableData, setTableData] = React.useState();
-
-
-  const getLifeTimeAnalyticTableData = () => {
-    const data = {
-      fromDate: '1000-01-01',
-      untilDate: '9999-12-31',
-    }
-    ServerAPI.getAnalyticTable(data)
-      .then(response => {
-        console.log(response.data);
-        setTableData(response.data);
-      })
-  }
-
-  useEffect(() => {
-    getLifeTimeAnalyticTableData();
-  }, [])
+  const [tableHeader, setTableHeader] = React.useState();
 
   //#region Date 
   const find = () => {
@@ -75,13 +60,48 @@ const StatisticPage = () => {
   //#region Menu
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const getLifeTimeAnalyticTableData = () => {
+    const data = {
+      fromDate: '1000-01-01',
+      untilDate: '9999-12-31',
+    }
+    ServerAPI.getAnalyticTable(data)
+      .then(response => { 
+        setTableData(response.data);
+        setTableHeader(options[selectedIndex])
+      })
+
+  }
+
+  const getThisMonthAnalyticData = () => {
+    var my_date = new Date();
+    var first_date = new Date(my_date.getFullYear(), my_date.getMonth(), 1);
+    var last_date = new Date(my_date.getFullYear(), my_date.getMonth() + 1, 0);
+
+    console.log(`${my_date.getFullYear()}-${my_date.getMonth() + 1}-${0}`)
+    const data = {
+      fromDate: `${my_date.getFullYear()}-${my_date.getMonth()}-${1}`,
+      untilDate: `${my_date.getFullYear()}-${my_date.getMonth() + 1}-${0}`,
+    }
+
+    ServerAPI.getAnalyticTable(data)
+      .then(response => { 
+        setTableData(response.data);
+        setTableHeader(my_date.getMonth())
+      })
+  }
+
+  useEffect(() => {
+    getLifeTimeAnalyticTableData();
+  }, [])
+
   useEffect(() => {
     switch (selectedIndex) {
       case options.indexOf('Lifetime'):
         getLifeTimeAnalyticTableData();
         break;
       case options.indexOf('This Month'):
-        console.log('This Month')
+        getThisMonthAnalyticData();
         break;
       case options.indexOf('This Year'):
         console.log('This Year')
@@ -153,8 +173,8 @@ const StatisticPage = () => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
-                Total Penjualan: {options[selectedIndex]}
-            </Typography>
+                Total Penjualan: {tableHeader}
+              </Typography>
               <Table
                 table={tableData}
               />
