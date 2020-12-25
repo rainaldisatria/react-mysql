@@ -78,11 +78,13 @@ const EditableTable = ({ tableName, editable, showHeader }) => {
                                             editable ?
                                                 <td>
                                                     <Button
+                                                        color='primary'
                                                         style={{ width: '50%' }}
                                                         onClick={() => {
                                                             editHandler(objectData);
                                                         }}>Edit</Button>
                                                     <Button
+                                                        color='primary'
                                                         style={{ width: '50%' }}
                                                         onClick={() => {
                                                             const columnName = Object.keys(objectData)[0];
