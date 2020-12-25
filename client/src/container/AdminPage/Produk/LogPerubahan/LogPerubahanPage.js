@@ -1,4 +1,4 @@
-import { Container, CssBaseline, makeStyles, Typography } from '@material-ui/core';
+import { Container, CssBaseline, Divider, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import Table from '../../../../components/Table/Table'
 
@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(4),
     },
+    spacer: {
+        paddingTop: theme.spacing(4),
+    }
 }))
 
 const LogPerubahanPage = () => {
@@ -20,9 +23,11 @@ const LogPerubahanPage = () => {
     return (
         <Container component='main' maxWidth='md' className={classes.container}>
             <CssBaseline /> 
-            <Typography component="h1" variant="h2" align="left" color="textPrimary" gutterBottom>
+            <Typography component="h1" variant="h2" align="left" color="textPrimary">
                 Log Perubahan
             </Typography>
+            <Divider />
+            <div className={classes.spacer} /> 
             <Table
                 tableName='log_perubahan' 
             />
