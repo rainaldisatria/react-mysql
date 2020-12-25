@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 340,
   },
+  spacer: {
+    paddingTop: theme.spacing(4), 
+  },
 }));
 
 const options = [
@@ -52,7 +55,7 @@ const StatisticPage = () => {
 
   const find = () => {
     const formatedFromDate = fromDate;
-    const formatedUntilDate = untilDate;  
+    const formatedUntilDate = untilDate;
 
     const data = {
       fromDate: formatedFromDate,
@@ -78,7 +81,7 @@ const StatisticPage = () => {
   //#endregion
 
   //#region Menu
-  const [anchorEl, setAnchorEl] = React.useState(null); 
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const getLifeTimeAnalyticTableData = () => {
     const data = {
@@ -168,9 +171,12 @@ const StatisticPage = () => {
   return <Container maxWidth="lg" className={classes.container}>
     <div className={classes.appBarSpacer} />
 
-    <Typography component="h1" variant="h2" align="left" color="textPrimary" gutterBottom>
+    <Typography component="h1" variant="h2" align="left" color="textPrimary">
       Ringkasan Penjualan
     </Typography>
+    <Divider />
+
+    <div className={classes.spacer} />
 
     <Grid container spacing={3}>
       <Grid item xs={3}>
@@ -194,7 +200,7 @@ const StatisticPage = () => {
       {/* Chart */}
       <Grid item xs={12} md={8} lg={9}>
         <Paper className={fixedHeightPaper}>
-          <Chart />
+          <Chart title={tableHeader}/>
         </Paper>
       </Grid>
 
@@ -210,7 +216,7 @@ const StatisticPage = () => {
         tableData ?
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
+              <Typography component="h1" variant="h5" align="left" color="textPrimary" gutterBottom>
                 Total Penjualan: {tableHeader}
               </Typography>
               <Table
@@ -220,19 +226,21 @@ const StatisticPage = () => {
           </Grid> : null
       }
 
-      <Grid item xs={12}>
-        <Divider />
-      </Grid>
-
       <Grid item xs>
-        <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
-          Penjualan 3 bulan pertama
+        <Typography component="h1" variant="h2" align="left" color="textPrimary">
+          Tabel View
       </Typography>
       </Grid>
 
       <Grid item xs={12}>
+        <Divider />
+      </Grid>
+
+      <div className={classes.spacer} />
+
+      <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
+          <Typography component="h1" variant="h5" align="left" color="textPrimary" gutterBottom>
             Januari
           </Typography>
           <Table
@@ -243,7 +251,7 @@ const StatisticPage = () => {
 
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
+          <Typography component="h1" variant="h5" align="left" color="textPrimary" gutterBottom>
             Februari
           </Typography>
           <Table
@@ -254,7 +262,7 @@ const StatisticPage = () => {
 
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="left" color="textPrimary" gutterBottom>
+          <Typography component="h1" variant="h5" align="left" color="textPrimary" gutterBottom>
             Maret
           </Typography>
           <Table
