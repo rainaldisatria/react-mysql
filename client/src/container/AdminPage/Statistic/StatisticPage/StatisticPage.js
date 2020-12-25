@@ -1,10 +1,10 @@
-import { Container, Grid, makeStyles, Paper, Typography, List, ListItem, Menu, ListItemText, MenuItem, TextField } from '@material-ui/core';
+import { Container, Grid, makeStyles, Paper, Typography, List, ListItem, Menu, ListItemText, MenuItem, TextField, Button } from '@material-ui/core';
 import React, { useEffect } from 'react';
-import Deposits from '../Deposits';
-import Orders from '../Orders';
+import Deposits from '../../Deposits';
+import Orders from '../../Orders';
 import clsx from 'clsx';
-import Chart from '../Chart';
-import EditableTable from '../../../components/EditableTable/EditableTable'
+import Chart from '../../Chart';
+import EditableTable from '../../../../components/EditableTable/EditableTable'
 
 const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -25,9 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 340,
-  }, 
-  date:{
+  },
+  date: {
     padding: '19px',
+  },
+  findButton: {
+    marginTop: '25px',
+    marginLeft: '380px'
   }
 }));
 
@@ -49,31 +53,36 @@ const StatisticPage = () => {
   if (selectedIndex === 3) {
     datePicker =
       <Grid item container>
-        <Grid item xs={6}> 
-            <form noValidate className={classes.date}>
-              <TextField
-                id="date"
-                label="From"
-                type="date"
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </form> 
+        <Grid item xs={3}>
+          <form noValidate className={classes.date}>
+            <TextField
+              id="date"
+              label="From"
+              type="date"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </form>
         </Grid>
-        <Grid item xs={6}> 
-            <form noValidate className={classes.date}>
-              <TextField
-                id="date"
-                label="Until"
-                type="date"
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </form> 
+        <Grid item xs={3}>
+          <form noValidate className={classes.date}>
+            <TextField
+              id="date"
+              label="Until"
+              type="date"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </form>
+        </Grid>
+        <Grid item xs className={classes.findButton}>
+          <Button variant='contained' color='primary'>
+            Find
+           </Button>
         </Grid>
       </Grid>
   }

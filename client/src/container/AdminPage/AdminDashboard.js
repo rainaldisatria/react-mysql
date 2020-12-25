@@ -5,15 +5,13 @@ import AdminDrawer from './AdminDrawer';
 import { Switch, Route } from 'react-router-dom';
 import ListObatPage from './Produk/ListObat/ListObatPage';
 import EditMenu from '../../components/EditMenu/EditMenu';
-import StatisticPage from './Statistic/StatisticPage';
+import StatisticPage from './Statistic/StatisticPage/StatisticPage';
 import AdminWelcomePage from './AdminWelcomePage/AdminWelcomePage';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ControlPanel from './ControlPanel/ControlPanel';
 import PersediaanPage from './Produk/Persediaan/PersediaanPage'
 import LogPerubahanPage from './Produk/LogPerubahan/LogPerubahanPage';
-import ObatKadaluarsa from './Produk/ObatKadaluarsa/ObatKadaluarsaPage';
-import Footer from '../../components/Layouts/Footer';
-import { Grid } from '@material-ui/core';
+import ObatKadaluarsa from './Produk/ObatKadaluarsa/ObatKadaluarsaPage'; 
 import OrdersPage from './Statistic/OrdersPage';
 import TransaksiPage from './Statistic/TransaksiPage';
 
