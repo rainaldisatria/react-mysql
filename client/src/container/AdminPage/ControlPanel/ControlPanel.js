@@ -1,28 +1,40 @@
+import { Container, makeStyles } from '@material-ui/core';
 import React from 'react';
-import EditableTable from '../../components/EditableTable/EditableTable';
-import EditMenu from '../../components/EditMenu/EditMenu';
+import EditableTable from '../../../components/EditableTable/EditableTable'; 
 
-const AdminDashboard = () => {
+const useStyles = makeStyles({
+    content:{
+        flexGrow: 1,
+    },
+})
+
+const ControlPanel = () => {
+    const classes = useStyles();
+
     return (
-        <div> 
+        <Container className={classes.content} maxWidth='xl'> 
             <h1>Admin Dashboard</h1>
             <EditableTable
                 tableName={'log_perubahan'}
+                showHeader
             ></EditableTable>
             <EditableTable
                 editable
                 tableName={'obat_kadaluarsa'}
+                showHeader
             ></EditableTable>
             <EditableTable
                 editable
                 tableName={'tabel_obat'}
+                showHeader
             ></EditableTable>
             <EditableTable
                 editable
                 tableName={'tabel_persediaan'}
+                showHeader
             ></EditableTable>
-        </div>
+        </Container>
     )
 }
 
-export default AdminDashboard;
+export default ControlPanel;

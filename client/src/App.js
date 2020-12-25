@@ -1,10 +1,10 @@
 import './App.css';
 import React, { useEffect } from "react";
 import { Notification } from './components/Notification/Notification';
-import AdminDashboard from './container/AdminDashboard/AdminDashboard';
+import AdminDashboard from './container/AdminPage/AdminDashboard'
 import LogInPage from './container/LoginPage/LoginPage';
 import SignUpPage from './container/SignUpPage/SignUpPage';
-import Dashboard from './container/AdminPage/Dashboard';
+import Dashboard from './container/AdminPage/AdminDashboard';
 import Header from './components/Layouts/Header';
 import Footer from './components/Layouts/Footer';
 import { Route, Switch } from 'react-router-dom';

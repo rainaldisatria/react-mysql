@@ -15,19 +15,6 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { useHistory } from 'react-router';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-      </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
 const useStyles = makeStyles((theme) => ({
     icon: {
         marginRight: theme.spacing(2),
@@ -39,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     heroButtons: {
         marginTop: theme.spacing(16),
     }, 
+    content: { 
+        flexGrow: 1,
+    }
 })); 
 
 const NotFoundPage = () => {
@@ -48,7 +38,7 @@ const NotFoundPage = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <main>
+            <main className={classes.content}>
                 {/* Hero unit */}
                 <div className={classes.heroContent}>
                     <Container maxWidth="xl">

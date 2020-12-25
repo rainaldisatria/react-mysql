@@ -84,7 +84,7 @@ export const statistik = (
 export const superAdmin = (
   <div>
     <ListSubheader inset>Super Admin</ListSubheader>
-    <Link>
+    <Link to='/admin/controlpanel'>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />
