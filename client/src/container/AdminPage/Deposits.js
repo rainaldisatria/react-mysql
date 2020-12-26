@@ -17,7 +17,7 @@ export default function Deposits({totalIncome, penjelasan}) {
     <React.Fragment>
       <Title>Total Income</Title>
       <Typography component="p" variant="h4">
-        Rp. {moneyFormat(totalIncome)}
+        Rp. {totalIncome ? moneyFormat(totalIncome): '0,00'}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         on {penjelasan}
