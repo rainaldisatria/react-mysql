@@ -218,7 +218,7 @@ const StatisticPage = () => {
       <Grid item xs={12} md={4} lg={3}>
         <Paper className={fixedHeightPaper}>
           <Deposits 
-            totalIncome={tableData?.[1][0]['TotalPendapatan']}
+            totalIncome={tableData?.[1]?.[0]['TotalPendapatan']}
             penjelasan={tableHeader}
           />
         </Paper>
