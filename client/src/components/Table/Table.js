@@ -101,7 +101,7 @@ const Table = ({ tableName, editable, showHeader, table }) => {
                                         }
                                     </tr>
                                 )
-                            }) : null
+                            }) : <div> Tabel Kosong </div>
                     }
                 </tbody>
             </table>

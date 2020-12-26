@@ -84,7 +84,9 @@ expressApp.post('/getAnalyticTable', (req, res) => {
     SELECT SUM(IQuery.Harga_Total_PerBarang) as TotalPendapatan 
     FROM 
         (SELECT SUM(Jumlah_Obat * Harga_Satuan) AS Harga_Total_PerBarang FROM tabel_transaksi JOIN tabel_obat ON 
-        tabel_transaksi.Kode_Obat = tabel_obat.Kode_Obat GROUP BY tabel_transaksi.Kode_Obat) as IQuery;`
+        tabel_transaksi.Kode_Obat = tabel_obat.Kode_Obat 
+        WHERE tabel_transaksi.Tgl_Transaksi BETWEEN '${fromDate}' AND '${untilDate}'
+        GROUP BY tabel_transaksi.Kode_Obat) as IQuery;`
 
     currentDB.query(query + totalPendapatan, (error, result) => {
         if (error) {
