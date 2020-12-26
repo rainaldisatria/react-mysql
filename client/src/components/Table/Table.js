@@ -68,7 +68,7 @@ const Table = ({ tableName, editable, showHeader, table }) => {
                 </thead>
                 <tbody>
                     {// Render table content  
-                        tableData ?
+                        tableData?.length > 0 ?
                             tableData.map((objectData, objId) => {
                                 return (
                                     <tr key={objId}>

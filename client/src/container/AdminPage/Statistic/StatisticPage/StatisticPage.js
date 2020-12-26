@@ -8,6 +8,7 @@ import DatePicker from './DatePicker';
 import OptionMenu from './OptionMenu';
 import ServerAPI from '../../../../Axios/ServerAPI';
 import { getCurrentDateToSQL } from '../../../../Utility';
+import sendNotification from '../../../../components/Notification/Notification';
 
 const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     height: 340,
   },
   spacer: {
-    paddingTop: theme.spacing(4), 
+    paddingTop: theme.spacing(4),
   },
 }));
 
@@ -53,6 +54,8 @@ const StatisticPage = () => {
   const [fromDate, setFromDate] = React.useState();
   const [untilDate, setUntilDate] = React.useState();
 
+  console.log(tableData);
+
   const find = () => {
     const formatedFromDate = fromDate;
     const formatedUntilDate = untilDate;
@@ -61,11 +64,17 @@ const StatisticPage = () => {
       fromDate: formatedFromDate,
       untilDate: formatedUntilDate,
     }
-    ServerAPI.getAnalyticTable(data)
-      .then(response => {
-        setTableData(response.data);
-        setTableHeader(`${fromDate} - ${untilDate}`)
-      })
+
+    if (formatedFromDate && formatedUntilDate && (formatedFromDate < formatedUntilDate)) {
+      ServerAPI.getAnalyticTable(data)
+        .then(response => {
+          setTableData(response.data);
+          setTableHeader(`${fromDate} - ${untilDate}`)
+        })
+    }
+    else{
+      sendNotification('Please enter correct time span', 'error', 2);
+    }
   }
 
   let datePicker = null;
@@ -200,7 +209,7 @@ const StatisticPage = () => {
       {/* Chart */}
       <Grid item xs={12} md={8} lg={9}>
         <Paper className={fixedHeightPaper}>
-          <Chart title={tableHeader}/>
+          <Chart title={tableHeader} />
         </Paper>
       </Grid>
 
@@ -208,7 +217,10 @@ const StatisticPage = () => {
       {/* Recent Deposits */}
       <Grid item xs={12} md={4} lg={3}>
         <Paper className={fixedHeightPaper}>
-          <Deposits />
+          <Deposits 
+            totalIncome={tableData?.[1][0]['TotalPendapatan']}
+            penjelasan={tableHeader}
+          />
         </Paper>
       </Grid>
 
@@ -220,7 +232,7 @@ const StatisticPage = () => {
                 Total Penjualan: {tableHeader}
               </Typography>
               <Table
-                table={tableData}
+                table={tableData?.[0]}
               />
             </Paper>
           </Grid> : null
