@@ -5,6 +5,20 @@ import { continuousStart, complete } from '../components/TopLoadingBar/TopLoadin
 
 const Server = {
     //#region Server
+    getMonthlyIncome: (month) => {
+        return Axios.post('http://localhost:3001/getMonthlyIncome', month)
+            .then(response => {
+                if (response.data.sqlMessage) {
+                    sendNotification(response.data.sqlMessage, 'error', 5);
+                }
+
+                return response;
+            }).catch(err => {
+                console.log(err);
+                return err;
+            })
+    },
+
     getAnalyticTable: (data) => {
         return Axios.post('http://localhost:3001/getAnalyticTable', data)
             .then(response => {
