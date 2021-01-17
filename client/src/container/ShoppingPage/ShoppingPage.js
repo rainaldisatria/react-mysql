@@ -36,7 +36,7 @@ const ShoppingPage = () => {
             <div className={classes.appBarSpacer} />
 
             <Grid container>
-                <Grid item >
+                <Grid item xs>
                     <ShoppingContent items={items}/>
                 </Grid>
             </Grid>
