@@ -11,7 +11,7 @@ import { Route, Switch } from 'react-router-dom';
 import ShoppingPage from './container/ShoppingPage/ShoppingPage';
 import { Grid, makeStyles } from '@material-ui/core';
 import TopLoadingBar from './components/TopLoadingBar/TopLoadingBar';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { autoLogIn } from './store/actions';
 import Cart from './container/Cart/Cart';
 import MyAccount from './container/MyAccount/MyAccount';
@@ -25,6 +25,8 @@ const useStyles = makeStyles(theme => ({
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const isAuth = useSelector(store => store.authenticated);
+  const isAdmin = useSelector(store => store.username);
 
   useEffect(() => {
     dispatch(autoLogIn())
@@ -33,16 +35,38 @@ function App() {
   let route = (
     <Switch>
       <Route path='/myaccount' exact component={MyAccount} />
-      <Route path='/cart' exact component={Cart} />
-      <Route path='/admin' exact component={Dashboard} />
+      <Route path='/cart' exact component={Cart} /> 
       <Route path='/login' exact component={LogInPage} />
       <Route path='/signup' exact component={SignUpPage} />
-      <Route path='/' exact component={ShoppingPage} />
-      <Route path='/admin' component={Dashboard} />
-      <Route path='/test' component={AdminDashboard} />
+      <Route path='/' exact component={ShoppingPage} />  
       <Route path='/' component={NotFoundPage} />
     </Switch>
   )
+
+  if(isAdmin == 'admin'){
+    route = (
+      <Switch>
+        <Route path='/myaccount' exact component={MyAccount} />
+        <Route path='/cart' exact component={Cart} /> 
+        <Route path='/login' exact component={LogInPage} />
+        <Route path='/signup' exact component={SignUpPage} />
+        <Route path='/' exact component={ShoppingPage} />
+        <Route path='/admin' component={Dashboard} /> 
+        <Route path='/' component={NotFoundPage} />
+      </Switch>
+    )
+  }
+
+  if(!isAuth){
+    route = (
+      <Switch>  
+        <Route path='/login' exact component={LogInPage} />
+        <Route path='/signup' exact component={SignUpPage} />
+        <Route path='/' exact component={ShoppingPage} />  
+        <Route path='/' component={NotFoundPage} />
+      </Switch>
+    )
+  }
 
   return (
     <div className="App">
