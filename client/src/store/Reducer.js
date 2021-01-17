@@ -14,6 +14,8 @@ const initialState = {
     // Authentication reducer
     authenticated: false,   
     username: '', 
+
+    searchKeyword: '',
 }
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +51,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 authenticated: action.condition,
                 username: action.username,
+            }
+
+        case actionType.SEARCH: 
+            return {
+                ...state,
+                searchKeyword: action.payload,
             }
 
         default:

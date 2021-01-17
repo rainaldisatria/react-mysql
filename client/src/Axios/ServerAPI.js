@@ -94,9 +94,11 @@ const Server = {
         })
     },
 
-    fetchObat: () => {
+    fetchObat: (keyword = '') => {
         continuousStart();
-        return Axios.get('http://localhost:3001/fetchObat')
+        return Axios.post('http://localhost:3001/fetchObat', {
+            keyword: keyword,
+        })
             .then(response => {
                 if (response.data.sqlMessage) {
                     sendNotification(response.data.sqlMessage, 'error', 2);

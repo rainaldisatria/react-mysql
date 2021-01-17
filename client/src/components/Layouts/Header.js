@@ -6,7 +6,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputBase from '@material-ui/core/InputBase';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoginStat } from '../../store/actions';
+import { searchSync, setLoginStat } from '../../store/actions';
 import ServerAPI from '../../Axios/ServerAPI';
 import { useHistory } from 'react-router-dom';
 
@@ -94,6 +94,17 @@ const Header = () => {
         history.push('/myaccount');
     }
 
+    const search = (e) => {
+        const keyword = e.target.value;
+
+        if(e.keyCode == 13)
+        { 
+            console.log(keyword);
+            history.push('/');
+            dispatch(searchSync(keyword));
+        }
+    }
+
     useEffect(() => {
         ServerAPI.fetchAccount(username)
             .then(response => {
@@ -178,7 +189,7 @@ const Header = () => {
             <AppBar position='fixed' className={classes.appBar}>
                 <Toolbar>
                     <Link to='/'>
-                        <Button className={classes.white}>
+                        <Button className={classes.white} onClick={() => dispatch(searchSync(''))}>
                             <LocalHospitalIcon className={classes.menuButton} />
                             <Typography variant={'h6'}>APOTEK JAKARTA </Typography>
                         </Button>
@@ -198,6 +209,8 @@ const Header = () => {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            autoFocus
+                            onKeyDown={search}
                         />
                     </div>
 

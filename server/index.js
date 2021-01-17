@@ -186,8 +186,14 @@ expressApp.post('/addToCart', (req, res) => {
     })
 })
 
-expressApp.get('/fetchObat', (req, res) => {
-    const query = `SELECT * FROM tabel_obat`;
+expressApp.post('/fetchObat', (req, res) => {
+    const keyword = req.body.keyword; 
+
+    const query = `SELECT * FROM tabel_obat WHERE
+    (
+        nama_obat LIKE '%${keyword}%'
+        OR kode_obat LIKE '%${keyword}%'
+    ) `;
 
     currentDB.query(query, (error, result) => {
         if (error) {

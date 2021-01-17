@@ -4,6 +4,13 @@ const authenticationStatFileName = 'authenticationStat';
 const usernameStatFileName = 'usernameStat';
 
 //#region Sync methods 
+export const searchSync = (keyword) => {
+    return {
+        type: SEARCH,
+        payload: keyword,
+    }
+}
+
 export const fetchTablesSync = (tables) => {
     return {
         type: FETCH_TABLES,
@@ -76,4 +83,5 @@ export const SET_LOGIN_STAT = "SET_LOGIN_STAT";
 
 export const SET_EDIT_MODAL = "SET_EDIT_MODAL";
 export const DISABLE_EDIT_MODAL = "DISABLE_EDIT_MODAL";
+export const SEARCH = 'SEARCH';
 //#endregion
