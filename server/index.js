@@ -211,7 +211,8 @@ expressApp.post('/fetchObat', (req, res) => {
     const query = `SELECT * FROM tabel_obat WHERE
     (
         nama_obat LIKE '%${keyword}%' 
-    ) `;
+    )
+    ORDER BY  Nama_Obat`;
 
     currentDB.query(query, (error, result) => {
         if (error) {
