@@ -1,7 +1,7 @@
 import { List, ListItem, ListItemText, Menu, MenuItem } from '@material-ui/core';
 import React from 'react';
 
-const OptionMenu = ({handleClickListItem, options, handleClose, selectedIndex, handleMenuItemClick, anchorEl}) => { 
+const OptionMenu = ({title, handleClickListItem, options, handleClose, selectedIndex, handleMenuItemClick, anchorEl}) => { 
     
     return (
         <div>
@@ -13,7 +13,7 @@ const OptionMenu = ({handleClickListItem, options, handleClose, selectedIndex, h
                     aria-label="Waktu Penjualan"
                     onClick={handleClickListItem}
                 >
-                    <ListItemText primary="Waktu Penjualan" secondary={options[selectedIndex]} />
+                    <ListItemText primary={title} secondary={options[selectedIndex]} />
                 </ListItem>
             </List>
 

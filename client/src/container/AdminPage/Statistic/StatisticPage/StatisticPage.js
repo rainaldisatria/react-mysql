@@ -196,7 +196,9 @@ const StatisticPage = () => {
             handleClickListItem={handleClickListItem}
             handleClose={handleClose}
             handleMenuItemClick={handleMenuItemClick}
-            anchorEl={anchorEl} />
+            anchorEl={anchorEl} 
+            title={'Waktu Penjualan'}
+            />
         </Paper>
       </Grid>
 
