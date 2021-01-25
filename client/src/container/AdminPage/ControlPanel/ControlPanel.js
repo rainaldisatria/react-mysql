@@ -35,25 +35,25 @@ const ControlPanel = () => {
                 tableName={'tabel_obat'}
                 showHeader
             ></Table>
-
+<Divider />
             <Table
                 editable
                 tableName={'obat_kadaluarsa'}
                 showHeader
             ></Table>
-
+<Divider />
             <Table
                 editable
                 tableName={'tabel_persediaan'}
                 showHeader
             ></Table>
-
+<Divider />
             <Table
                 tableName={'log_perubahan'}
                 showHeader
                 editable
             ></Table>
-
+<Divider />
             <Typography component="h1" variant="h4" align="left" color="textPrimary" className={classes.text} >
                 B. Transaksi
             </Typography>
@@ -64,7 +64,7 @@ const ControlPanel = () => {
                 showHeader
                 editable
             ></Table>
-
+<Divider />
             <Table
                 tableName={'orders'}
                 showHeader
@@ -81,7 +81,7 @@ const ControlPanel = () => {
                 showHeader
                 editable
             ></Table>
-
+<Divider />
             <Table
                 tableName={'cart'}
                 showHeader

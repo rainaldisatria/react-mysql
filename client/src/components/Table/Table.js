@@ -36,10 +36,12 @@ const Table = ({ tableName, editable, showHeader, table }) => {
     }, [tableName, table])
 
     useEffect(() => { 
-        sortTable();
-        setProperties(Object.keys(tableData[0]).map((value) => { 
-            return value;
-        }));
+        sortTable(); 
+        if(tableData.length > 0){
+            setProperties(Object.keys(tableData[0]).map((value) => { 
+                return value;
+            }));
+        }
     }, [tableData]) 
 
     useEffect(() => {
@@ -118,9 +120,7 @@ const Table = ({ tableName, editable, showHeader, table }) => {
 
     return (
         <div>
-            {showHeader ? <h3>{tableName}</h3> : null}
-            {/* SHOW SORT MENU HERE */}
-
+            {showHeader ? <h2>{tableName}</h2> : null}  
             <Grid container spacing={1}>
                 <Grid item xs={3}>
                     <Paper style={{marginBottom: '16px'}}>
@@ -204,6 +204,7 @@ const Table = ({ tableName, editable, showHeader, table }) => {
                 </tbody>
             </table>
             {addButton}
+            <div className={classes.spacer} />
         </div>
     )
 }
