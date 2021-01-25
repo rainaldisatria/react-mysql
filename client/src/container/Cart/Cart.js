@@ -135,8 +135,7 @@ const Cart = () => {
             <Grid item container xs={8}>
                 <Grid item direction={'column'} xs container spacing={3}>
                     {
-                        cartFields.map((objectData, objId) => { 
-                            {console.log(objectData['quantity'])}
+                        cartFields.map((objectData, objId) => {
                             return (
                                 <Grid key={objectData['kodeObat']} item xs>
                                     <CartItem
