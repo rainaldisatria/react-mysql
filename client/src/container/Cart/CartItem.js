@@ -65,7 +65,12 @@ const CartItem = ({ id, initialQuantity, removeCart, updateQuantityInDB}) => {
     
     const getMaxQuantity = () => {
         ServerAPI.getJumlahPersediaan(id).then(response => { 
-            setMaxQuantity(response.data[0]?.['Jumlah_Sedia']);
+            const maxQuantity = response.data[0]?.['Jumlah_Sedia']
+            setMaxQuantity(maxQuantity);
+            if(quantity > maxQuantity){
+                setQuantity(maxQuantity);
+                updateQuantityInDB(id, maxQuantity);
+            }
         }) 
     }
 
