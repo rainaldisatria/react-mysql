@@ -11,14 +11,18 @@ const useStyles = makeStyles((theme) => ({
     spacer: theme.mixins.toolbar,
 }))
 
+const direction = ['Ascending', 'Descending'];
+
 const Table = ({ tableName, editable, showHeader, table }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [tableData, setTableData] = useState([{}]);
-    const [sortedTableData, setSortedTableData] = useState();
+    const [sortedTableData, setSortedTableData] = useState([]);
     const [properties, setProperties] = useState();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorElDir, setAnchorEDir] = React.useState(null);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [selectedDirection, setSelectedDirection] = React.useState(0);
 
     // Start
     useEffect(() => {
@@ -40,22 +44,21 @@ const Table = ({ tableName, editable, showHeader, table }) => {
 
     useEffect(() => {
         sortTable();  
-    }, [selectedIndex])
+    }, [selectedIndex, selectedDirection]) 
 
     const sortTable = () => { 
         let clone = [...tableData]; 
         clone.sort((a, b) => {
             if (a[properties[selectedIndex]] < b[properties[selectedIndex]]) {
-                return -1;
+                return direction[selectedDirection] === 'Ascending' ? -1 : 1;
             }
             if (a[properties[selectedIndex]] > b[properties[selectedIndex]]) {
-                return 1;
+                return direction[selectedDirection] === 'Ascending' ? 1 : -1;
             }
             return 0;
         })
-
         setSortedTableData(clone);
-    } 
+    }  
 
     const update = () => {
         Server.fetchTableData(tableName).then(res => { setTableData(res.data) })
@@ -74,11 +77,24 @@ const Table = ({ tableName, editable, showHeader, table }) => {
     const handleClickListItem = (event) => {
         setAnchorEl(event.currentTarget);
       };
+
+      const handleClickListItemDir = (event) => {
+        setAnchorEDir(event.currentTarget);
+      }
     
       const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
         handleClose();
       };
+
+      const handleMenuItemClickDir = (event, index) => {
+          setSelectedDirection(index);
+          handleCloseDir();
+      }
+
+      const handleCloseDir = () => {
+        setAnchorEDir(null);
+      }
     
       const handleClose = () => {
         setAnchorEl(null);
@@ -105,7 +121,7 @@ const Table = ({ tableName, editable, showHeader, table }) => {
             {showHeader ? <h3>{tableName}</h3> : null}
             {/* SHOW SORT MENU HERE */}
 
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
                 <Grid item xs={3}>
                     <Paper style={{marginBottom: '16px'}}>
                         <OptionMenu
@@ -116,6 +132,20 @@ const Table = ({ tableName, editable, showHeader, table }) => {
                             handleClose={handleClose}
                             handleMenuItemClick={handleMenuItemClick}
                             anchorEl={anchorEl} 
+                        />
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={3}>
+                    <Paper style={{marginBottom: '16px'}}>
+                        <OptionMenu
+                            title={'Direction'}
+                            options={direction}
+                            selectedIndex={selectedDirection}
+                            handleClickListItem={handleClickListItemDir}
+                            handleClose={handleCloseDir}
+                            handleMenuItemClick={handleMenuItemClickDir}
+                            anchorEl={anchorElDir} 
                         />
                     </Paper>
                 </Grid>
