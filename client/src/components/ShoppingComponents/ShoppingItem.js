@@ -42,10 +42,18 @@ const ShoppingItem = ({ title, description, price, id }) => {
 
     useEffect(() => {
         ServerAPI.getJumlahPersediaan(id).then(response => {
-            const maximumQuantity = response.data[0]?.['Jumlah_Sedia'];
-            setMaxQuantity(maximumQuantity);
-            if (maximumQuantity < 1) {
+            const maximumQuantity = response.data[0]?.['Jumlah_Sedia']; 
+            
+            if(typeof maximumQuantity === 'undefined'){
                 setDisabled(true);
+            }
+            else{
+                setDisabled(false);
+
+                setMaxQuantity(maximumQuantity);
+                if (maximumQuantity < 1) {
+                    setDisabled(true);
+                }
             }
         })
     }, [id])
