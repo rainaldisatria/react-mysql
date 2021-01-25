@@ -240,7 +240,7 @@ const StatisticPage = () => {
 
       <Grid item xs>
         <Typography component="h1" variant="h2" align="left" color="textPrimary">
-          Tabel View
+          Tabel View: Total penjualan di 3 bulan pertama
       </Typography>
       </Grid>
 
