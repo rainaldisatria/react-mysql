@@ -39,8 +39,7 @@ const Table = ({ tableName, editable, showHeader, table }) => {
     }, [tableData]) 
 
     useEffect(() => {
-        sortTable(); 
-        console.log('called');
+        sortTable();  
     }, [selectedIndex])
 
     const sortTable = () => { 
