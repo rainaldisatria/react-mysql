@@ -13,7 +13,7 @@ exports.fetchObatData = (req, res, currentDB) => {
     })
 } 
 
-exports.fetchObat = (req, res) => {
+exports.fetchObat = (req, res, currentDB) => {
     const keyword = req.body.keyword;
 
     const query = `SELECT * FROM tabel_obat WHERE

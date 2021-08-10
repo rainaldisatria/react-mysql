@@ -21,23 +21,7 @@ const currentDB = mysql.createConnection({
 });
 
 //#region tabel_transaksi
-expressApp.post('/getMonthlyIncome', (req, res) => {
-    const monthID = Object.keys(req.body)[0];
-    const curYear = new Date().getFullYear();
-    const query = `Select SUM(Jumlah_Obat) as income from tabel_transaksi where month(Tgl_Transaksi) = ${monthID} and year(Tgl_Transaksi) = ${curYear}`;
-
-    console.log(query);
-
-    currentDB.query(query, (error, response) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            res.send(response);
-        }
-    })
-})
+expressApp.post('/getMonthlyIncome', (req, res) => getMonthlyIncome(req, res, currentDB))
 //#endregion
 
 //#region tabel_persediaan
@@ -57,24 +41,7 @@ expressApp.post('/fetchJumlahPersediaan', (req, res) => {
     })
 })
 //#endregion
-
-
-expressApp.post('/fetchCartData', (req, res) => {
-    const username = Object.keys(req.body)[0];
-    const getTotalPriceQuery = `SELECT SUM(cart.quantity * tabel_obat.Harga_Satuan) AS totalHarga FROM cart LEFT JOIN tabel_obat ON kodeObat = Kode_Obat WHERE cart.username = '${username}';`;
-    const getItemCountQuery = `SELECT SUM(quantity) as totalItem FROM cart WHERE username = '${username}';`;
-
-    currentDB.query(getTotalPriceQuery + getItemCountQuery, (error, result) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            res.send(result);
-        }
-    })
-})
-
+ 
 //#region tabel_obat   
 const { fetchObatData, fetchObat } = require('./controllers/tabelObatController');
 
@@ -245,6 +212,7 @@ expressApp.post("/api/postman", async (req, res) => {
 //#region users  
 const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
+const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
@@ -253,7 +221,23 @@ expressApp.post('/signup', signup)
 expressApp.post('/login', login)
 //#endregion
 
-//#region Database management
+//#region Database management 
+expressApp.post('/fetchCartData', (req, res) => {
+    const username = Object.keys(req.body)[0];
+    const getTotalPriceQuery = `SELECT SUM(cart.quantity * tabel_obat.Harga_Satuan) AS totalHarga FROM cart LEFT JOIN tabel_obat ON kodeObat = Kode_Obat WHERE cart.username = '${username}';`;
+    const getItemCountQuery = `SELECT SUM(quantity) as totalItem FROM cart WHERE username = '${username}';`;
+
+    currentDB.query(getTotalPriceQuery + getItemCountQuery, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            res.send(result);
+        }
+    })
+})
+
 expressApp.post('/selectTable', (req, res) => {
     selected_table = Object.keys(req.body)[0];
     res.send(selected_table);
