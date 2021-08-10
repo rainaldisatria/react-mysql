@@ -4,13 +4,9 @@ const mysql = require('mysql');
 const cors = require('cors');
 const db = require('./db')
 
-db.authenticate().then(() => {
-    console.log("connected to mysql")
-})
-
 expressApp.use(express.urlencoded({ extended: true }));
 expressApp.use(express.json());
-expressApp.use(cors());
+expressApp.use(cors()); 
 
 const currentDB = mysql.createConnection({
     user: 'root',
