@@ -35,9 +35,7 @@ expressApp.post('/fetchObatData', (req, res) => fetchObatData(req, res, currentD
 
 expressApp.post('/fetchObat', (req, res) => fetchObat(req, res, currentDB))
 //#endregion
-
-
-
+ 
 expressApp.post('/getAnalyticTable', (req, res) => {
     const fromDate = req.body.fromDate;
     const untilDate = req.body.untilDate;
@@ -174,32 +172,13 @@ expressApp.post('/fetchCart', (req, res) => {
     })
 })
 //#endregion
-
-
-expressApp.post("/api/postman", async (req, res) => {
-    try{
-        const {username, password} = req.body;
-
-        const result = await User.findAll({
-
-            where:{
-                username: username,
-                password: password,
-            }
-        })
-
-        res.json(result)
-    }
-    catch{
-
-    }
-})
-
+ 
 //#region users  
 const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
 const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
 const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
+const { fetchCartData } = require('./controllers/adminController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
@@ -209,21 +188,7 @@ expressApp.post('/login', login)
 //#endregion
 
 //#region Database management 
-expressApp.post('/fetchCartData', (req, res) => {
-    const username = Object.keys(req.body)[0];
-    const getTotalPriceQuery = `SELECT SUM(cart.quantity * tabel_obat.Harga_Satuan) AS totalHarga FROM cart LEFT JOIN tabel_obat ON kodeObat = Kode_Obat WHERE cart.username = '${username}';`;
-    const getItemCountQuery = `SELECT SUM(quantity) as totalItem FROM cart WHERE username = '${username}';`;
-
-    currentDB.query(getTotalPriceQuery + getItemCountQuery, (error, result) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            res.send(result);
-        }
-    })
-})
+expressApp.post('/fetchCartData', (req, res, currentDB) => fetchCartData(req, res, currentDB))
 
 expressApp.post('/selectTable', (req, res) => {
     selected_table = Object.keys(req.body)[0];
