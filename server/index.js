@@ -20,7 +20,6 @@ const currentDB = mysql.createConnection({
     multipleStatements: true,
 });
 
-const User = require('./models/user')
 expressApp.post("/api/postman", async (req, res) => {
     console.log("post called")
 })
@@ -270,27 +269,8 @@ expressApp.post('/fetchAccount', (req, res) => {
     })
 })
 
-expressApp.post('/signup', async (req, res) => { 
-    try {
-        const { firstName, lastName, username, password, userType, balance } = req.body; 
-
-        await User.create({
-            username: username,
-            firstName: firstName,
-            lastName: lastName,
-            password: password,
-            userType: userType,
-            balance: balance,
-        });
-
-
-        res.json(req.body)
-    }
-    catch (err) {
-        console.log(err.message)
-        res.status(500).send("server error")
-    }
-})
+const { signup } = require('./controllers/usersController')
+expressApp.post('/signup', signup)
 
 expressApp.post('/login', (req, res) => {
     const username = req.body.username;
