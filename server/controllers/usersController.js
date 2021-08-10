@@ -41,3 +41,17 @@ exports.login = async (req, res) => {
 
     }
 }
+
+exports.fetchAccount = (req, res, currentDB) => {
+    const username = Object.keys(req.body)[0];
+    const query = `SELECT * FROM users WHERE username='${username}'`;
+
+    currentDB.query(query, (error, result) => {
+        if (error) {
+            res.send(error);
+        }
+        else {
+            res.send(result);
+        }
+    })
+}

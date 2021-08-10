@@ -75,21 +75,8 @@ expressApp.post('/fetchCartData', (req, res) => {
     })
 })
 
-//#region tabel_obat
-expressApp.post('/fetchObatData', (req, res) => {
-    const kodeObat = Object.keys(req.body)[0];
-
-    const query = `SELECT * FROM tabel_obat WHERE Kode_Obat = '${kodeObat}'`;
-    currentDB.query(query, (error, result) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            res.send(result)
-        }
-    })
-})
+//#region tabel_obat  
+expressApp.post('/fetchObatData', (req, res) => fetchObatData(req, res, currentDB))
 
 expressApp.post('/fetchObat', (req, res) => {
     const keyword = req.body.keyword;
@@ -250,7 +237,7 @@ expressApp.post('/fetchCart', (req, res) => {
 })
 //#endregion
 
-//#region users 
+
 expressApp.post("/api/postman", async (req, res) => {
     try{
         const {username, password} = req.body;
@@ -270,22 +257,12 @@ expressApp.post("/api/postman", async (req, res) => {
     }
 })
 
-const { signup, login } = require('./controllers/usersController')
-const User = require('./models/user')
+//#region users  
+const { signup, login, fetchAccount } = require('./controllers/usersController')
+const User = require('./models/user');
+const { fetchObatData } = require('./controllers/tabelObatController');
 
-expressApp.post('/fetchAccount', (req, res) => {
-    const username = Object.keys(req.body)[0];
-    const query = `SELECT * FROM users WHERE username='${username}'`;
-
-    currentDB.query(query, (error, result) => {
-        if (error) {
-            res.send(error);
-        }
-        else {
-            res.send(result);
-        }
-    })
-})
+expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
 expressApp.post('/signup', signup)
 
