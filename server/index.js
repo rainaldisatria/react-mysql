@@ -16,7 +16,7 @@ const currentDB = mysql.createConnection({
     multipleStatements: true,
 });
 
-
+//#region tabel_transaksi
 expressApp.post('/getMonthlyIncome', (req, res) => {
     const monthID = Object.keys(req.body)[0]; 
     const curYear = new Date().getFullYear();
@@ -34,8 +34,9 @@ expressApp.post('/getMonthlyIncome', (req, res) => {
         }
     })
 })
+//#endregion
 
-//#region Anonymouse
+//#region tabel_persediaan
 expressApp.post('/fetchJumlahPersediaan', (req, res) => {
     const kodeObat = req.body.kodeObat;
 
@@ -51,6 +52,7 @@ expressApp.post('/fetchJumlahPersediaan', (req, res) => {
         }
     })
 })
+//#endregion
 
 
 expressApp.post('/fetchCartData', (req, res) => {
@@ -69,6 +71,7 @@ expressApp.post('/fetchCartData', (req, res) => {
     })
 })
 
+//#region tabel_obat
 expressApp.post('/fetchObatData', (req, res) => {
     const kodeObat = Object.keys(req.body)[0];
 
@@ -80,6 +83,25 @@ expressApp.post('/fetchObatData', (req, res) => {
         }
         else {
             res.send(result)
+        }
+    })
+}) 
+
+expressApp.post('/fetchObat', (req, res) => {
+    const keyword = req.body.keyword; 
+
+    const query = `SELECT * FROM tabel_obat WHERE
+    (
+        nama_obat LIKE '%${keyword}%' 
+    ) `;
+
+    currentDB.query(query, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            res.send(result);
         }
     })
 })
@@ -144,6 +166,7 @@ expressApp.post('/buy', (req, res) => {
     })
 })
 
+//#region cart
 expressApp.post('/removeCartItem', (req, res) => {
     const username = req.body.username;
     const kodeObat = req.body.kodeObat;
@@ -159,7 +182,7 @@ expressApp.post('/removeCartItem', (req, res) => {
             res.send(response);
         }
     })
-})
+}) 
 
 expressApp.post('/setCartItemQuantity', (req, res) => {
     const username = req.body.username;
@@ -180,7 +203,7 @@ expressApp.post('/setCartItemQuantity', (req, res) => {
             res.send(result);
         }
     })
-})
+}) 
 
 expressApp.post('/addToCart', (req, res) => {
     const username = req.body.username;
@@ -203,26 +226,7 @@ expressApp.post('/addToCart', (req, res) => {
             res.send(result);
         }
     })
-})
-
-expressApp.post('/fetchObat', (req, res) => {
-    const keyword = req.body.keyword; 
-
-    const query = `SELECT * FROM tabel_obat WHERE
-    (
-        nama_obat LIKE '%${keyword}%' 
-    ) `;
-
-    currentDB.query(query, (error, result) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            res.send(result);
-        }
-    })
-})
+}) 
 
 expressApp.post('/fetchCart', (req, res) => {
     const username = Object.keys(req.body)[0];
@@ -240,7 +244,9 @@ expressApp.post('/fetchCart', (req, res) => {
         }
     })
 })
-
+//#endregion
+  
+//#region users
 expressApp.post('/fetchAccount', (req, res) => {
     const username = Object.keys(req.body)[0];
     const query = `SELECT * FROM users WHERE username='${username}'`;
@@ -254,8 +260,7 @@ expressApp.post('/fetchAccount', (req, res) => {
         }
     })
 })
-
-//#region 
+ 
 expressApp.post('/signup', (req, res) => {
     const data = req.body;
     var columnsName = [];
