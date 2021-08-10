@@ -75,27 +75,12 @@ expressApp.post('/fetchCartData', (req, res) => {
     })
 })
 
-//#region tabel_obat  
+//#region tabel_obat   
+const { fetchObatData, fetchObat } = require('./controllers/tabelObatController');
+
 expressApp.post('/fetchObatData', (req, res) => fetchObatData(req, res, currentDB))
 
-expressApp.post('/fetchObat', (req, res) => {
-    const keyword = req.body.keyword;
-
-    const query = `SELECT * FROM tabel_obat WHERE
-    (
-        nama_obat LIKE '%${keyword}%' 
-    ) `;
-
-    currentDB.query(query, (error, result) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            res.send(result);
-        }
-    })
-})
+expressApp.post('/fetchObat', (req, res) => fetchObat(req, res, currentDB))
 //#endregion
 
 
@@ -260,7 +245,6 @@ expressApp.post("/api/postman", async (req, res) => {
 //#region users  
 const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
-const { fetchObatData } = require('./controllers/tabelObatController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
