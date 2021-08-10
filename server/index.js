@@ -188,13 +188,13 @@ expressApp.post('/login', login)
 //#endregion
 
 //#region Database management 
-expressApp.post('/fetchCartData', (req, res, currentDB) => fetchCartData(req, res, currentDB))
+expressApp.post('/fetchCartData', (req, res) => fetchCartData(req, res, currentDB))
 
 expressApp.post('/selectTable', selectTable)
 
-expressApp.get('/', (req, res, currentDB) => showTables(req, res, currentDB))
+expressApp.get('/', (req, res) => showTables(req, res, currentDB))
 
-expressApp.post('/delete/:tableName', (req, res, currentDB) => deleteTable(req, res, currentDB))
+expressApp.post('/delete/:tableName', (req, res) => deleteTable(req, res, currentDB))
 
 expressApp.post(`/update/:tableName`, (req, res) => {
     const tableName = req.params.tableName;
