@@ -178,7 +178,7 @@ const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
 const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
 const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
-const { fetchCartData, selectTable, showTables } = require('./controllers/adminController');
+const { fetchCartData, selectTable, showTables, deleteTable } = require('./controllers/adminController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
@@ -194,25 +194,7 @@ expressApp.post('/selectTable', selectTable)
 
 expressApp.get('/', (req, res, currentDB) => showTables(req, res, currentDB))
 
-expressApp.post('/delete/:tableName', (req, res) => {
-    tableName = req.params.tableName;
-    const columnName = req.body.columnName;
-    const value = req.body.value;
-
-    const query = `DELETE FROM ${tableName} WHERE ${columnName} = "${value}"`;
-
-    currentDB.query(query, (err, result) => {
-        if (err) {
-            res.send(err);
-            console.log(err);
-        }
-        else {
-            res.send(result);
-            console.log(result);
-            console.log('affected rows: ' + result.affectedRows);
-        }
-    })
-})
+expressApp.post('/delete/:tableName', (req, res, currentDB) => deleteTable(req, res, currentDB))
 
 expressApp.post(`/update/:tableName`, (req, res) => {
     const tableName = req.params.tableName;

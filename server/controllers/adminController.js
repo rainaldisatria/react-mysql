@@ -32,3 +32,23 @@ exports.showTables = (req, ers, currentDB) => {
         }
     })
 }
+
+exports.deleteTable = (req, res, currentDB) => {
+    tableName = req.params.tableName;
+    const columnName = req.body.columnName;
+    const value = req.body.value;
+
+    const query = `DELETE FROM ${tableName} WHERE ${columnName} = "${value}"`;
+
+    currentDB.query(query, (err, result) => {
+        if (err) {
+            res.send(err);
+            console.log(err);
+        }
+        else {
+            res.send(result);
+            console.log(result);
+            console.log('affected rows: ' + result.affectedRows);
+        }
+    })
+}
