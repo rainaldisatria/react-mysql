@@ -1,15 +1,14 @@
 const express = require('express');
 const expressApp = express();
 const mysql = require('mysql');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const cors = require('cors'); 
 const db = require('./db')
 
 db.authenticate().then(() => {
     console.log("connected to mysql")
 })
 
-expressApp.use(bodyParser.urlencoded({ extended: true }));
+expressApp.use(express.urlencoded({ extended: true }));
 expressApp.use(express.json());
 expressApp.use(cors());
 
@@ -20,6 +19,26 @@ const currentDB = mysql.createConnection({
     database: 'rumah_sakit',
     multipleStatements: true,
 });
+
+const User = require('./models/user')
+expressApp.post("/api/postman", async (req, res) => {
+    console.log("post called")
+    try{
+        const {firstName, lastName, username, password, userType, balance} = req.body; 
+        const newUser = new User({
+            firstName, lastName, username, password, userType, balance
+        })
+ 
+
+        await newUser.save()
+
+        res.json(newUser)
+    }
+    catch(err){
+        console.log(err.message)
+        res.status(500).send("server error")
+    }
+})
 
 //#region tabel_transaksi
 expressApp.post('/getMonthlyIncome', (req, res) => {
