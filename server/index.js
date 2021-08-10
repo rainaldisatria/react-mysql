@@ -16,6 +16,7 @@ const currentDB = mysql.createConnection({
     multipleStatements: true,
 });
 
+//#region Routes
 //#region tabel_transaksi
 expressApp.post('/getMonthlyIncome', (req, res) => getMonthlyIncome(req, res, currentDB))
 //#endregion
@@ -76,6 +77,7 @@ expressApp.get('/desc/:tableName', (req, res) => descTable(req, res, currentDB))
 expressApp.post('/getAnalyticTable', (req, res) =>  getAnalyticTable(req, res, currentDB))
 
 expressApp.post('/buy', (req, res) => buy(req, res, currentDB))
+//#endregion
 //#endregion
 
 expressApp.listen(3001, () => {
