@@ -59,7 +59,7 @@ exports.addToCart = (req, res, currentDB) => {
     })
 }
 
-exports.fetchCart = (req, res, currentDB => {
+exports.fetchCart = (req, res, currentDB) => {
     const username = Object.keys(req.body)[0];
     console.log(req.body);
 
