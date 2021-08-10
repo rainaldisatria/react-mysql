@@ -14,7 +14,21 @@ exports.fetchCartData = (req, res, currentDB) => {
     })
 }
 
-exports.selectTable = (req, res, currentDB) => {
+exports.selectTable = (req, res) => {
     selected_table = Object.keys(req.body)[0];
     res.send(selected_table);
+}
+
+exports.showTables = (req, ers, currentDB) => {
+    const query = `SHOW TABLES`;
+
+    currentDB.query(query, (err, result) => {
+        if (err) {
+            res.send(err);
+            console.log(err);
+        }
+        else {
+            res.send(result);
+        }
+    })
 }

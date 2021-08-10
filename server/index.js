@@ -178,7 +178,7 @@ const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
 const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
 const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
-const { fetchCartData, selectTable } = require('./controllers/adminController');
+const { fetchCartData, selectTable, showTables } = require('./controllers/adminController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
@@ -192,19 +192,7 @@ expressApp.post('/fetchCartData', (req, res, currentDB) => fetchCartData(req, re
 
 expressApp.post('/selectTable', selectTable)
 
-expressApp.get('/', (req, res) => {
-    const query = `SHOW TABLES`;
-
-    currentDB.query(query, (err, result) => {
-        if (err) {
-            res.send(err);
-            console.log(err);
-        }
-        else {
-            res.send(result);
-        }
-    })
-})
+expressApp.get('/', (req, res, currentDB) => showTables(req, res, currentDB))
 
 expressApp.post('/delete/:tableName', (req, res) => {
     tableName = req.params.tableName;
