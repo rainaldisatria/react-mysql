@@ -178,7 +178,7 @@ const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
 const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
 const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
-const { fetchCartData, selectTable, showTables, deleteTable } = require('./controllers/adminController');
+const { fetchCartData, selectTable, showTables, deleteTable, updateTableName, insertTable, table, descTable } = require('./controllers/adminController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
@@ -196,91 +196,13 @@ expressApp.get('/', (req, res) => showTables(req, res, currentDB))
 
 expressApp.post('/delete/:tableName', (req, res) => deleteTable(req, res, currentDB))
 
-expressApp.post(`/update/:tableName`, (req, res) => {
-    const tableName = req.params.tableName;
+expressApp.post(`/update/:tableName`, (req, res) => updateTableName(req, res, currentDB))
 
-    const updatedData = req.body.editedObject;
-    let updateQuery = [];
-    Object.keys(updatedData).map((columnName, colId) => {
-        updateQuery.push(`${columnName} = '${updatedData[columnName]}'`)
-    })
+expressApp.post('/insert/:tableName', (req, res) => insertTable(req, res, currentDB))
 
-    const whereData = req.body.whereTo;
-    let whereQuery = [];
-    Object.keys(whereData).map((columnName, colId) => {
-        whereQuery.push(`${columnName} = '${whereData[columnName]}`)
-    })
-    let newWhereQuery = `${Object.keys(whereData)[0]} = '${whereData[Object.keys(whereData)[0]]}'`
+expressApp.get('/table/:tableName', (req, res) => table(req, res, currentDB))
 
-    const query = `UPDATE ${tableName} SET ${updateQuery} WHERE ${newWhereQuery}`
-
-    currentDB.query(query, (err, result) => {
-        if (err) {
-            res.send(err);
-            console.log(err);
-        }
-        else {
-            res.send(result)
-            console.log(result);
-        }
-    })
-})
-
-expressApp.post('/insert/:tableName', (req, res) => {
-    const tableName = req.params.tableName;
-    const formData = req.body;
-    const columnName = [];
-    const values = [];
-
-    // Setting up the const variable
-    Object.keys(formData).map((value, key) => {
-        values.push(formData[value]);
-        columnName.push(value);
-    })
-
-    const query = `INSERT INTO ${tableName} (${columnName}) VALUES ?`;
-
-    currentDB.query(query, [[values]], (err, result) => {
-        if (err) {
-            res.send(err);
-            console.log(err);
-        }
-        else {
-            console.log("Number of record inserted " + result.affectedRows);
-            res.send(result);
-        }
-    })
-})
-
-expressApp.get('/table/:tableName', (req, res) => {
-    const tableName = req.params.tableName;
-    const query = `SELECT * FROM ${tableName}`;
-
-    currentDB.query(query, (err, result) => {
-        if (err) {
-            res.send(err);
-            console.log(err);
-        }
-        else {
-            res.send(result);
-        }
-    });
-})
-
-expressApp.get('/desc/:tableName', (req, res) => {
-    const tableName = req.params.tableName;
-    const query = `DESC ${tableName}`;
-
-    currentDB.query(query, (err, result) => {
-        if (err) {
-            res.send(err);
-            console.log(err);
-        }
-        else {
-            res.send(result);
-        }
-    })
-})
+expressApp.get('/desc/:tableName', (req, res) => descTable(req, res, currentDB))
 //#endregion
 
 expressApp.listen(3001, () => {
