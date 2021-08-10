@@ -25,21 +25,7 @@ expressApp.post('/getMonthlyIncome', (req, res) => getMonthlyIncome(req, res, cu
 //#endregion
 
 //#region tabel_persediaan
-expressApp.post('/fetchJumlahPersediaan', (req, res) => {
-    const kodeObat = req.body.kodeObat;
-
-    const query = `SELECT Jumlah_Sedia FROM tabel_persediaan WHERE Kode_Obat = '${kodeObat}'`;
-    console.log(query);
-    currentDB.query(query, (error, response) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            res.send(response);
-        }
-    })
-})
+expressApp.post('/fetchJumlahPersediaan', (req, res) => fetchJumlahPersediaan(req, res, currentDB))
 //#endregion
  
 //#region tabel_obat   
@@ -213,6 +199,7 @@ expressApp.post("/api/postman", async (req, res) => {
 const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
 const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
+const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
