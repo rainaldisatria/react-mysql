@@ -5,7 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./db')
 
-db.authenthicate().then(() => {
+db.authenticate().then(() => {
     console.log("connected to mysql")
 })
 
