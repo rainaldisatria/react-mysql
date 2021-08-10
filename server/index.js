@@ -3,6 +3,11 @@ const expressApp = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const db = require('./db')
+
+db.authenthicate().then(() => {
+    console.log("connected to mysql")
+})
 
 expressApp.use(bodyParser.urlencoded({ extended: true }));
 expressApp.use(express.json());
