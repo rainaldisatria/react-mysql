@@ -178,7 +178,7 @@ const { signup, login, fetchAccount } = require('./controllers/usersController')
 const User = require('./models/user');
 const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
 const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
-const { fetchCartData } = require('./controllers/adminController');
+const { fetchCartData, selectTable } = require('./controllers/adminController');
 
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
@@ -190,10 +190,7 @@ expressApp.post('/login', login)
 //#region Database management 
 expressApp.post('/fetchCartData', (req, res, currentDB) => fetchCartData(req, res, currentDB))
 
-expressApp.post('/selectTable', (req, res) => {
-    selected_table = Object.keys(req.body)[0];
-    res.send(selected_table);
-})
+expressApp.post('/selectTable', selectTable)
 
 expressApp.get('/', (req, res) => {
     const query = `SHOW TABLES`;
