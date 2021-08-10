@@ -1,7 +1,7 @@
 const express = require('express');
 const expressApp = express();
 const mysql = require('mysql');
-const cors = require('cors'); 
+const cors = require('cors');
 const db = require('./db')
 
 db.authenticate().then(() => {
@@ -23,31 +23,16 @@ const currentDB = mysql.createConnection({
 const User = require('./models/user')
 expressApp.post("/api/postman", async (req, res) => {
     console.log("post called")
-    try{
-        const {firstName, lastName, username, password, userType, balance} = req.body; 
-        const newUser = new User({
-            firstName, lastName, username, password, userType, balance
-        })
- 
-
-        await newUser.save()
-
-        res.json(newUser)
-    }
-    catch(err){
-        console.log(err.message)
-        res.status(500).send("server error")
-    }
 })
 
 //#region tabel_transaksi
 expressApp.post('/getMonthlyIncome', (req, res) => {
-    const monthID = Object.keys(req.body)[0]; 
+    const monthID = Object.keys(req.body)[0];
     const curYear = new Date().getFullYear();
-    const query = `Select SUM(Jumlah_Obat) as income from tabel_transaksi where month(Tgl_Transaksi) = ${monthID} and year(Tgl_Transaksi) = ${curYear}`; 
+    const query = `Select SUM(Jumlah_Obat) as income from tabel_transaksi where month(Tgl_Transaksi) = ${monthID} and year(Tgl_Transaksi) = ${curYear}`;
 
     console.log(query);
-    
+
     currentDB.query(query, (error, response) => {
         if (error) {
             console.log(error);
@@ -109,10 +94,10 @@ expressApp.post('/fetchObatData', (req, res) => {
             res.send(result)
         }
     })
-}) 
+})
 
 expressApp.post('/fetchObat', (req, res) => {
-    const keyword = req.body.keyword; 
+    const keyword = req.body.keyword;
 
     const query = `SELECT * FROM tabel_obat WHERE
     (
@@ -135,7 +120,7 @@ expressApp.post('/fetchObat', (req, res) => {
 
 expressApp.post('/getAnalyticTable', (req, res) => {
     const fromDate = req.body.fromDate;
-    const untilDate = req.body.untilDate; 
+    const untilDate = req.body.untilDate;
 
     // (100-SUM(jumlah_obat)) as sisa_stok
     const query = `SELECT tabel_obat.kode_obat, nama_obat, harga_satuan, SUM(jumlah_obat) AS jumlah_terjual,
@@ -206,7 +191,7 @@ expressApp.post('/removeCartItem', (req, res) => {
             res.send(response);
         }
     })
-}) 
+})
 
 expressApp.post('/setCartItemQuantity', (req, res) => {
     const username = req.body.username;
@@ -227,7 +212,7 @@ expressApp.post('/setCartItemQuantity', (req, res) => {
             res.send(result);
         }
     })
-}) 
+})
 
 expressApp.post('/addToCart', (req, res) => {
     const username = req.body.username;
@@ -250,7 +235,7 @@ expressApp.post('/addToCart', (req, res) => {
             res.send(result);
         }
     })
-}) 
+})
 
 expressApp.post('/fetchCart', (req, res) => {
     const username = Object.keys(req.body)[0];
@@ -269,7 +254,7 @@ expressApp.post('/fetchCart', (req, res) => {
     })
 })
 //#endregion
-  
+
 //#region users
 expressApp.post('/fetchAccount', (req, res) => {
     const username = Object.keys(req.body)[0];
@@ -284,31 +269,27 @@ expressApp.post('/fetchAccount', (req, res) => {
         }
     })
 })
- 
-expressApp.post('/signup', (req, res) => {
-    const data = req.body;
-    var columnsName = [];
-    var values = [];
-    Object.keys(data).map((columnName, colId) => {
-        columnsName.push(columnName);
-        values.push(data[columnName]);
-    })
+
+expressApp.post('/signup', async (req, res) => { 
+    try {
+        const { firstName, lastName, username, password, userType, balance } = req.body; 
+
+        await User.create({
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            password: password,
+            userType: userType,
+            balance: balance,
+        });
 
 
-    const query = `INSERT INTO users (${columnsName}, userType) VALUES 
-        (${values.map(val => `'${val}'`).join(", ")}, 'user')`;
-    console.log(query);
-
-    currentDB.query(query, (error, result) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            console.log(result);
-            res.send(result);
-        }
-    })
+        res.json(req.body)
+    }
+    catch (err) {
+        console.log(err.message)
+        res.status(500).send("server error")
+    }
 })
 
 expressApp.post('/login', (req, res) => {

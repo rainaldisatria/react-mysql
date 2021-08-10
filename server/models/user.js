@@ -1,15 +1,15 @@
 const sequelize = require('sequelize')
 const db = require('../db')
 
-const User = db.define(
+const user = db.define(
     "users",
     {
-        firstName: {type: sequelize.STRING},
-        lastName: {type: sequelize.STRING},
-        username: {type: sequelize.STRING, primaryKey: true},
-        password: {type: sequelize.STRING},
-        userType: {type: sequelize.ENUM('user', 'admin')},
-        balance: {type: sequelize.INTEGER},
+        username: { type: sequelize.STRING, primaryKey: true },
+        firstName: { type: sequelize.STRING },
+        lastName: { type: sequelize.STRING },
+        password: { type: sequelize.STRING },
+        userType: { type: sequelize.ENUM('user', 'admin') },
+        balance: { type: sequelize.INTEGER },
     },
     {
         freezeTableName: true,
@@ -17,4 +17,4 @@ const User = db.define(
     }
 )
 
-module.exports = User;
+module.exports = user;
