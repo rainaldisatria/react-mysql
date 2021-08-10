@@ -138,3 +138,60 @@ exports.descTable = (req, res, currentDB) => {
         }
     })
 }
+
+exports.buy = (req, res, currentDB) => {
+    const username = req.body.username;
+    const data = req.body.data;
+
+    const insertIntoOrdersQuery = `INSERT INTO orders (date, username, kodeObat, namaObat, hargaSatuan, bentukObat, quantity)
+    VALUES (CURDATE(), '${username}', '${data.Kode_Obat}', '${data.Nama_Obat}', '${data.Harga_Satuan}', '${data.Bentuk_Obat}', '${data.quantity}');`;
+
+    const insertToTableTransaksi = `INSERT INTO tabel_transaksi (Kode_Obat, Tgl_Transaksi, Jumlah_Obat) 
+    VALUES ('${data.Kode_Obat}', CURDATE(), '${data.quantity}') ON DUPLICATE KEY UPDATE
+    Jumlah_Obat = Jumlah_Obat + ${data.quantity};`;
+
+    const clearCartQuery = `DELETE FROM cart WHERE username = '${username}'`;
+
+    currentDB.query(insertIntoOrdersQuery + insertToTableTransaksi + clearCartQuery, (error, response) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(response);
+            res.send(response);
+        }
+    })
+}
+
+exports.getAnalyticTable = (req, res, currentDB) => {
+    const fromDate = req.body.fromDate;
+    const untilDate = req.body.untilDate;
+
+    // (100-SUM(jumlah_obat)) as sisa_stok
+    const query = `SELECT tabel_obat.kode_obat, nama_obat, harga_satuan, SUM(jumlah_obat) AS jumlah_terjual,
+    harga_satuan * SUM(jumlah_obat) AS Total_Harga_Terjual
+    FROM tabel_obat JOIN tabel_transaksi ON
+    tabel_obat.kode_obat = tabel_transaksi.kode_obat JOIN tabel_persediaan ON 
+    tabel_persediaan.kode_obat = tabel_obat.kode_obat 
+    WHERE (tabel_transaksi.Tgl_Transaksi BETWEEN '${fromDate}' AND '${untilDate}') 
+    group by kode_obat;`
+    const totalPendapatan = `
+    SELECT SUM(IQuery.Harga_Total_PerBarang) as TotalPendapatan 
+    FROM 
+        (SELECT SUM(Jumlah_Obat * Harga_Satuan) AS Harga_Total_PerBarang FROM tabel_transaksi JOIN tabel_obat ON 
+        tabel_transaksi.Kode_Obat = tabel_obat.Kode_Obat 
+        WHERE tabel_transaksi.Tgl_Transaksi BETWEEN '${fromDate}' AND '${untilDate}'
+        GROUP BY tabel_transaksi.Kode_Obat) as IQuery;`
+
+    currentDB.query(query + totalPendapatan, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    })
+}
