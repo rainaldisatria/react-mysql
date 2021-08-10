@@ -23,3 +23,21 @@ exports.signup = async (req, res) => {
     }
 }
 
+exports.login = async (req, res) => { 
+    try{
+        const {username, password} = req.body;
+
+        const result = await User.findAll({
+
+            where:{
+                username: username,
+                password: password,
+            }
+        })
+
+        res.json(result)
+    }
+    catch{
+
+    }
+}

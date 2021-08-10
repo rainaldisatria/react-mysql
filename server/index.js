@@ -20,10 +20,6 @@ const currentDB = mysql.createConnection({
     multipleStatements: true,
 });
 
-expressApp.post("/api/postman", async (req, res) => {
-    console.log("post called")
-})
-
 //#region tabel_transaksi
 expressApp.post('/getMonthlyIncome', (req, res) => {
     const monthID = Object.keys(req.body)[0];
@@ -254,7 +250,29 @@ expressApp.post('/fetchCart', (req, res) => {
 })
 //#endregion
 
-//#region users
+//#region users 
+expressApp.post("/api/postman", async (req, res) => {
+    try{
+        const {username, password} = req.body;
+
+        const result = await User.findAll({
+
+            where:{
+                username: username,
+                password: password,
+            }
+        })
+
+        res.json(result)
+    }
+    catch{
+
+    }
+})
+
+const { signup, login } = require('./controllers/usersController')
+const User = require('./models/user')
+
 expressApp.post('/fetchAccount', (req, res) => {
     const username = Object.keys(req.body)[0];
     const query = `SELECT * FROM users WHERE username='${username}'`;
@@ -269,26 +287,9 @@ expressApp.post('/fetchAccount', (req, res) => {
     })
 })
 
-const { signup } = require('./controllers/usersController')
 expressApp.post('/signup', signup)
 
-expressApp.post('/login', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    const query = `SELECT * FROM users WHERE username='${username}' and password='${password}'`;
-    console.log(query)
-    currentDB.query(query, (error, result) => {
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            console.log(result);
-            res.send(result);
-        }
-    })
-})
+expressApp.post('/login', login)
 //#endregion
 
 //#region Database management
