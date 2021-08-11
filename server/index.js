@@ -1,8 +1,7 @@
 const express = require('express');
 const expressApp = express();
 const mysql = require('mysql');
-const cors = require('cors');
-const db = require('./db') 
+const cors = require('cors'); 
 const { signup, login, fetchAccount } = require('./controllers/usersController') 
 const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
 const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
