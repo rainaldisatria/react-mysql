@@ -65,7 +65,7 @@ const ShoppingItem = ({ title, description, price, id }) => {
                     component="img"
                     alt="Contemplative Reptile"
                     height="140"
-                    image="https://bulelengkab.go.id/assets/instansikab/70/artikel/mengenal-obat-gangguan-jiwa-dan-penggunaannya-56.jpg"
+                    image="https://i.guim.co.uk/img/media/20491572b80293361199ca2fc95e49dfd85e1f42/0_240_5157_3094/master/5157.jpg?width=620&quality=85&auto=format&fit=max&s=769b733a241ddf213f4e32a96bc01c87"
                     title="Contemplative Reptile"
                 />
                 <CardContent>
