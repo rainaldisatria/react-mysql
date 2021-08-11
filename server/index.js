@@ -2,7 +2,12 @@ const express = require('express');
 const expressApp = express();
 const mysql = require('mysql');
 const cors = require('cors');
-const db = require('./db')
+const db = require('./db') 
+const { signup, login, fetchAccount } = require('./controllers/usersController') 
+const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
+const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
+const { fetchCartData, selectTable, showTables, deleteTable, updateTableName, insertTable, table, descTable, buy, getAnalyticTable } = require('./controllers/adminController');
+const { removeCartItem, setCartItemQuantity, addToCart, fetchCart } = require('./controllers/cartController');
 
 expressApp.use(express.urlencoded({ extended: true }));
 expressApp.use(express.json());
@@ -43,13 +48,7 @@ expressApp.post('/addToCart', (req, res) => addToCart(req, res, currentDB))
 expressApp.post('/fetchCart', (req, res) => fetchCart(req, res, currentDB))
 //#endregion
  
-//#region users  
-const { signup, login, fetchAccount } = require('./controllers/usersController') 
-const { getMonthlyIncome } = require('./controllers/tabelTransaksiController');
-const { fetchJumlahPersediaan } = require('./controllers/tabelPersediaanController');
-const { fetchCartData, selectTable, showTables, deleteTable, updateTableName, insertTable, table, descTable, buy, getAnalyticTable } = require('./controllers/adminController');
-const { removeCartItem, setCartItemQuantity, addToCart, fetchCart } = require('./controllers/cartController');
-
+//#region users   
 expressApp.post('/fetchAccount', (req, res) => fetchAccount(req, res, currentDB))
 
 expressApp.post('/signup', signup)
